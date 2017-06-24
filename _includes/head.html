@@ -1,0 +1,24 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  {% if page.title && page.categories %}
+    <title>{{ page.categories }} - {{ page.title }} | {{ site.title }}</title>
+  {% else %}
+    <title>{{ site.title }}</title>
+  {% endif %}
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | remove: '<p>' | remove: '</p>' }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="author" content="{{ site.author.name }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{% if page.excerpt %}{{ page.excerpt | remove: '<p>' | remove: '</p>' }}{% else %}{{ site.description }}{% endif %}">
+
+  <link rel="icon" href="{{ "images/favicon.png" | prepend: site.baseurl }}" />
+
+  <link rel="stylesheet" href="{{ "css/main.css" | prepend: site.baseurl }}?{{site.time | date: '%s%N'}}">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.baseurl }}feed.xml">
+</head>
