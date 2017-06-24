@@ -41,6 +41,16 @@
               </li>
             {% endif %}
 
+            {% if site.author.youtube_username %}
+              <!-- Youtube -->
+              <li class="navigation__item">
+                <a href="https://www.youtube.com/{{ site.author.youtube_username }}" title="{{ site.author.github_username }} on Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+            {% endif %}
+
             {% if site.author.email %}
               <!-- Email -->
               <li class="navigation__item">
