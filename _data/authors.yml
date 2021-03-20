@@ -1,0 +1,15 @@
+# Add Authors here
+bartkessels:
+   name: Bart Kessels
+   username: bartkessels
+   site: https://bartkessels.net
+   avatar: bartkessels.png
+   bio: "I'm a passionate open source software developer"
+   email: development@bk-mail.com
+   social:
+      - title: "github"
+        url: "https://github.com/bartkessels"
+      - title: "linkedin"
+        url: "https://www.linkedin.com/in/kesselsbart"
+      - title: "youtube"
+        url: "https://www.youtube.com/user/bkproductionsinfo"

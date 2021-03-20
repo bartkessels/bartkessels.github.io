@@ -1,0 +1,49 @@
+---
+---
+
+@charset "utf-8";
+
+@import "devlopr";
+
+/* custom css goes below */
+
+.experience {
+    margin-left: 10px;
+}
+
+.project-img {
+    border-radius: 5%;
+}
+
+.experience-platforms a, .experience-platforms a :hover, .experience-title a, .experience-title a :hover {
+    text-decoration: none !important;
+    color: var(--light-text-color) !important;
+}
+
+#article-img img {
+    border-radius: 50%;
+}
+
+.recent-article-link {
+    color: var(--light-text-color)!important;
+}
+
+.recent-article-date {
+    font-size: 15px;
+    color: var(--main-text-color);
+}
+
+.article-card a :hover{
+    text-decoration: none;
+    background: none!important;
+}
+
+.author-profile-post-img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
+.recent-posts {
+    margin-left: 0px !important;
+}

@@ -1,0 +1,219 @@
+---
+layout: default
+---
+
+<div class="row ">
+  <div class="col-lg-4 offset-md-1">
+
+    <!-- About me -->
+    <div class="card" id="profile-card">
+      <a href="/">
+        <img src="{{site.url}}{{site.baseurl}}/assets/img/{{ site.author_logo }}" class="profile-img" />
+      </a>
+      <h1 class="profile-name">{{ site.title }}</h1>
+      <p class="profile-bio">{{ site.subtitle }}</p>
+      {% if site.github_username %} {%- include github_follow_button.html -%} {%
+      endif %}
+
+      <p class="profile-links">
+        {% if site.github_username %}
+        <a
+          class="social-link"
+          target="_blank"
+          href="http://github.com/{{ site.github_username }}"
+        >
+          <i class="fab fa-github"></i>
+        </a>
+        {% endif %} {% if site.linkedin_username %}
+        <a
+          class="social-link"
+          target="_blank"
+          href="http://linkedin.com/in/{{ site.linkedin_username }}"
+        >
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        {% endif %}
+      </p>
+
+      {% if site.author_email %}
+      <h6><i class="fas fa-envelope"></i> <a target="_blank" href="mailto:{{ site.author_email }}">{{ site.author_email }}</a></h6>
+      {% endif %} {% if site.author_website_url %}
+      <h6><i class="fas fa-link"></i> <a target="_blank" href="{{ site.author_website_url }}">{{ site.author_website_url }}</a></h6>
+      {% endif %}
+    </div>
+
+    <!-- Recent posts -->
+    {% assign psize = site.posts | size %}
+    {% if psize != 0 %}
+    <div class="card">
+      <h1>Recent posts</h1>
+
+      <ul class="recent-posts">
+        {% assign posts = site.posts | sort: 'date' | reverse %}
+        {% for post in posts limit:5 %}
+        <li class="article-card">
+          <a href="{{post.url}}" class="article-card-link">
+            <div id="article-container">
+              <div id="article-img">
+                {% if post.author %}
+                  {% assign author = post.author %}
+                  {% if author %}
+                   {% assign author_data = site.data.authors[author] %}
+                   <img
+                    src="{{site.url}}{{site.baseurl}}{{ post.thumbnail }}"
+                    alt="{{ post.title }}"
+                    width="75px"
+                    height="75px"
+                    />
+                  {% endif %}
+                {% endif %}
+
+              </div>
+              <div id="article-link">
+                  <p class="recent-article-link">{{post.title}}
+                  <br>
+                  <span class="recent-article-date">- <time datetime="{{ post.date }}" itemprop="datePublished">{{ post.date | date: "%b %-d, %Y" }}</time></span></p>
+              </div>
+            </div>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+  </div>
+  <div class="col-lg-7">
+    {% if site.show_author_project_details == true %}
+
+    <!-- Open source projects -->
+    <div id="author_projects" class="card">
+      <h1 class="card-title">Open source projects</h1>
+      <br />
+      {% for project in site.author_open_source_projects %} {% if project.visibility
+      == true %}
+      <div class="row" id="project-card">
+        <div class="col-md-4">
+          <img
+            src="{{site.url}}{{site.baseurl}}/assets/img/{{project.project_thumbnail}}"
+            class="project-img"
+          />
+        </div>
+        <div class="col-md-6 center">
+          <h4 class="experience-title">
+            <a
+              href="{{ project.github_url }}"
+              target="_blank"
+              title="View {{ project.project_title }} on Github"
+              class="fab fa-github"
+              aria-hidden="true"></a>&nbsp;
+              {{ project.project_title }}
+          </h4>
+          <h6 class="experience-info">{{ project.project_info}}</h6>
+          <p class="experience-desc">{{ project.project_description }}</p>
+          <p class="experience-platforms">
+            {% for platform in project.platforms %}
+              <a
+                href="{{platform.url}}"
+                target="_blank"
+                title="{{platform.title}}"
+                class="{{ platform.icon }}" 
+                aria-hidden="true"></a>&nbsp;
+            {% endfor %}
+          </p>
+          <p>
+            <a class="project-link" target="_blank" href="{{project.project_url}}">
+              {{ project.project_url}} <sup class="fas fa-external-link-alt"></sup>
+            </a>
+          </p>
+        </div>
+      </div>
+      <br />
+      {% endif %} {% endfor %}
+    </div>
+
+    <!-- Proprietary projects -->
+    <div id="author_projects" class="card">
+      <h1 class="card-title">Proprietary projects</h1>
+      <p>Even though I&lsquo;m a passionate open source developer, as most others, I'm also involved in developing proprietary software for businesses</p>
+      <br />
+      {% for project in site.author_proprietary_projects %} {% if project.visibility
+      == true %}
+      <div class="row" id="project-card">
+        <div class="col-md-4">
+          <img
+            src="{{site.url}}{{site.baseurl}}/assets/img/{{project.project_thumbnail}}"
+            class="project-img"
+          />
+        </div>
+        <div class="col-md-6 center">
+          <h4 class="experience-title">{{ project.project_title }}</h4>
+          <p><i>{{ project.project_involvement }}</i></p>
+          <h6 class="experience-info">{{ project.project_info}}</h6>
+          <p class="experience-desc">{{ project.project_description }}</p>
+          <p class="experience-platforms">
+            {% for platform in project.platforms %}
+              <a
+                href="{{platform.url}}"
+                target="_blank"
+                title="{{platform.title}}"
+                class="fab fa-{{platform.icon}}" 
+                aria-hidden="true"></a>&nbsp;
+            {% endfor %}
+          </p>
+          <p>
+            <a class="project-link" target="_blank" href="{{project.project_url}}">
+              {{ project.project_url}} <sup class="fas fa-external-link-alt"></sup>
+            </a>
+          </p>
+        </div>
+      </div>
+      <br />
+      {% endif %} {% endfor %}
+    </div>
+
+    {% endif %}
+    
+    <!-- Work experience -->
+    {% if site.show_author_work_experiences == true %}
+    <div class="card">
+      <h1 class="card-title">Work Experience</h1>
+      <br />
+      {% for exp in site.author_work_experiences %} {% if exp.visibility == true %}
+      <div class="row">
+        <div class="col-md-6 experience">
+          <h4 class="experience-title">{{ exp.designation }}</h4>
+          <h6 class="experience-info">{{ exp.company_name}}</h6>
+          <h6 class="experience-years">{{ exp.years }}</h6>
+          <p class="experience-desc">{{ exp.description }}</p>
+          <p><a href="{{exp.company_url}}">
+            {{ exp.company_url}} <sup class="fas fa-external-link-alt"></sup>
+          </a></p>
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+    {% endif %}
+    
+    <!-- Degrees -->
+    {% if site.show_author_education_details == true %}
+    <div class="card">
+      <h1 class="card-title">Education</h1>
+      <br />
+      {% for detail in site.author_education_details %} {% if detail.visibility
+      == true %}
+      <div class="row">
+        <div class="col-md-6 experience">
+          <h4 class="experience-title">{{detail.college_degree }}</h4>
+          <h6 class="experience-info">{{detail.college_name}}</h6>
+          <p class="experience-desc">{{detail.description}}</p>
+          <p><a href="{{detail.college_url}}">
+            {{ detail.college_url}} <sup class="fas fa-external-link-alt"></sup>
+          </a></p>
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
