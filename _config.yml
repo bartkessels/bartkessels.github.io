@@ -20,8 +20,14 @@ typewrite-text: I'm a passionate open source developer
 
 # Experiences
 author_work_experiences:
+            - company_name: Info Support
+              years: 2020 - present
+              company_url: https://infosupport.nl
+              designation: Junior IT-consultant
+              description: Software engineer in the .NET stack with C#
+              visibility: true
             - company_name: RazorBit
-              years: 2015 - Present
+              years: 2015 - 2020
               company_url: https://razorbit.nl
               designation: Founder & Software engineer
               description: Building (web) API's and Android/Flutter apps
