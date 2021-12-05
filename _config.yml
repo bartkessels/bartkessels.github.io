@@ -122,7 +122,7 @@ author_proprietary_projects:
                   - title: Download WocoAPP from the Apple App Store
                     icon: fab fa-apple
                     url: https://itunes.apple.com/nl/app/wocoapp/id1375323603?mt=8
-                visibility: true
+                visibility: false
               - project_thumbnail: projects/constructifapp.jpg
                 project_title: Constructif | Bewoners
                 project_involvement: Built the API & Flutter/Android application
@@ -137,7 +137,7 @@ author_proprietary_projects:
                   - title: Download ConstructifAPP from the Apple App Store
                     icon: fab fa-apple
                     url: https://apps.apple.com/gb/app/constructif-bewoners/id1481123214
-                visibility: true
+                visibility: false
 
 # social links
 twitter_username: _bartkessels
