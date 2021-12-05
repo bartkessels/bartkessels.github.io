@@ -132,46 +132,6 @@ layout: default
       {% endif %} {% endfor %}
     </div>
 
-    <!-- Proprietary projects -->
-    <div id="author_projects" class="card">
-      <h1 class="card-title">Proprietary projects</h1>
-      <p>Even though I&lsquo;m a passionate open source developer, as most others, I'm also involved in developing proprietary software for businesses</p>
-      <br />
-      {% for project in site.author_proprietary_projects %} {% if project.visibility
-      == true %}
-      <div class="row" id="project-card">
-        <div class="col-md-4">
-          <img
-            src="{{site.url}}{{site.baseurl}}/assets/img/{{project.project_thumbnail}}"
-            class="project-img"
-          />
-        </div>
-        <div class="col-md-6 center">
-          <h4 class="experience-title">{{ project.project_title }}</h4>
-          <p><i>{{ project.project_involvement }}</i></p>
-          <h6 class="experience-info">{{ project.project_info}}</h6>
-          <p class="experience-desc">{{ project.project_description }}</p>
-          <p class="experience-platforms">
-            {% for platform in project.platforms %}
-              <a
-                href="{{platform.url}}"
-                target="_blank"
-                title="{{platform.title}}"
-                class="fab fa-{{platform.icon}}" 
-                aria-hidden="true"></a>&nbsp;
-            {% endfor %}
-          </p>
-          <p>
-            <a class="project-link" target="_blank" href="{{project.project_url}}">
-              {{ project.project_url}} <sup class="fas fa-external-link-alt"></sup>
-            </a>
-          </p>
-        </div>
-      </div>
-      <br />
-      {% endif %} {% endfor %}
-    </div>
-
     {% endif %}
     
     <!-- Work experience -->

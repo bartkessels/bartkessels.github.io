@@ -111,40 +111,6 @@ author_open_source_projects:
                     url: https://github.com/bartkessels/HashGenerator/releases/latest/download/hashgen_win_x64.exe
                 visibility: true
 
-author_proprietary_projects:
-              - project_thumbnail: projects/wocoapp.png
-                project_title: WocoAPP
-                project_involvement: Built the API & Flutter/Android application
-                project_description: >-
-                  The WocoAPP is an application which gives tenants a more easy way of contacting their housing
-                  corporations. This can be as simple as a contact form, or even a complete repair request with
-                  pictures of the problem. When a tenant has sent a message or repeair request, the corporation can
-                  live-chat with that particular tent
-                project_url: https://wocoapp.nl
-                platforms:
-                  - title: Download WocoAPP from the Google Play Store
-                    icon: fab fa-google-play
-                    url: https://play.google.com/store/apps/details?id=nl.razorbit.wocoapp
-                  - title: Download WocoAPP from the Apple App Store
-                    icon: fab fa-apple
-                    url: https://itunes.apple.com/nl/app/wocoapp/id1375323603?mt=8
-                visibility: false
-              - project_thumbnail: projects/constructifapp.jpg
-                project_title: Constructif | Bewoners
-                project_involvement: Built the API & Flutter/Android application
-                project_description: >-
-                  The ConstructifAPP is used by Constructif to keep their tenants up-to-date on
-                  all development/renovations around their own house.
-                project_url: https://constructifapp.nl
-                platforms:
-                  - title: Download ConstructifAPP from the Google Play Store
-                    icon: fab fa-google-play
-                    url: https://play.google.com/store/apps/details?id=nl.razorbit.constructifapp
-                  - title: Download ConstructifAPP from the Apple App Store
-                    icon: fab fa-apple
-                    url: https://apps.apple.com/gb/app/constructif-bewoners/id1481123214
-                visibility: false
-
 # social links
 twitter_username: _bartkessels
 github_username:  bartkessels
