@@ -6,7 +6,7 @@ author: bartkessels
 date: '2022-01-01'
 thumbnail: /assets/img/posts/getit-logo.png
 keywords: GetIt, Qt, Gtk, C++
-permalink: /blog/getit-rewrite/
+permalink: /blog/getit-rewrite-update/
 usemathjax: true
 ---
 
