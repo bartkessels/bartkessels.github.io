@@ -4,7 +4,7 @@ title:  "Rewriting GetIt"
 summary: "Rewrite of GetIt from GTK to Qt"
 author: bartkessels
 date: '2022-01-01'
-thumbnail: /assets/img/posts/getit-logo.png
+thumbnail: /assets/img/posts/getit.png
 keywords: GetIt, Qt, Gtk, C++
 permalink: /blog/getit-rewrite/
 usemathjax: true
