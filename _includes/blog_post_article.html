@@ -17,12 +17,16 @@
   
   <div class="card-body" itemprop="articleBody">
     <p>
-      <img
-          style="float:left; margin-right: 10px; margin-bottom: 10px;"
-          width="30%"
-          src="{{site.url}}{{site.baseurl}}{{ page.thumbnail }}"
-          alt="{{ post.title }}"
-        />
+      {% if page.displayThumbnail %}
+
+        <img
+            style="float:left; margin-right: 10px; margin-bottom: 10px;"
+            width="30%"
+            src="{{site.url}}{{site.baseurl}}{{ page.thumbnail }}"
+            alt="{{ post.title }}"
+          />
+
+        {% endif %}
 
         <b>{{ page.summary }}</b>
         <br>
