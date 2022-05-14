@@ -28,6 +28,12 @@
 
         {% endif %}
 
+        {% if page.video %}
+
+        <iframe width="560" height="315" src="{{ page.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+        {% endif %}
+
         <b>{{ page.summary }}</b>
         <br>
         {{ content }}
