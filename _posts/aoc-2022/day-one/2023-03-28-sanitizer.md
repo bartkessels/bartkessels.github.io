@@ -66,7 +66,7 @@ So the only thing we need to do, is map each calory inside our 'inner-list' to a
 
 ## Implementation
 
-### Business logic
+### Sanitizer
 
 Now we now how we want our data structure to look like, we can start creating the `getItems(): List<List<Int>>` method inside our `Sanitizer` class.
 Because we've laid out the way we want to functionally setup our code. We can just implement it in Kotlin using the `split` and `map` methods on our input file.
