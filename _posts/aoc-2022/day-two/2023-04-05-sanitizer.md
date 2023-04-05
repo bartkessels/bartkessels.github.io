@@ -27,10 +27,10 @@ C Z
 ```
 {: file="Raw input" }
 
-The strategy input is split into two columns, the first of which is our oponents strategy and the second column is our strategy. So we need to turn the data into
+The strategy input is split into two columns, the first of which is our opponents strategy and the second column is our strategy. So we need to turn the data into
 some kind of a match model like this.
 
-|         | Oponent strategy | own strategy |
+|         | opponent strategy | own strategy |
 |:-------:|:----------------:|:------------:|
 | Match 1 | A                | Y            |
 | Match 2 | B                | X            |
