@@ -28,10 +28,10 @@ CrZsJsPPZsGzwwsLwLmpwMDw
 ```
 {: file="Raw input" }
 
-This input <ZINSOPBOUW> are six rucksacks which each having two compartments. Each compartment is the half of each string
-that <GOEDE WOORD VOOR voorstellen> is a rucksack.
+This input represents six rucksacks, where each rucksack consists of two compartments. The first compartment contains the
+first half of each line, and the second compartment contains the second half.
 
-So if we split our data based on this information, we want to get the following structure.
+So if we split our data based on this information, we get the following structure.
 
 |            | Compartment A      | Compartment B      |
 |-----------:|:-------------------|:-------------------|
