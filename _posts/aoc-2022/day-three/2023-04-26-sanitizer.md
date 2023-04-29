@@ -81,18 +81,17 @@ Because we've laid out the way we want to functionally setup our code. We can ju
 class Sanitizer(
     private val resource: URL?
 ) {
-    fun getItems(): List<Pair<String, String>>? {
-        return resource
-            ?.readText()
-            ?.split("\n")
-            ?.map {
-                val compartmentSize = it.length / 2 // Step 1
-                val firstCompartment = it.substring(0, compartmentSize - 1) // Step 2
-                val secondCompartment = it.substring(comparmentSize, it.length) // Step 3
+    fun getItems(): List<Pair<String, String>>? =
+      resource
+          ?.readText()
+          ?.split("\n")
+          ?.map {
+              val compartmentSize = it.length / 2 // Step 1
+              val firstCompartment = it.substring(0, compartmentSize) // Step 2
+              val secondCompartment = it.substring(compartmentSize, it.length) // Step 3
 
-                Pair(firstCompartment, secondCompartment)
-            }
-    }
+              Pair(firstCompartment, secondCompartment)
+          }
 }
 ```
 {: file="aoc-2022/day3/src/main/kotlin/aoc/Sanitizer.kt" }
@@ -101,10 +100,7 @@ class Sanitizer(
 At _step 1_ we sum up the entire length of the string and divide it by two because we know that each rucksack has only
 two compartments. At _step 2_ and _step 3_ we retrieve the compartments by retrieving the substring of the entire rucksack.
 
-At _step 2_ we start the substring at index 0 until the compartmentSize - 1. We need to add the -1 because the rucksack
-is 0 indexed. So for a string of 10 characters, the half would be 5. But the fifth element lives on the 4th index.
-Because we subtract one from the compartmentSize for our first compartment, we don't need to do anything subtractions while
-retrieving the second compartment at _step 3_.
+At _step 2_ we start the substring at index 0 up until the compartmentSize. Because the substring `endIndex` parameter is exclusive [(Jetbrains, n.d.)](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/substring.html), we can threat it as if it's a 1-based index. At step 3, we take the rest of the string with the compartmentSize as the `startIndex`. Because the `startIndex` is inclusive [(Jetbrains, n.d.)](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/substring.html), we don't need to subtract or add anything.
 
 Which will finally give us the data model we designed in the previous chapter.
 
