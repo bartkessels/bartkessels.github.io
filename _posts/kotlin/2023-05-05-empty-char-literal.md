@@ -2,7 +2,7 @@
 title: Kotlin giving an empty char literal error
 toc: true
 mermaid: true
-date: 2023-05-03 12:30:00 +02
+date: 2023-05-05 12:30:00 +02
 categories: [Kotlin]
 permalink: kotlin/empty-char-literal
 tags: [kotlin, error, problem, char, literal, solution]

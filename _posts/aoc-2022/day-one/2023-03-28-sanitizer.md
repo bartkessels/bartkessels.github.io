@@ -1,5 +1,5 @@
 ---
-title: Day 1 - Sanitizer
+title: Advent of Code 2022, Day 1 - Sanitizer
 toc: true
 mermaid: true
 date: 2023-03-29 12:15:00 +02
