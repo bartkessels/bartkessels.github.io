@@ -9,7 +9,7 @@ on:
       - README.md
       - LICENSE
   schedule:
-    - cron: "0 6 * * 3,5" # Every wednesday and friday at 6am
+    - cron: "0 17 * * 3,5" # Every wednesday and friday at 5pm
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
