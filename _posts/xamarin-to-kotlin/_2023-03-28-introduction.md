@@ -22,7 +22,7 @@ So hence the decision now to move towards a native mobile development platform.
 
 # History
 
-So a bit of history of myself, before I finished school I used to have a company with a friend of mine where we'd build native apps for Android and iOS. So the first
+So a bit of history about myself, before I finished school I used to have a company with a friend of mine where we'd build native apps for Android and iOS. So the first
 couple of years I was building Android applications in Java without knowing anything about design patterns or how the Android lifecycle really worked.
 
 But for the time being it was fine, as we weren't building really big apps. At the time it was just an app for a local gym club.
