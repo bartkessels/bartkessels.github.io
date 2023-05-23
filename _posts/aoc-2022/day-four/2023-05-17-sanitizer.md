@@ -10,7 +10,7 @@ tags: [advent of code, kotlin, solution]
 
 ## Preface
 
-The objective of the fourth day is available on the [advent of code](https://adventofcode.com/2022/day/3) website, so it won't be shared here. On this page only the steps of achieving a solution are given with a solution build in Kotlin.
+The objective of the fourth day is available on the [advent of code](https://adventofcode.com/2022/day/4) website, so it won't be shared here. On this page only the steps of achieving a solution are given with a solution build in Kotlin.
 
 ## Design
 
