@@ -182,10 +182,80 @@ flowchart LR
 
 Now we now how we want our data structure to look like, we can start creating the `getStacks(): List<Stack<Char>>` and `getInstructions(): List<Triple<Int, Int, Int>>` methods inside our `Sanitizer` class.
 
-```kotlin
+#### getStacks method
 
+```kotlin
+fun getStacks(): List<Stack<Char>> {
+    val stacks = mutableListOf<Stack<Char>>()
+    val stackCharacterSize = 4
+
+    resource
+        ?.readText()
+        ?.split("\n\n") // Step 1
+        ?.first() // Step 2
+        ?.split("\n")
+        ?.dropLast(1)  // Step 3
+        ?.forEach {
+            var currentStackIndex = 0
+
+            it.chunked(stackCharacterSize) { // Step 4
+                val character = it
+                    .removePrefix("[")
+                    .removeSuffix("]")
+                    .trim()
+                    .firstOrNull()
+
+                if (stacks.elementAtOrNull(currentStackIndex) == null) { // Step 5
+                    stacks.add(currentStackIndex, Stack<Char>())
+                }
+
+                character?.let { // Step 6
+                    stacks.elementAt(currentStackIndex).push(it)
+                }
+
+                currentStackIndex++
+            }
+        }
+
+    return stacks
+}
 ```
 {: file="aoc-2022/day5/src/main/kotlin/aoc/Sanitizer.kt" }
+
+The first thing we do, is splitting the string on an empty line which is represented by two newline characters (`\n\n`) at _Step 1_. Because we know that the items above the empty line are the stacks we take the first result of the split method at _Step 2_.
+
+Because the stacks input also contain the stack labels which we don't need, we remove that line entirely. Because we know that's the last line before the empty line we can remove the last item in the list that's present after the `split("\n\n").first()` call. We do this at _Step 3_.
+
+At _Step 4_ we read each line in chunks of 4 characters. This is done because at our design-phase we've notificed that each stack block consists of 1 character, with two block brackets and a trailing white space. Thus counted up to four characters in total.
+
+And finally at _Step 5_ we turn the chunked items into a `Triple` when the character isn't null or empty. We can assure that the character will be null if it's empty because of our call to `firstOrNull()` after we've stripped all unnecessarry items from the character block. Using the `let` lambda, we can execute the code of adding the character to the stack only when the character isn't null.
+
+#### getInstructions method
+
+```kotlin
+fun getInstructions(): List<Triple<Int, Int, Int>>? =
+    resource
+        ?.readText()
+        ?.split("\n\n") // Step 1
+        ?.last() // Step 2
+        ?.split("\n")
+        ?.map {
+            val items = it
+                .replace("move ", "")
+                .replace("from ", "")
+                .replace("to ", "")
+                .split(" ")
+                .map{ it.toInt() }
+
+            Triple( // Step 3
+                items.get(0),
+                items.get(1),
+                items.get(2)
+            )
+        }
+```
+
+The first thing we do, is splitting the string on an empty line which is represented by two newline characters (`\n\n`) at _Step 1_. Because we know that the items below the empty line are the instructions we take the last result of the split method at _Step 2_.
 
 ### Test case
 
