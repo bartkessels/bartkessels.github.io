@@ -195,21 +195,22 @@ fun getStacks(): List<Stack<Char>> {
         ?.first() // Step 2
         ?.split("\n")
         ?.dropLast(1)  // Step 3
+        ?.reversed() // Step 4
         ?.forEach {
             var currentStackIndex = 0
 
-            it.chunked(stackCharacterSize) { // Step 4
+            it.chunked(stackCharacterSize) { // Step 5
                 val character = it
                     .removePrefix("[")
                     .removeSuffix("]")
                     .trim()
                     .firstOrNull()
 
-                if (stacks.elementAtOrNull(currentStackIndex) == null) { // Step 5
+                if (stacks.elementAtOrNull(currentStackIndex) == null) { // Step 6
                     stacks.add(currentStackIndex, Stack<Char>())
                 }
 
-                character?.let { // Step 6
+                character?.let { // Step 7
                     stacks.elementAt(currentStackIndex).push(it)
                 }
 
@@ -226,9 +227,23 @@ The first thing we do, is splitting the string on an empty line which is represe
 
 Because the stacks input also contain the stack labels which we don't need, we remove that line entirely. Because we know that's the last line before the empty line we can remove the last item in the list that's present after the `split("\n\n").first()` call. We do this at _Step 3_.
 
-At _Step 4_ we read each line in chunks of 4 characters. This is done because at our design-phase we've notificed that each stack block consists of 1 character, with two block brackets and a trailing white space. Thus counted up to four characters in total.
+Because the way stacks work, they're first in first out we the order of insertion is important. If we insert an item, that is also the first item we can retrieve. Because we need to setup characters based on a top-down structure, the first item we can retrieve is actually the item at the bottom. But looking at the example, they say the the top item is the first item we need to retrieve. So at _Step 4_ we reverse the stacks after we've removed the last line with all the stack labels.
 
-And finally at _Step 5_ we turn the chunked items into a `Triple` when the character isn't null or empty. We can assure that the character will be null if it's empty because of our call to `firstOrNull()` after we've stripped all unnecessarry items from the character block. Using the `let` lambda, we can execute the code of adding the character to the stack only when the character isn't null.
+At _Step 5_ we read each line in chunks of 4 characters. This is done because at our design-phase we've notificed that each stack block consists of 1 character, with two block brackets and a trailing white space. Thus counted up to four characters in total.
+
+At _Step 6_ we turn the chunked items into a `Triple` when the character isn't null or empty. We can assure that the character will be null if it's empty because of our call to `firstOrNull()` after we've stripped all unnecessarry items from the character block. Using the `let` lambda, we can execute the code of adding the character to the stack only when the character isn't null.
+
+Finally, at _Step 7_ we add the character to the stack if the element isn't null using the `let` function [(Jetbrains, n.d.)](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/let.html).
+
+This will give us the following data structure for the stacks.
+
+```kotlin
+[
+  Stack('N', 'Z'),      // Stack 1
+  Stack('D', 'C', 'M'), // Stack 2
+  Stack('P')            // Stack 3
+]
+```
 
 #### getInstructions method
 
@@ -257,11 +272,78 @@ fun getInstructions(): List<Triple<Int, Int, Int>>? =
 
 The first thing we do, is splitting the string on an empty line which is represented by two newline characters (`\n\n`) at _Step 1_. Because we know that the items below the empty line are the instructions we take the last result of the split method at _Step 2_.
 
+And finally at _Step 3_ we turn the results into a Triple data type, which according to the documentation:
+
+> Represents a triad of values.
+
+[(Jetbrains, n.d.)](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-triple/)
+
+This will result in the following data structure.
+
+```kotlin
+[
+  Triple(1, 2, 1),
+  Triple(3, 1, 3),
+  Triple(2, 2, 1),
+  Triple(1, 1, 2)
+]
+```
+
 ### Test case
 
 To validate that our logic works as expected, we create a test case based on the sample data from the assignment. This way we can validate that our sanitizer gives us the correct data structure which we can use in the assignments.
 
 ```kotlin
+class SanitizerTest {
+    @Test
+    fun testGetStacks() {
+        // Arrange
+        val resource = SanitizerTest::class.java.getResource("/input.txt")
+        val sut = Sanitizer(resource)
+        val expectedStack1 = Stack<Char>() // Step 1
+        val expectedStack2 = Stack<Char>()
+        val expectedStack3 = Stack<Char>()
 
+        expectedStack1.push('Z') // Step 2
+        expectedStack1.push('N')
+        expectedStack2.push('M')
+        expectedStack2.push('C')
+        expectedStack2.push('D')
+        expectedStack3.push('P')
+
+        val expectedStacks = listOf(
+            expectedStack1,
+            expectedStack2,
+            expectedStack3
+        )
+
+        // Act
+        val result = sut.getStacks()
+
+        // Assert
+        assertContentEquals(expectedStacks, result)
+    }
+
+    @Test
+    fun testGetInstructions() {
+        // Arrange
+        val resource = SanitizerTest::class.java.getResource("/input.txt")
+        val sut = Sanitizer(resource)
+        val expectedInstructions = listOf(
+            Triple(1, 2, 1),
+            Triple(3, 1, 3),
+            Triple(2, 2, 1),
+            Triple(1, 1, 2)
+        )
+
+        // Act
+        val result = sut.getInstructions()
+
+        // Assert
+        assertContentEquals(expectedInstructions, result)
+    }
+}
 ```
 {: file="aoc-2022/day5/src/test/kotlin/aoc/SanitizerTest.kt" }
+
+Unlinke the previous days, this test class has two test methods. One for the `getStacks()` method and one for the `getInstructions()` method. We know how our expected stacks need to look, so we create each stack and push the expected contents one by one at _Step 1_ and _Step 2_.
