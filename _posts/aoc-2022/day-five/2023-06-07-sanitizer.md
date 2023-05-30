@@ -1,16 +1,16 @@
 ---
-title: Advent of Code 2022, Day 4 - Sanitizer
+title: Advent of Code 2022, Day 5 - Sanitizer
 toc: true
 mermaid: true
 date: 2023-05-17 12:15:00 +02
-categories: [Advent of Code 2022, Day Four]
-permalink: advent-of-code-2022/day-four/sanitizer
+categories: [Advent of Code 2022, Day Five]
+permalink: advent-of-code-2022/day-five/sanitizer
 tags: [advent of code, kotlin, solution]
 ---
 
 ## Preface
 
-The objective of the fourth day is available on the [advent of code](https://adventofcode.com/2022/day/5) website, so it won't be shared here. On this page only the steps of achieving a solution are given with a solution build in Kotlin.
+The objective of the fifth day is available on the [advent of code](https://adventofcode.com/2022/day/5) website, so it won't be shared here. On this page only the steps of achieving a solution are given with a solution build in Kotlin.
 
 ## Design
 
