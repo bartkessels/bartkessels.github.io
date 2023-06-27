@@ -2,7 +2,7 @@
 title: Advent of Code 2022, Day 5 - Sanitizer
 toc: true
 mermaid: true
-date: 2023-05-17 12:15:00 +02
+date: 2023-06-07 12:15:00 +02
 categories: [Advent of Code 2022, Day Five]
 permalink: advent-of-code-2022/day-five/sanitizer
 tags: [advent of code, kotlin, solution]
