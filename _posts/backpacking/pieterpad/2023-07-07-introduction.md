@@ -7,7 +7,7 @@ categories: [Backpacking, Pieterpad]
 permalink: backpacking/pieterpad/introduction
 tags: [Backpacking, Travel, Pieterpad]
 image:
-  path: /assets/images/blogposts/backpacking/pieterpad/introduction.png
+  path: /assets/images/blogposts/backpacking/pieterpad/introduction.jpg
 ---
 
 For the non-Dutch people it might not sound familiar, “het Pieterpad”, but in the Netherlands it’s one of the most well known long distance trails that has been laid out [(Stichting Pieterpad, n.d.)](https://www.pieterpad.nl/pieterpad/introductie). It has been layed out in 26 legs that are somewhere between 15 to 22 kilometers each.
