@@ -47,7 +47,7 @@ class SanitizerTest {
     @Test
     fun testGetItems() {
         // Arrange
-        val input = {}::class.java.getResource("/input.txt")
+        val input = {}::class.java.getResource("/input_part_two.txt")
         val expectedData = "mjqjpqmgbljsphdztnvjfqwrcgsmlb"
         val sut = Sanitizer(input)
 
