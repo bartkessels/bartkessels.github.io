@@ -2,7 +2,7 @@
 title: Use CMake target in another folder
 toc: true
 mermaid: true
-date: 2023-09-06 00:15:00 +02
+date: 2023-09-13 00:15:00 +02
 categories: [CMake]
 permalink: cmake/use-cmake-target-in-another-folder
 tags: [CMake, include, add_subdirectory, target, different folder, scope]
