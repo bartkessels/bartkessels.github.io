@@ -7,7 +7,7 @@ categories: [It Depends]
 permalink: it-depends/releasing-it-depends
 tags: [It Depends, software bill of materials, CycloneDX]
 image:
-  path: /assets/images/blogposts/itdepends/itdepends.png
+  path: /assets/images/blogposts/itdepends/logo.png
 ---
 
 ## Introduction
