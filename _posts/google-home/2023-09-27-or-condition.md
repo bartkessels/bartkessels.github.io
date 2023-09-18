@@ -2,7 +2,7 @@
 title: or condition in Google Home
 toc: true
 mermaid: true
-date: 2023-09-14 00:15:00 +02
+date: 2023-09-27 00:15:00 +02
 categories: [Google Home]
 permalink: google-home/or-condition
 tags: [Google Home, Google, smart home, conditions, yaml, or condition]
