@@ -10,7 +10,7 @@ tags: [Google Home, Google, smart home, conditions, yaml, multiple lights, turn 
 
 ## Introduction
 
-Recently I was creating an automation where I wanted to turn of multiple lights at once. The automation was supposed to turn off all the lights in the living room and the kitchen when the sun comes up. The hallway lights still needed to be on because there’s no sunlight in the hallway. Therefore I couldn’t just run the turn off all lights voice command.
+Recently I was creating an automation where I wanted to turn of multiple lights at once. The automation was supposed to turn off all the lights in the living room and the kitchen when the sun comes up. The hallway lights still needed to be on because there’s no sunlight in the hallway. Therefore, I couldn’t just run the turn off all lights voice command.
 
 ### The verbose method
 

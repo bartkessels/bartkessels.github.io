@@ -32,7 +32,7 @@ flowchart TD
 
 ## Case
 
-For this post we want to expand our automation by only turning on the hallway lights when the previous conditions are met, and when either the bedroom lights are on or the living room lights are on. When either of those lights are off, we can safely assume that we are at home, however we chose to turn those lights of because we are in bed. Otherwise we would be in our bedroom with the lights on or in the living room with the lights on.
+For this post we want to expand our automation by only turning on the hallway lights when the previous conditions are met, and when either the bedroom lights are on or the living room lights are on. When either of those lights are off, we can safely assume that we are at home, however we chose to turn those lights of because we are in bed. Otherwise, we would be in our bedroom with the lights on or in the living room with the lights on.
 
 So, let's update our diagram with the new requirements.
 

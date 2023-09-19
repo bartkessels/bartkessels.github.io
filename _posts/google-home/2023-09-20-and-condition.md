@@ -14,7 +14,7 @@ Since a couple of weeks Google has (finally!) added support for more advanced au
 
 ## Case
 
-The first thing I wanted to do was to turn on the lights in the hallway when motion is detected using a motion sensor. But they don't need to turn on everytime motion is detected. Either because it's not dark outside or because I'm not at home.
+The first thing I wanted to do was to turn on the lights in the hallway when motion is detected using a motion sensor. But they don't need to turn on every time motion is detected. Either because it's not dark outside or because I'm not at home.
 
 We can see this as requirements that need to be met when motion detection is triggered. If we put it in a flow-diagram, it would look like this.
 
