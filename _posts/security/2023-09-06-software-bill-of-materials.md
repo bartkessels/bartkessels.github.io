@@ -10,7 +10,7 @@ tags: [software bill of materials, CycloneDX, OWASP, Log4Shell, Dependency Track
 
 ## Introduction
 
-As a software developer it's important to know what dependencies your application are using. This is especially true after the vulnerability we've seen in versions _2.0-beta9_ to _2.14.1_ of _Log4J_ called _Log4Shell if you still remember that [(CISA, December 2021)](https://www.cisa.gov/news-events/cybersecurity-advisories/aa21-356a), [(NCSC, December 2021)](https://english.ncsc.nl/latest/news/2021/12/11/update-install-updates-to-address-serious-vulnerability-in-apache-log4j).
+As a software developer it's important to know what dependencies your application are using. This is especially true after the vulnerability we've seen in versions _2.0-beta9_ to _2.14.1_ of _Log4J_ called _Log4Shell_ if you still remember that [(CISA, December 2021)](https://www.cisa.gov/news-events/cybersecurity-advisories/aa21-356a), [(NCSC, December 2021)](https://english.ncsc.nl/latest/news/2021/12/11/update-install-updates-to-address-serious-vulnerability-in-apache-log4j).
 
 That December a lot of developers needed to search through their own systems and verify that they didn't use _Log4J_ or the impacted versions for that matter. But, that's not all there's to it. You might easily see the versions of the direct dependencies you're using, but what about transitive dependencies (i.e. the dependencies of your dependencies).
 
