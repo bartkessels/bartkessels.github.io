@@ -2,7 +2,7 @@
 title: Upset - introduction
 toc: true
 mermaid: false
-date: 2023-13-12 23:14:00 +02
+date: 2023-12-13 23:14:00 +02
 categories: [Upset]
 permalink: upset/introduction
 tags: [Installation, setting up, Windows, MacOS, Linux]
