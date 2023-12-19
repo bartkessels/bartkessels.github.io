@@ -41,7 +41,7 @@ class PeopleRepository
 }
 ```
 
-As you can see, we have three lines of code just for declaring and initialising a single property. If we convert this to C# 12, this will look like a `record` constructor.
+As you can see, we have three lines of code just for declaring and initializing a single property. If we convert this to C# 12, this will look like a `record` constructor.
 
 ```csharp
 public class PersonRepository(DbContext context)
@@ -82,16 +82,22 @@ public class PersonRepository(DbContext context)
 As you can see we use the `context` from our primary constructor to call the `GetPeople` method from the `DbContext`.
 The first thing that I noticed is that I can't access the `context` variable from the `this` pointer inside the `GetName` method. Which is weird to me, because neither the class nor the method are static.
 
-### Not accessible through the 'this' pointer
-
 If we take a look at the documentation of primary constructors, it clearly states that _Primary constructor parameters don't become properties, except in record types._ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#primary-constructors). Which explains why it not accessible through `this`.
-But the thing that I find fascinating, is that it _IS_ available for `record`s. Let's find out if we can see how this differnationat
+But the thing that I find fascinating, is that it _IS_ available for `record`s however.
 
-
-If for example we look at the grammar for the instance constructor in C#, we see that
-
-https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#primary-constructors
+If we look at the documentation for `record`s, Microsoft states that _When you declare a primary constructor on a record, the compiler generates public properties for the primary constructor parameters._ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record). Which is different from the
+primary constructor where the documentation says _t's important to view primary constructor parameters as parameters even though they are in scope throughout the class definition_ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#primary-constructors).
 
 ## How does it work
 
+Parameters that are given through the primary constructor are just the same as parameters you get through any method or function. The only real difference is the fact that the
+parameters from the primary constructor are available in the entire class.
+
+Unfortunately it suffers the same issue as regular pass-by-value parameters have. You can change the value they point to. Thus meaning that you can update the
+primary constructor variable in method `x` while you expected it to be something else in method `y`.
+
 ## Use cases
+
+My personal preference for constructors is to initialize read-only fields for dependency injection. And my first for using this was for data transfer objects. But thinking over that again, I think I'd rather use `record`s for that.
+
+You can however use them to initialize dependencies inside your constructor, and going against dependency injection in a way. But for some use-cases that might a valid consideration. As for me, I don't think I have a valid use-case for it just yet. But we'll see how it works itself out in the future.
