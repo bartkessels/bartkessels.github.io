@@ -1,0 +1,42 @@
+---
+layout: home
+permalink: /category/
+---
+{% assign current_cat = page.url | split: "/" | last %}
+
+<!-- Posts Index
+================================================== -->
+<section class="recent-posts">
+    <div class="section-title">
+        <h2>
+            <span>{{ page.title }}</span><br>
+        </h2>
+
+    </div>
+
+    {% assign noPosts = site.categories[current_cat] | size %}
+    {% if noPosts <= 0 %}
+        <div class="main-content">
+            <p>Whoops, looks like there aren't any posts in this category</p>
+        </div>
+    {% endif %}
+
+    {% if noPosts > 0 %}
+    {% assign sortedPosts = site.categories[current_cat] | sort: page.sort %}
+    <div class="row listrecent">
+        {% for post in sortedPosts %}
+            {% include postbox.html %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</section>
+
+<!-- Pagination
+================================================== -->
+<div class="bottompagination">
+    <span class="navigation" role="navigation">
+        {% include pagination.html %}
+    </span>
+</div>
+
