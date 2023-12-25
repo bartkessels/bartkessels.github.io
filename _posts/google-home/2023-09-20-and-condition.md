@@ -6,6 +6,7 @@ layout: post
 image: assets/images/google-home/and-condition.png
 caption: This image is generated using Dall-E
 prompt: Generate an image of a small home at night with multiple lights in a minimalistic flat style
+mermaid: true
 date: 2023-09-20 12:00
 categories: [google-home]
 permalink: google-home/and-condition
