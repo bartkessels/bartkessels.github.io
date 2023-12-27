@@ -1,13 +1,13 @@
 ---
 title: C# 12 updates - Primary Constructor
-description: "For those of you coming for Javascript or Kotlin, you're going to love this new feature. Set your member variables through a primary constructor."
+description: For those of you coming for Javascript or Kotlin, you're going to love this new feature. Set your member variables through a primary constructor.
 author: bart
 layout: post
 image: assets/images/c-sharp/c-sharp-12/primary-constructor.png
 caption: This image is generated using Dall-E
 prompt: Generate an image of a computer screen with an IDE open and someone trying out the new primary constructor from C# in a minimalistic flat style
 mermaid: false
-date: 2023-12-21
+date: 2023-12-27
 categories: [c-sharp]
 permalink: csharp/csharp-12/primary-constructor
 tags: [.NET, Microsoft, C#, C# 12]
@@ -55,6 +55,7 @@ public class PersonRepository(DbContext context)
 
 Let's create our fake `DbContext` class and give it a method to read all names from the _'database'_.
 
+__DbContext.cs__
 ```csharp
 namespace PrimaryConstructor;
 
@@ -68,7 +69,6 @@ public class DbContext
         };
 }
 ```
-{: file="csharp-12-features/PrimaryConstructor/DbContext.cs" }
 
 Next we'll be implementing a method in our `PersonRepository` to get a persons name based on an index (yes, not a best practice but usable for our purpose).
 
