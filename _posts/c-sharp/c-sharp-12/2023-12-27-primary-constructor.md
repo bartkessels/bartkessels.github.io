@@ -91,6 +91,44 @@ But the thing that I find fascinating, is that it _IS_ available for `record`s h
 If we look at the documentation for `record`s, Microsoft states that _When you declare a primary constructor on a record, the compiler generates public properties for the primary constructor parameters._ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record). Which is different from the
 primary constructor where the documentation says _t's important to view primary constructor parameters as parameters even though they are in scope throughout the class definition_ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#primary-constructors).
 
+### Generated C# code
+
+If we take our example and put it inside a tool like [sharplab.io](https://sharplab.io) we can see the code that is being generated for the primary constructor.
+
+```csharp
+[System.Runtime.CompilerServices.NullableContext(1)]
+[System.Runtime.CompilerServices.Nullable(0)]
+public class PersonRepository
+{
+    [CompilerGenerated]
+    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+    private DbContext <context>P;
+
+    public PersonRepository(DbContext context)
+    {
+        <context>P = context;
+        base..ctor();
+    }
+
+    public string GetName(int index)
+    {
+        return Enumerable.ElementAt(<context>P.GetPeople(), index);
+    }
+}
+```
+
+We see that the primary constructor parameter is added as a member variable to our class, but it's accessed through the `P` variable based on a generic type of the name of our parameter. So what happens when we try to use the `P` member ourselves.
+
+```csharp
+public class PersonRepository(DbContext context)
+{
+    public string GetName(int index) =>
+        <context>P.GetPeople().ElementAt(index);
+}
+```
+
+As I expected, we cannot access it directly because it gives our the error message that it cannot resolve the `context` symbol.
+
 ## How does it work
 
 Parameters that are given through the primary constructor are just the same as parameters you get through any method or function. The only real difference is the fact that the
