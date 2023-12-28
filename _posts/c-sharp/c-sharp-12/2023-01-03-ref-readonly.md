@@ -7,7 +7,7 @@ image: assets/images/c-sharp/c-sharp-12/ref-readonly.png
 caption: This image is generated using Dall-E
 prompt: Generate an image of a computer screen with an IDE open and someone trying out the new ref readonly modifier from C# in a minimalistic flat style
 mermaid: false
-date: 2023-11-03
+date: 2023-01-03
 categories: [c-sharp]
 permalink: csharp/csharp-12/ref-readonly
 tags: [.NET, Microsoft, C#, C# 12]

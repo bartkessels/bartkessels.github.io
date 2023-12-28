@@ -7,7 +7,7 @@ image: assets/images/c-sharp/c-sharp-12/default-lambda-parameters.png
 caption: This image is generated using Dall-E
 prompt: Generate an image of a computer screen with an IDE open and writing lambdas in C# in a minimalistic flat style
 mermaid: false
-date: 2023-11-10
+date: 2023-01-10
 categories: [c-sharp]
 permalink: csharp/csharp-12/default-lambda-parameters
 tags: [.NET, Microsoft, C#, C# 12, parameters, default parameters, lambda]
