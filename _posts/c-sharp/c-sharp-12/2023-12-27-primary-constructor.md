@@ -11,6 +11,8 @@ date: 2023-12-27
 categories: [c-sharp]
 permalink: csharp/csharp-12/primary-constructor
 tags: [.NET, Microsoft, C#, C# 12]
+related: csharp12
+related_to: [csharp12, csharp]
 ---
 
 For those of you coming from Javascript or Kotlin, you're going to love this new update in C#.

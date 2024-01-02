@@ -11,6 +11,8 @@ date: 2023-06-28 12:00
 categories: [advent-of-code-2022]
 permalink: advent-of-code/2022/day-six/sanitizer
 tags: [advent of code, kotlin, solution]
+related: aoc2022_day6
+related_to: [aoc2022_day6, aoc2022]
 ---
 
 ## Preface

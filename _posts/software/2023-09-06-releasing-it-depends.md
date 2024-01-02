@@ -9,6 +9,8 @@ date: 2023-09-06 12:00
 categories: [software]
 permalink: software/it-depends
 tags: [It Depends, software bill of materials, CycloneDX]
+related: itdepends
+related_to: [cmake_build_qt_application]
 ---
 
 ## Introduction

@@ -7,13 +7,15 @@ image: assets/images/c-sharp/c-sharp-12/ref-readonly.png
 caption: This image is generated using Dall-E
 prompt: Generate an image of a computer screen with an IDE open and someone trying out the new ref readonly modifier from C# in a minimalistic flat style
 mermaid: false
-date: 2023-01-03
+date: 2024-01-03
 categories: [c-sharp]
 permalink: csharp/csharp-12/ref-readonly
 tags: [.NET, Microsoft, C#, C# 12]
+related: csharp12
+related_to: [csharp12, csharp]
 ---
 
-If we take a look at the release notes, Microsoft states that the `readonly ref` modifier more clarity allows where the `ref` or `in` modifiers where used before [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-12#ref-readonly-parameters).
+If we take a look at the release notes, Microsoft states that the `ref readonly` modifier more clarity allows where the `ref` or `in` modifiers where used before [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-12#ref-readonly-parameters).
 
 When taking a look at the documentation for the `ref readonly` modifier, it states that the modifier can be used to force the call site to pass in a reference and the callee cannot change the reference [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters#ref-readonly-modifier).
 
@@ -113,7 +115,10 @@ Looking at the official documentation, there's not much to find except for this 
 > Reserved for use by a compiler for tracking metadata. This attribute should not be used by developers in source code.
 > * [(Microsoft, n.d.)](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.requireslocationattribute?view=net-8.0)
 
-Let's take a look at the spec and see if we can find more information.
+Let's take a look at the spec and see if we can find more information. So my guess is, that this attribute requires the given argument to be declared before being passed into the method which required the `ref readonly` parameter.
+
+If we update our previous example and change the call to `GetPerson(ref new DbContext(), 1)` and initialize a new `DbContext` object during the call instead of passing an already allocated object. This will give us the warning `Argument 1 should be a variable because it is passed to a 'ref readonly' parameter`. If we now remove the `readonly` modifier in the `GetPerson` signature, this error messages disappears and changes into `Argument is 'value' while parameter is declared as 'ref'`. My expectation was that this was allowed, but I think that because the `ref readonly` modifier is desugared into a `ref` modifier with the `[In]` and `[RequiresLocation]` attributes, it allows for 
+
 
 SPEC: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-12.0/ref-readonly-parameters
 

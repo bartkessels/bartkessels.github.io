@@ -11,6 +11,8 @@ date: 2023-09-27 12:00
 categories: [cmake]
 permalink: cmake/building-a-qt-windows-executable
 tags: [Qt, CMake, Windows, executable, It Depends, automated]
+related: cmake_build_qt_application
+related_to: [cmake_build_qt_application, cmake_target]
 ---
 
 ## Introduction

@@ -10,6 +10,8 @@ date: 2023-10-18 12:00
 categories: [google-home]
 permalink: google-home/keep-your-automations-clean
 tags: [Google Home, Google, smart home, yaml, multiple automations, clean]
+related: googlehome
+related_to: [googlehome]
 ---
 
 ## Introduction

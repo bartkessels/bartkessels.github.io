@@ -10,6 +10,8 @@ date: 2023-09-06 12
 categories: [security]
 permalink: security/software-bill-of-materials
 tags: [software bill of materials, CycloneDX, OWASP, Log4Shell, Dependency Track, It Depends]
+related: security
+related_to: [itdepends]
 ---
 
 ## Introduction

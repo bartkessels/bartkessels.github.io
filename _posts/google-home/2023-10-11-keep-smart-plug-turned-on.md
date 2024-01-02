@@ -10,6 +10,8 @@ date: 2023-10-11 12:00
 categories: [google-home]
 permalink: google-home/keep-your-smart-plug-turned-on
 tags: [Google Home, Google, smart home, yaml, multiple lights, smart plug, Philips Hue]
+related: googlehome
+related_to: [googlehome]
 ---
 
 ## Introduction

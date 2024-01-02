@@ -9,6 +9,7 @@ date: 2023-06-30 12:00
 categories: [backpacking]
 permalink: backpacking/introduction
 tags: [Backpacking, Travel]
+related: backpacking
 ---
 
 In the Netherlands it’s almost time for the summer vacation, which means that it’s

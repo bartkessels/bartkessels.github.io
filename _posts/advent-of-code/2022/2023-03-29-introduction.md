@@ -11,6 +11,7 @@ date: 2023-03-29
 categories: [advent-of-code-2022]
 permalink: advent-of-code/2022/introduction
 tags: [advent of code, kotlin, introduction, solution]
+related: aoc2022
 ---
 
 Over the next couple of weeks I'll be posting about the Advent of Code 2022 solutions. For each day I'll create three posts, a post about the data sanitation.

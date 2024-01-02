@@ -10,6 +10,8 @@ date: 2023-10-04 12:00
 categories: [google-home]
 permalink: google-home/easily-control-multiple-lights
 tags: [Google Home, Google, smart home, conditions, yaml, multiple lights, turn on, turn off]
+related: googlehome
+related_to: [googlehome]
 ---
 
 ## Introduction

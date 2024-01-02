@@ -11,11 +11,13 @@ date: 2023-09-20 12:00
 categories: [cmake]
 permalink: cmake/building-a-qt-macos-bundle
 tags: [Qt, CMake, MacOS, bundle, It Depends, automated]
+related: cmake_build_qt_application
+related_to: [cmake_build_qt_application, cmake_target]
 ---
 
 ## Introduction
 
-The past couple of weeks I've been working on a new project, a Qt Widgets desktop application called GetIt.
+The past couple of weeks I've been working on a new project, a Qt Widgets desktop application called It Depends.
 
 As with all software projects, the question arises "how to properly build and release it?". For API's and mobile applications this is easily answered because there's an API to either release to the cloud, the Apple App Store and the Google Play Store. But for generic desktop applications this is a bit harder.
 
@@ -29,9 +31,9 @@ For my application I have the following folder structure
 * src/
     * main.cpp
     * CMakeLists.txt
-* packaging
-    * macos
-      * icons
+* packaging/
+    * macos/
+      * icons/
         * icon.icns
       * CMakeLists.txt
     * CMakeLists.txt

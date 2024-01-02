@@ -11,6 +11,8 @@ date: 2023-09-13 12:00
 categories: [cmake]
 permalink: cmake/use-cmake-target-in-another-folder
 tags: [CMake, include, add_subdirectory, target, different folder, scope]
+related: cmake_target
+related_to: [cmake_build_macos_bundle, cmake_build_windows_executable]
 ---
 
 ## Introduction

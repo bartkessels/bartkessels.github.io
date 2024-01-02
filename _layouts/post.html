@@ -94,19 +94,18 @@ post_class: post-template
             </div>
             <!-- End Categories -->
 
-            <!-- Post Tags -->
-            <div class="after-post-tags">
-                <p><b>Tags</b></p>
-                <ul class="tags">
-                    {% assign sortedTags = page.tags | sort %}
-                    {% for tag in sortedTags %}
-                    <li>
-                        <a class="smoothscroll" href="{{site.baseurl}}/tags/#{{ tag | replace: ' ','-' }}">{{ tag }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
+            <!-- Related Articles -->
+            {% assign relatedPosts = site.posts | where: "related_to", page.related | sort: post.date %}
+            {% assign noRelatedPosts = relatedPosts | size %}
+
+            {% if noRelatedPosts > 0 and page.related %}
+            <div>
+                <p><b>Related articles</b></p>
+                {% for post in relatedPosts %}
+                    {% include relatedbox.html %}
+                {% endfor %}
             </div>
-            <!-- End Tags -->
+            {% endif %}
 
         </div>
         <!-- End Post -->

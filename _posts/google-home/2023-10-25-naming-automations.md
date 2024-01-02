@@ -11,6 +11,8 @@ date: 2023-10-25 12:00
 categories: [google-home]
 permalink: google-home/naming-your-automations
 tags: [Google Home, Google, smart home, yaml, multiple automations, clean, name]
+related: googlehome
+related_to: [googlehome]
 ---
 
 ## Introduction

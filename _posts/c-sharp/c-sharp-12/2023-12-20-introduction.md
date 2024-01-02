@@ -1,6 +1,6 @@
 ---
 title: C# 12 updates - Introduction
-description: "A couple of weeks ago Microsoft has released C# 12 which packed a lot of new features. In the upcoming weeks I'll be diving into these update and writing about it."
+description: A couple of weeks ago Microsoft has released C# 12 which packed a lot of new features. In the upcoming weeks I'll be diving into these update and writing about it.
 author: bart
 layout: post
 image: assets/images/c-sharp/c-sharp-12/introduction.png
@@ -12,6 +12,8 @@ date: 2023-12-20
 categories: [c-sharp]
 permalink: csharp/csharp-12/introduction
 tags: [.NET, Microsoft, C#, C# 12]
+related: csharp12
+related_to: [csharp12, csharp]
 ---
 
 A couple of weeks ago Microsoft has launched C# 12 which packed a lot of new features [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-12).

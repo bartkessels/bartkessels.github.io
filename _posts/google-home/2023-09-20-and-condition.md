@@ -11,6 +11,8 @@ date: 2023-09-20 12:00
 categories: [google-home]
 permalink: google-home/and-condition
 tags: [Google Home, Google, smart home, conditions, yaml, and condition]
+related: googlehome
+related_to: [googlehome]
 ---
 
 ## Introduction
