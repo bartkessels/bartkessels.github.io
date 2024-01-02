@@ -4,7 +4,8 @@ description: Gat a grip on the versions of the dependencies your using by visual
 author: bart
 layout: post
 image: assets/images/software/itdepends.png
-caption: Screenshot of It Depends with an SBOM loaded
+caption: This image is generated using Dall-E
+prompt: Generate an image of an application on a computer screen with lines to other applications in a minimalistic flat style
 date: 2023-09-06 12:00
 categories: [software]
 permalink: software/it-depends
