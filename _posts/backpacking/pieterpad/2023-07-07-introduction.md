@@ -5,7 +5,7 @@ author: bart
 layout: post
 image: assets/images/backpacking/pieterpad/introduction.jpg
 caption: This image is taken in Sevenum near Het Schuitwater (roughly translated, The barge water)
-date: 2023-07-07 12:00
+date: 2023-07-07
 categories: [backpacking, pieterpad]
 permalink: backpacking/pieterpad/introduction
 tags: [Backpacking, Travel, Pieterpad, Netherlands, Long Distance, Trail]
