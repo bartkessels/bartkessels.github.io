@@ -46,6 +46,12 @@
                     <a class="nav-link" href="{{ site.baseurl }}/category/software">Software</a>
                 </li>
 
+                <li class="nav-item"><span class="nav-link">|</span></li>
+
+                <li class="nav-item {% if page.url == '/category/backpacking' %} active {% endif %}">
+                    <a class="nav-link" href="{{ site.baseurl }}/category/backpacking">Backpacking</a>
+                </li>
+
                 {% include search-lunr.html %}
 
             </ul>
