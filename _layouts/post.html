@@ -96,19 +96,17 @@ post_class: post-template
 
             <!-- Related Articles -->
             {% assign relatedPosts = site.posts | where: "related_to", page.related | sort: post.date %}
-            {% assign noRelatedPosts = relatedPosts | size %}
+            {% assign relatedPostsWithoutCurrent = relatedPosts | where_exp: "item", "item.title != page.title" %}
+            {% assign noRelatedPosts = relatedPostsWithoutCurrent | size %}
 
-            {% if noRelatedPosts > 1 and page.related %}
+            {% if noRelatedPosts > 0 %}
             <div>
                 <p><b>Related articles</b></p>
-                {% for post in relatedPosts %}
-                    {% if post.title != page.title %}
-                        {% include relatedbox.html %}
-                    {% endif %}
+                {% for post in relatedPostsWithoutCurrent %}
+                    {% include relatedbox.html %}
                 {% endfor %}
             </div>
             {% endif %}
-
         </div>
         <!-- End Post -->
     </div>

@@ -10,7 +10,7 @@ categories: [software]
 permalink: software/it-depends
 tags: [It Depends, software bill of materials, CycloneDX]
 related: itdepends
-related_to: [cmake_build_qt_application]
+related_to: [cmake_build_qt_application, security]
 ---
 
 ## Introduction
