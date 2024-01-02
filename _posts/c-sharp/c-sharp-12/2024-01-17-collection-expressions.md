@@ -7,7 +7,7 @@ image: assets/images/c-sharp/c-sharp-12/collection-expressions.png
 caption: This image is generated using Dall-E
 prompt: Generate an image of a happy person writing code in front of a laptop in a minimalistic flat style
 mermaid: false
-date: 2023-01-17
+date: 2024-01-17
 categories: [c-sharp]
 permalink: csharp/csharp-12/collection-expressions
 tags: [.NET, Microsoft, C#, C# 12, collections]
