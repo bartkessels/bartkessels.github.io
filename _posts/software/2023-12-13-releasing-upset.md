@@ -18,8 +18,8 @@ tags: [Installation, setting up, Windows, MacOS, Linux]
 In the last couple of weeks I've had a bit of a rough patch with my work laptop. Which lead me to installing it over and over again.
 
 The last time I had to get my laptop fixed by reinstalling Windows, I had this idea of creating an application which would do all the setup for me. But since it's a Windows laptop
-that would lead to me having to write a Powershell script. Well, me being me, I din't really like that idea and I wanted to experiment in Rust a little bit anyway. So I decided
-to create a Rust CLI application which would setup any computer using a yaml-configuration file.
+that would lead to me having to write a Powershell script. Well, me being me, I didn't really like that idea and I wanted to experiment in Rust a little bit anyway. So I decided
+to create a Rust CLI application which would set up any computer using a yaml-configuration file.
 
 And the name, as you might have guessed, is __Upset__. The reason behind this name is pretty clear, I was really upset with having to install my computer again (for the second time
 that day), and it's an anagram for _set up_ which I find pretty funny.
@@ -33,7 +33,7 @@ We'll Upset isn't quite finished yet, there are still some features I'd like to 
 * Add an extra required option to validate the required commands
     - In such a way, that if you configure Git as your VCS, it won't clone anything because it knows Git is not installed
 * A method to copy files
-* Setup an automatic pipeline to build an executable for each platform
+* Set up an automatic pipeline to build an executable for each platform
 
 ## Contribute
 
