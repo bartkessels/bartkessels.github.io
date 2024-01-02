@@ -4,57 +4,49 @@ permalink: /category/
 ---
 {% assign current_cat = page.url | split: "/" | last %}
 {% assign noPosts = site.categories[current_cat] | size %}
-{% assign sortedPosts = site.categories[current_cat] | sort: page.sort %}
-{% assign stories = sortedPosts | where: "story", true %}
-{% assign noStories = stories | size %}
 
-{% if noStories > 0 %}
-<!-- Featured
-================================================== -->
-<section class="featured-posts">
-    <div class="section-title">
-        <h2><span>Stories</span></h2>
-    </div>
-    <div class="row">
-        {% for post in stories %}
-            {% include featuredbox.html %}
-        {% endfor %}
-    </div>
-</section>
-{% endif %}
-
-<!-- Posts Index
-================================================== -->
-<section class="recent-posts">
-    <div class="section-title">
-        <h2>
-            <span>{{ page.title }}</span><br>
-        </h2>
-
-    </div>
-
-
-    {% if noPosts <= 0 %}
+{% if noPosts <= 0 %}
+    <section class="recent-posts">
         <div class="main-content">
             <p>Whoops, looks like there aren't any posts in this category</p>
         </div>
+    </section>
+{% endif %}
+
+{% if noPosts > 0 %}
+    {% assign sortedPosts = site.categories[current_cat] | sort: page.sort %}
+    {% assign stories = sortedPosts | where: "story", true %}
+    {% assign noStories = stories | size %}
+
+    {% if noStories > 0 %}
+    <!-- Featured
+    ================================================== -->
+    <section class="featured-posts">
+        <div class="section-title">
+            <h2><span>Stories</span></h2>
+        </div>
+        <div class="row">
+            {% for post in stories %}
+                {% include featuredbox.html %}
+            {% endfor %}
+        </div>
+    </section>
     {% endif %}
 
-    {% if noPosts > 0 %}
-    <div class="row listrecent">
-        {% for post in sortedPosts %}
-            {% include postbox.html %}
-        {% endfor %}
-    </div>
-    {% endif %}
+    <!-- Posts Index
+    ================================================== -->
+    <section class="recent-posts">
+        <div class="section-title">
+            <h2>
+                <span>{{ page.title }}</span><br>
+            </h2>
 
-</section>
+        </div>
 
-<!-- Pagination
-================================================== -->
-<div class="bottompagination">
-    <span class="navigation" role="navigation">
-        {% include pagination.html %}
-    </span>
-</div>
-
+        <div class="row listrecent">
+            {% for post in sortedPosts %}
+                {% include postbox.html %}
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
