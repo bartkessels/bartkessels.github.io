@@ -3,6 +3,25 @@ layout: home
 permalink: /category/
 ---
 {% assign current_cat = page.url | split: "/" | last %}
+{% assign noPosts = site.categories[current_cat] | size %}
+{% assign sortedPosts = site.categories[current_cat] | sort: page.sort %}
+{% assign stories = sortedPosts | where: "story", true %}
+{% assign noStories = stories | size %}
+
+{% if noStories > 0 %}
+<!-- Featured
+================================================== -->
+<section class="featured-posts">
+    <div class="section-title">
+        <h2><span>Stories</span></h2>
+    </div>
+    <div class="row">
+        {% for post in stories %}
+            {% include featuredbox.html %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
 
 <!-- Posts Index
 ================================================== -->
@@ -14,7 +33,7 @@ permalink: /category/
 
     </div>
 
-    {% assign noPosts = site.categories[current_cat] | size %}
+
     {% if noPosts <= 0 %}
         <div class="main-content">
             <p>Whoops, looks like there aren't any posts in this category</p>
@@ -22,7 +41,6 @@ permalink: /category/
     {% endif %}
 
     {% if noPosts > 0 %}
-    {% assign sortedPosts = site.categories[current_cat] | sort: page.sort %}
     <div class="row listrecent">
         {% for post in sortedPosts %}
             {% include postbox.html %}

@@ -1,6 +1,7 @@
 ---
 title: C# 12 updates - Introduction
 description: A couple of weeks ago Microsoft has released C# 12 which packed a lot of new features. In the upcoming weeks I'll be diving into these update and writing about it.
+story: true
 author: bart
 layout: post
 image: assets/images/c-sharp/c-sharp-12/introduction.png
