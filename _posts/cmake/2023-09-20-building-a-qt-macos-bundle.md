@@ -28,16 +28,18 @@ Because the project I'm working on is built using C++ with CMake I'd like to use
 
 For my application I have the following folder structure
 
-* src/
-    * main.cpp
-    * CMakeLists.txt
-* packaging/
-    * macos/
-      * icons/
-        * icon.icns
-      * CMakeLists.txt
-    * CMakeLists.txt
-* CMakeLists.txt
+```
+- src/
+  - main.cpp
+  - CMakeLists.txt
+- packaging/
+  - macos/
+    - icons/
+      - icon.icns
+      - CMakeLists.txt
+    - CMakeLists.txt
+- CMakeLists.txt
+```
 
 Where in the source folder the all the source code files are linked to the dependencies and are being compiled into the specified target.
 In the packaging folder I have all the logic for each platform to publish for that specific platform, in the `packaging/CMakeLists.txt` file is just a simple `if-statement` to include the correct platform, for this tutorial that is going to be macOS.
