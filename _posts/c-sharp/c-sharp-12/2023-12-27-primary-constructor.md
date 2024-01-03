@@ -136,7 +136,7 @@ As I expected, we cannot access it directly because it gives our the error messa
 Parameters that are given through the primary constructor are just the same as parameters you get through any method or function. The only real difference is the fact that the
 parameters from the primary constructor are available in the entire class.
 
-Unfortunately it suffers the same issue as regular pass-by-value parameters have. You can change the value they point to. Thus meaning that you can update the
+Unfortunately it suffers the same issue as regular pass-by-reference parameters have. You can change the value they point to. Thus meaning that you can update the
 primary constructor variable in method `x` while you expected it to be something else in method `y`.
 
 ## Use cases
