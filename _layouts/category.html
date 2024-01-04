@@ -15,6 +15,7 @@ permalink: /category/
 
 {% if noPosts > 0 %}
     {% assign sortedPosts = site.categories[current_cat] | sort: page.sort %}
+    {% assign posts = sortedPosts | where: "story", nil %}
     {% assign stories = sortedPosts | where: "story", true %}
     {% assign noStories = stories | size %}
 
@@ -44,7 +45,7 @@ permalink: /category/
         </div>
 
         <div class="row listrecent">
-            {% for post in sortedPosts %}
+            {% for post in posts %}
                 {% include postbox.html %}
             {% endfor %}
         </div>
