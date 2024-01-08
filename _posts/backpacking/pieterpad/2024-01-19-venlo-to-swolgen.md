@@ -8,7 +8,7 @@ caption: This image is taken in Venlo near the Maas looking at Blerick.
 date: 2024-01-19
 categories: [backpacking, pieterpad]
 permalink: backpacking/pieterpad/venlo-to-swolgen
-tags: [Backpacking, Travel, Pieterpad, Netherlands, Long Distance, Trail]
+tags: [Backpacking, Travel, Pieterpad, Netherlands, Long Distance, Trail, Venlo, Swolgen, Meerlo]
 related: pieterpad
 related_to: [pieterpad, backpacking]
 ---
