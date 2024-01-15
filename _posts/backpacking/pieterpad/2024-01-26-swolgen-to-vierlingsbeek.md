@@ -20,7 +20,7 @@ After a great nights sleep and an [amazing evening](./2024-01-19-venlo-to-swolge
 The second leg of the vacation started in Meerlo instead of in Swolgen, so we were already a couple of miles into this leg.
 
 ![The leg we've created for walking from Swolgen to Vierlingsbeek](/assets/images/backpacking/pieterpad/leg-swolgen-to-vierlingsbeek.png)
-> This image is captured from [Komoot were we've laid out our own leg](https://www.komoot.com/nl-nl/tour/1258309152)
+> This image is captured from [Komoot where we've laid out our own leg](https://www.komoot.com/nl-nl/tour/1258309152)
 
 As you can see on the map, around Geijsteren there is a small detour for the camping we'll be staying at after the first day.
 

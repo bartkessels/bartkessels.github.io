@@ -20,7 +20,7 @@ Before we began, we thought that this was going to be the last leg of our vacati
 The last leg of our vacation started in Ven-Zelderheide because of some troubles we had with the camping, as you can read in the [previous post](./2024-02-03-vierlingsbeek-to-gennep.md). This isn't captured in the route because it was a last-minute decision.
 
 ![The leg we've created for walking from Gennep to Groesbeek](/assets/images/backpacking/pieterpad/leg-gennep-to-groesbeek.png)
-> This image is captured from [Komoot, were we've laid out our own leg](https://www.komoot.com/nl-nl/tour/1258364493)
+> This image is captured from [Komoot, where we've laid out our own leg](https://www.komoot.com/nl-nl/tour/1258364493)
 
 As you might have seen on the route, around Plasmolen there is a weird detour at the Sint-Jansberg. This was supposed to be the camping location, but at that location there is no camping. This was a bug in Komoot that we found when we searched for the address of the camping.
 

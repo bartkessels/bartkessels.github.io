@@ -18,7 +18,7 @@ related_to: [pieterpad, backpacking]
 Our third and first to last leg of this vacation starts in Vierlingsbeek and goes all the way to Gennep.
 
 ![The leg we've created for walking from Vierlingsbeek to Gennep](/assets/images/backpacking/pieterpad/leg-vierlingsbeek-to-gennep.png)
-> This image is captured from [Komoot were we've laid out our own leg](https://www.komoot.com/nl-nl/tour/1258322036)
+> This image is captured from [Komoot where we've laid out our own leg](https://www.komoot.com/nl-nl/tour/1258322036)
 
 In Afferden there is again a small detour for our camping, but that doesn't lead to the actual camping. Something has gone wrong when changing this route to include the camping. So please don't rely on this route if you're planning to camp in Afferden. You'll have to find a camping by yourself (which isn't that hard in Afferden).
 
