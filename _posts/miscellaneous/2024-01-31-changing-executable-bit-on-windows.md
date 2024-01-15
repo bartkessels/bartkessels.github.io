@@ -14,7 +14,7 @@ related: git
 related_to: [git, windows]
 ---
 
-When using a Linux pipeline in your development process when you develop on a Windows system might give you error messages from time to time. Usually, at least in my experience, these are time-related issues because Windows has different naming conventions for timezone id's than Linux, for example `W. Europe Standard Time` on Windows versus `europe/amsterdam` on Linux.
+When using a Linux pipeline in your development process when you develop on a Windows system might give you error messages from time to time. Usually, at least in my experience, these are time-related issues because Windows has different naming conventions for timezone id's than Linux, for example `W. Europe Standard Time` on Windows versus `Europe/Amsterdam` on Linux.
 
 But when you need to execute a script in your pipeline, the chances are high that you run into a `Permission denied` failure.
 
