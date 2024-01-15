@@ -40,13 +40,13 @@ Now that we know for which entities we can change the permissions, let's find ou
 
 These permissions are pretty self-explanatory, so I'm not going to cover them. However, the _Execute_ permission is the one that we need for our problem to be resolved.
 
-To change the permissions of a file or folder we can use the `chmod` command. Which stands for _Change permission Mode_ [(Oracle, n.d.)](https://docs.oracle.com/cd/E86824_01/html/E54763/chmod-1.html) according to the Solaris man pages.
+To change the permissions of a file or folder, we can use the `chmod` command. Which stands for _Change permission Mode_ [(Oracle, n.d.)](https://docs.oracle.com/cd/E86824_01/html/E54763/chmod-1.html) according to the Solaris man pages.
 
 When using the `chmod` command we can use two operations the `+` and `-` which either adds the permission to the file, or removes the permission from the file. And if we specify the permission type, `r`, `w`, `x` we can easily update the permissions for our file to be executable by running `chmod +x <filename>` [(The Linux Foundation, 2022)](https://www.linuxfoundation.org/blog/blog/classic-sysadmin-understanding-linux-file-permissions).
 
 ## Using Git
 
-However, if you're using Windows to develop your application you don't have access to the `chmod` command. At least not native, you can either use git bash or WSL, but I'd rather use the native tools that are already there instead of going the WSL route.
+However, if you're using Windows to develop your application, you don't have access to the `chmod` command. At least not native, you can either use git bash or WSL, but I'd rather use the native tools that are already there instead of going the WSL route.
 
 If we check out the [documentation for Git](https://git-scm.com/docs/git-add) we see that the `add` command has a flag called `chmod` which accepts the same `+` and `-` operations as the `chmod` command itself. However, it can only be used to change the executable bit of the file. As the documentation states
 
@@ -62,7 +62,7 @@ To summarize, we can use `git add` command with the `chmod` flag to change the e
 C:\Git > git add --chmod=+x <filename>
 ```
 
-If we then do a status check we get the following results.
+If we then do a status check, we get the following results.
 
 ```powershell
 C:\Git > git status
