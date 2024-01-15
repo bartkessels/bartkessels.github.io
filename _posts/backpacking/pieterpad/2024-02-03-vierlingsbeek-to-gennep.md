@@ -5,7 +5,7 @@ author: bart
 layout: post
 image: assets/images/backpacking/pieterpad/vierlingsbeek-to-gennep.jpg
 caption: This image is taken in Gennep at the east side of the town.
-date: 2023-02-10
+date: 2024-02-10
 categories: [backpacking, pieterpad]
 permalink: backpacking/pieterpad/vierlingsbeek-to-gennep
 tags: [Backpacking, Travel, Pieterpad, Netherlands, Long Distance, Trail, Vielingsbeek, Afferden, Gennep]
