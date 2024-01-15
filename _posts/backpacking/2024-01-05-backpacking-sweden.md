@@ -15,15 +15,15 @@ related_to: [backpacking]
 
 As I've said in a [previous post](./2023-06-30-introduction.md) my girlfriend and I we're going backpacking in Sweden. We've never backpacked before together so this would turn into a great adventure we're both pretty stoked on.
 
-Unfortunately this dream would soon come to an end for us, because of Hans.
+Unfortunately, this dream would soon come to an end for us, because of Hans.
 
 ## The drive
 
-The drive to Sweden was a very long one, we drove from Venlo the Netherlands through Germany and Denmark to Sweden. This took about 11 hours with several stops to stretch our legs and have a bathroom break. During the drive the weather was kinda bad, but not as bad as we've seen in the Netherlands the week before.
+The drive to Sweden was a very long one, we drove from Venlo the Netherlands through Germany and Denmark to Sweden. This took about 11 hours with several stops to stretch our legs and have a bathroom break. During the drive, the weather was kinda bad, but not as bad as we've seen in the Netherlands the week before.
 
-The best part about Germany is that on a lot of highways there is no specific speed limit. Thus, we could drive as hard as we want, but Germany being Germany, during the summer period they do a lot of road construction. This lead to us being in a traffic jam for almost the entirety we were driving in Germany. Luckily that was only about 6 hours of the drive, so there was still plenty of time to drive without traffic jams in Denmark and Sweden.
+The best part about Germany is that on a lot of highways, there is no specific speed limit. Thus, we could drive as hard as we want, but Germany being Germany, during the summer period they do a lot of road construction. This led to us being in a traffic jam for almost the entirety we were driving in Germany. Luckily, that was only about 6 hours of the drive, so there was still plenty of time to drive without traffic jams in Denmark and Sweden.
 
-When arriving at the border between Germany and Denmark we were pulled over by customs because they wanted to check what we were carrying. When the customs officer asked us to open the trunk he looked a bit thunderstruck. Because we've told him that we were going on a holiday for three weeks in Sweden and the only thing he saw we're two backpacks and nothing else. That's when he wanted to know more about us, our trip and what was in our backpacks. Long story short, we were asked if we had weed (you know, we're Dutch) for about ten times in a timespan of five minutes, we had to tell were we were going to camp in Sweden, and we had to show our pocket knives. Finally, he let us through, and we were both a bit speechless because we felt a bit like we were criminals because of the way he kept asking if we had weed on us. But we were finally in Scandinavia!
+When arriving at the border between Germany and Denmark, customs pulled over us because they wanted to check what we were carrying. When the customs officer asked us to open the trunk, he looked a bit thunderstruck. Because we've told him that we were going on a holiday for three weeks in Sweden and the only thing he saw we're two backpacks and nothing else. That's when he wanted to know more about us, our trip and what was in our backpacks. Long story short, we were asked if we had weed (you know, we're Dutch) for about ten times in a timespan of five minutes, we had to tell were we were going to camp in Sweden, and we had to show our pocket knives. Finally, he let us through, and we were both a bit speechless because we felt a bit like we were criminals because of the way he kept asking if we had weed on us. But we were finally in Scandinavia!
 
 ## Our first night
 
@@ -33,12 +33,12 @@ We had to set up our tent in the pouring rain, so when were inside the tent we h
 
 ## Storm Hans
 
-The next day we woke up with a lot of missed messages from our relatives. They all had one thing in common, they mentioned something about a storm. At first, we thought it was nothing but when I checked the Dutch news I saw articles about land slides, roads that we're flooded and a train that was derailed. That's when we knew that it was bad news for us in our little tent.
+The next day we woke up with a lot of missed messages from our relatives. They all had one thing in common, they mentioned something about a storm. At first, we thought it was nothing, but when I checked the Dutch news, I saw articles about land slides, roads that we're flooded and a train that was derailed. That's when we knew that it was bad news for us in our little tent.
 
 We decided to wait it out in a mall near Malm&ouml; were we could enjoy a nice hot meal and stock in on groceries for the next couple of days. When we were done shopping and went back to the car, the weather hadn't changed, so we decided to take a look at the local weather forecast. It simply stated that the storm would last for at least seven more days, and it warned for _danger for property and life_ (roughly translated, because the original warning was in Dutch on our devices). That's when we decided to drive home and come up with a new plan for our vacation.
 
 ## Pieterpad
 
-Back home the weather in the Netherlands had cleared up a lot, from raining all days with a temperature between 15&deg; and 20&deg; Celsius (59&deg; and 68&deg; Fahrenheit), it was now beautiful blue skies and a temperature between 25&deg; and 35&deg; Celsius (77&deg; and 95&deg; Fahrenheit). Because of this change, we decided to walk the Pieterpad from Venlo to the north of the Netherlands. We didn't have an end goal. We just started walking the trail and just see were we would end up at the end of the two weeks.
+Back home, the weather in the Netherlands had cleared up a lot, from raining all days with a temperature between 15&deg; and 20&deg; Celsius (59&deg; and 68&deg; Fahrenheit), it was now beautiful blue skies and a temperature between 25&deg; and 35&deg; Celsius (77&deg; and 95&deg; Fahrenheit). Because of this change, we decided to walk the Pieterpad from Venlo to the north of the Netherlands. We didn't have an end goal. We just started walking the trail and just see were we would end up at the end of the two weeks.
 
 More stories about this Pieterpad will follow in the upcoming weeks.
