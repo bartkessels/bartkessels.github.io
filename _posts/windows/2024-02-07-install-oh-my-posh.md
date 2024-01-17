@@ -16,12 +16,12 @@ related_to: [windows, powershell]
 
 ## Introduction
 
-As you might have seen in my earlier [Upset](../upset/2023-12-13-introduction.md) post, I had to install my work laptop quite few times. And each time I had to look up the way I have to setup Oh My Posh.
+As you might have seen in my earlier [Upset](../upset/2023-12-13-introduction.md) post, I had to install my work laptop quite few times. And each time I had to look up the way I have to set up Oh My Posh.
 So I decided to write a small blog post about it, mainly because I think the documentation for Oh My Posh isn't as clear as I'd like it to be.
 
 But first things first, what is Oh My Posh?
 
-Oh My Posh is a prompt theme for, among other things, Powershell [(Oh My Posh, n.d.)](https://ohmyposh.dev). Because I'm using macOS privately with Oh My Zsh, I'd like to use a similar tool on my Windows work laptop. Because I like using native tools I decided that on Windows I'll be using Powershell. And, with Oh My Posh I can customize my Powershell the way I want.
+Oh My Posh is a prompt theme for, among other things, Powershell [(Oh My Posh, n.d.)](https://ohmyposh.dev). Because I'm using macOS privately with Oh My Zsh, I'd like to use a similar tool on my Windows work laptop. Because I like using native tools, I decided that on Windows I'll be using Powershell. And, with Oh My Posh I can customize my Powershell the way I want.
 
 ## Installation
 
@@ -50,10 +50,16 @@ Check if Oh my Posh is installed by running `oh-my-posh` in your terminal/powers
 
 You can find this `PATH` variable inside the `$profile` that your Powershell instance uses. To update the `PATH` permanently, execute `notepad $profile` and update the `PATH` variable there. This will make sure that every new Powershell instance you open, will contain the same items in the `PATH`.
 
+If you get an error message stating that the `$profile` file cannot be found, you can create this file using the following Powershell command.
+
+```pwsh
+> New-Item -Path $PROFILE -Type File -Force
+```
+
 #### Install fonts
 
 To make sure all the themes work from Oh My Posh, you should install the required fonts.
-If you haven't done this and your terminal looks off. It's quite likelly that the missing fonts are the issue here.
+If you haven't done this and your terminal looks off. It's quite likely that the missing fonts are the issue here.
 As, unfortunately, I've had that problem myself.
 
 You can either install the fonts for your current user or for all users on your device. If you choose to install the fonts for all users, you must open the terminal/powershell application as administrator before executing the following command.
@@ -87,6 +93,18 @@ In the above example the `face` is set to `MesloLGM Nerd Font`, but you need to 
 
 #### Set the theme
 
-Oh My Posh includes a lot of custom themes off the bat. However, to use a specific theme update your `.powershellrc` file.
+Oh My Posh includes a lot of custom themes off the bat. These themes can be found by running the `Get-PoshThemes` CMDLet. To use the theme you like you need to update your local `.powershellrc` file or your `$profile` file for the theme to load everytime you start a new Powershell instance.
 
-This file 
+When running the `Get-PoshThemes` CMDLet, for each theme the specified file is displayed, you need to copy the file for that theme into your `.powershellrc` or `$profile` file.
+
+Open your `$profile` file using notepad `notepad $profile` and add or alter the following line
+
+```
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/<FILE_OF_THE_THEME>.json" | Invoke-Expression
+```
+
+This will execute the `init` command from Oh My Posh and set the theme to the file you copied before. To see your changes you can either close the current Powershell instance and open another one, or load the altered `$profile` file into your current session by running
+
+```pwsh
+> . $PROFILE
+```
