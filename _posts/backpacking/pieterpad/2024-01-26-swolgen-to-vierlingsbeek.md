@@ -5,7 +5,7 @@ author: bart
 layout: post
 image: assets/images/backpacking/pieterpad/swolgen-to-vierlingsbeek.jpg
 caption: This image is taken in Geijsteren at the Geijsterse moorland
-date: 2023-01-26
+date: 2024-01-26
 categories: [backpacking, pieterpad]
 permalink: backpacking/pieterpad/swolgen-to-vierlingsbeek
 tags: [Backpacking, Travel, Pieterpad, Netherlands, Long Distance, Trail, Swolgen, Geijsteren, Vierlingsbeek]
