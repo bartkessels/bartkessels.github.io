@@ -11,6 +11,7 @@ date: 2023-12-13 12:00
 categories: [software]
 permalink: software/upset
 tags: [Installation, setting up, Windows, MacOS, Linux]
+related: upset
 ---
 
 ## Introduction

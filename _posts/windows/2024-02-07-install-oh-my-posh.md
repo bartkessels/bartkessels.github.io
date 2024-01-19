@@ -93,9 +93,9 @@ In the above example the `face` is set to `MesloLGM Nerd Font`, but you need to 
 
 #### Set the theme
 
-Oh My Posh includes a lot of custom themes off the bat. These themes can be found by running the `Get-PoshThemes` CMDLet. To use the theme you like you need to update your local `.powershellrc` file or your `$profile` file for the theme to load everytime you start a new Powershell instance.
+Oh My Posh includes a lot of custom themes off the bat. These themes can be found by running the `Get-PoshThemes` CMDLet. To use the theme you like you need to update your `$profile` file for the theme to load everytime you start a new Powershell instance.
 
-When running the `Get-PoshThemes` CMDLet, for each theme the specified file is displayed, you need to copy the file for that theme into your `.powershellrc` or `$profile` file.
+When running the `Get-PoshThemes` CMDLet, for each theme the specified file is displayed, you need to copy the file for that theme into your `$profile` file.
 
 Open your `$profile` file using notepad `notepad $profile` and add or alter the following line
 
@@ -103,8 +103,8 @@ Open your `$profile` file using notepad `notepad $profile` and add or alter the 
 oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/<FILE_OF_THE_THEME>.json" | Invoke-Expression
 ```
 
-This will execute the `init` command from Oh My Posh and set the theme to the file you copied before. To see your changes you can either close the current Powershell instance and open another one, or load the altered `$profile` file into your current session by running
+This will execute the `init` command from Oh My Posh and set the theme to the file you copied before. To see your changes, you can either close the current Powershell instance and open another one, or load the altered `$profile` file into your current session by running
 
 ```pwsh
-> . $PROFILE
+> . $profile
 ```
