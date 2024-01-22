@@ -3,7 +3,7 @@ title: Set up Jetpack Compose
 description: In Android development, the new standard for building UI's is Jetpack Compose. But how do you actually set it up for your application?
 author: bart
 layout: post
-image: assets/images/android/set-up-jetpack-compose.png
+image: assets/images/android/create-an-application/set-up-jetpack-compose.png
 caption: This image is generated using Dall-E
 prompt: Generate an image of a phone with a bit of code being displayed behind the Android logo in a minimalistic flat style
 date: 2024-02-21
