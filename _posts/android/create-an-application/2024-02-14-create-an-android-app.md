@@ -13,6 +13,7 @@ tags: [Android, App Development]
 related: create_android_app
 related_to: [android]
 story: true
+featured: true
 ---
 
 Have you ever had the urge to build your own Android app? Well, I have, and in this story I'll be covering the basics on how you can build an Android app.
