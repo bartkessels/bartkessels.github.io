@@ -8,7 +8,7 @@ caption: This image is generated using Dall-E
 prompt: Generate an image of a phone with material design components on the screen in a minimalistic flat style
 date: 2024-03-06
 categories: [android]
-permalink: android/set-up-view-models-with-jetpack-compose
+permalink: android/set-up-material-design
 tags: [Android, Jetpack Compose, UI, App Development, Material Design]
 related: create_android_app
 related_to: [android, jetpack_compose, create_android_app]

@@ -14,7 +14,7 @@ related: create_android_app
 related_to: [android, jetpack_compose, create_android_app]
 ---
 
-Now that we have our [base project set up](./2024-02-14-create-an-android-app.md), let's add an activity with a view so we can see our own application. When building Android application in this time and age, it's pretty assumable that you're going to use Jetpack Compose for your UI, since it's also the recommended toolkit by Google [(Google, n.d.)](https://developer.android.com/jetpack/compose).
+Now that we have our [base project set up](./2024-02-14-create-an-android-app.md), let's add an activity with a view, so we can see our own application. When building Android application in this time and age, it's pretty assumable that you're going to use Jetpack Compose for your UI, since it's also the recommended toolkit by Google [(Google, n.d.)](https://developer.android.com/jetpack/compose).
 
 ## Add Jetpack Compose
 

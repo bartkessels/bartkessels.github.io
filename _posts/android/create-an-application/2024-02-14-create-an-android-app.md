@@ -6,7 +6,7 @@ layout: post
 image: assets/images/android/create-an-application/create-an-android-app.png
 caption: This image is generated using Dall-E
 prompt: Generate an image of a person sitting behind a computer screen which is displaying a phone on the screen in a minimalistic flat style
-date: 2023-02-14
+date: 2024-02-14
 categories: [android]
 permalink: android/create-an-android-app
 tags: [Android, App Development]
