@@ -38,9 +38,11 @@
                     <a class="nav-link" href="{{ site.baseurl }}/category/kotlin">Kotlin</a>
                 </li>
 
+                {% if site.categories.android %}
                 <li class="nav-item {% if page.url == '/category/android' %} active {% endif %}">
                     <a class="nav-link" href="{{ site.baseurl }}/category/android">Android</a>
                 </li>
+                {% endif %}
 
                 <li class="nav-item {% if page.url == '/category/software' %} active {% endif %}">
                     <a class="nav-link" href="{{ site.baseurl }}/category/software">Software</a>

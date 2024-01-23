@@ -14,7 +14,7 @@ related: create_android_app
 related_to: [android, jetpack_compose, create_android_app]
 ---
 
-In our previous posts about [setting up Jetpack Compose](./2024-02-21-set-up-jetpack-compose.md) and [setting up Material Design](./2024-03-06-set-up-material-design.md) we've been through two UI iterations. To see each iteration we had to build and run our app. Now, this isn't that bad for just two iterations and our small UI, but let's say your working on a big project which consists of multiple components where you'd like to see each component separate from the entire app. This might become pretty tedious when you have to build your entire app just to see how a little component looks.
+In our previous posts about [setting up Jetpack Compose](./2024-02-21-set-up-jetpack-compose.md) and [setting up Material Design](./2024-03-06-set-up-material-design.md) we've been through two UI iterations. To see each iteration, we had to build and run our app. Now, this isn't that bad for just two iterations and our small UI, but let's say your working on a big project which consists of multiple components where you'd like to see each component separate from the entire app. This might become pretty tedious when you have to build your entire app just to see how a little component looks.
 
 Luckily for this, we can use previews in Android Studio. This is different from the old XML-views we knew before, because the main difference between the View-based UI and Jetpack Compose is the fact that Compose doesn't need a View to render it's composables. Because of this, we can view the UI in Android Studio without having to run the app on an emulator or Android device [(Google, 2024)](https://developer.android.com/jetpack/compose/tooling).
 

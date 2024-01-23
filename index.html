@@ -13,15 +13,11 @@ title: Home
     </div>
     <div class="row">
 
-    {% for post in site.posts %}
+        {% assign featuredPosts = site.posts | where: "featured", true %}
 
-        {% if post.featured == true %}
-
+        {% for post in featuredPosts limit: 2 %}
             {% include featuredbox.html %}
-
-        {% endif %}
-
-    {% endfor %}
+        {% endfor %}
 
     </div>
 </section>
