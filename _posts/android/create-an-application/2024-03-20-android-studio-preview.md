@@ -33,7 +33,7 @@ dependencies {
 }
 ```
 
-This gives us the `Preview` annotation, which in turn will enable us to preview our UI without having to connect to an emulator in Android Studio [(Google, 2024)](https://developer.android.com/jetpack/compose/tooling/previews).
+This gives us the `Preview` annotation, which in turn will enable us to preview our UI without having to connect to an emulator in Android Studio [(Google, 2024)](https://developer.android.com/jetpack/compose/tooling/previews). The `debugImplementation` will add the extra `ui-tooling` dependency only when your app is running in debug-mode, in other words, when the preview is being rendered.
 
 Execute a gradle sync and we're ready to preview our UI.
 
@@ -137,6 +137,9 @@ private fun MainInternalPreview() {
 
 ## Display the preview
 
-If we build the application, Android Studio should display the preview window by default, otherwise you can click on the _Code & Preview_ button in the upper right corner of the file you have open.
+If we build the application, Android Studio should display the preview window by default; otherwise you can click on the _Code & Preview_ button in the upper right corner of the file you have open.
 
 ![Android Studio with code and the preview](/assets/images/android/create-an-application/android-studio-code-with-preview.png)
+
+* The entire application can be found [github.com/bartkessels/basic-android-app](https://github.com/bartkessels/basic-android-app)
+* Just the code that's been created in this post in the [tutorial/android-studio-preview branch](https://github.com/bartkessels/basic-android-app/tree/tutorial/android-studio-preview)
