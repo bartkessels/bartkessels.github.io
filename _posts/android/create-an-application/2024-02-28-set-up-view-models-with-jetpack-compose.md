@@ -125,5 +125,5 @@ Now that everything is configured, we can run our own application. The only thin
 
 ![Our updated Android app](/assets/images/android/create-an-application/basic-android-application-view-model.png)
 
-* The entire application can be found [github.com/bartkessels/basic-android-app](https://github.com/bartkessels/basic-android-app)
-* Just the code that's been created in this post in the [tutorial/set-up-view-models branch](https://github.com/bartkessels/basic-android-app/tree/tutorial/set-up-view-models)
+* The entire application can be found on [github.com/bartkessels/basic-android-app](https://github.com/bartkessels/basic-android-app)
+* Just the code that's been created in this post can be found in the [tutorial/set-up-view-models branch](https://github.com/bartkessels/basic-android-app/tree/tutorial/set-up-view-models)

@@ -141,5 +141,5 @@ If we build the application, Android Studio should display the preview window by
 
 ![Android Studio with code and the preview](/assets/images/android/create-an-application/android-studio-code-with-preview.png)
 
-* The entire application can be found [github.com/bartkessels/basic-android-app](https://github.com/bartkessels/basic-android-app)
-* Just the code that's been created in this post in the [tutorial/android-studio-preview branch](https://github.com/bartkessels/basic-android-app/tree/tutorial/android-studio-preview)
+* The entire application can be found on [github.com/bartkessels/basic-android-app](https://github.com/bartkessels/basic-android-app)
+* Just the code that's been created in this post can be found in the [tutorial/android-studio-preview branch](https://github.com/bartkessels/basic-android-app/tree/tutorial/android-studio-preview)

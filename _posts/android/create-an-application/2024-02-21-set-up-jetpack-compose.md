@@ -129,5 +129,5 @@ Now that everything is configured, we can run our own application. The only thin
 
 ![Our basic Android app](/assets/images/android/create-an-application/basic-android-application.png)
 
-* The entire application can be found [github.com/bartkessels/basic-android-app](https://github.com/bartkessels/basic-android-app)
-* Just the code that's been created in this post in the [tutorial/setup-jetpack-compose branch](https://github.com/bartkessels/basic-android-app/tree/tutorial/setup-jetpack-compose)
+* The entire application can be found on [github.com/bartkessels/basic-android-app](https://github.com/bartkessels/basic-android-app)
+* Just the code that's been created in this post can be found in the [tutorial/setup-jetpack-compose branch](https://github.com/bartkessels/basic-android-app/tree/tutorial/setup-jetpack-compose)

@@ -151,5 +151,5 @@ If you run the application, you probably won't see a change. But if you change y
 
 ![Supporting the Dutch language](/assets/images/android/create-an-application/adding-the-dutch-language.png)
 
-* The entire application can be found [github.com/bartkessels/basic-android-app](https://github.com/bartkessels/basic-android-app)
-* Just the code that's been created in this post in the [tutorial/support-multiple-languages branch](https://github.com/bartkessels/basic-android-app/tree/tutorial/support-multiple-languages)
+* The entire application can be found on [github.com/bartkessels/basic-android-app](https://github.com/bartkessels/basic-android-app)
+* Just the code that's been created in this post can be found in the [tutorial/support-multiple-languages branch](https://github.com/bartkessels/basic-android-app/tree/tutorial/support-multiple-languages)
