@@ -6,7 +6,7 @@ layout: post
 image: assets/images/android/create-an-application/writing-ui-tests.png
 caption: This image is generated using Dall-E
 prompt: Generate an image of a phone which displays robot arms dragging the UI elements in a minimalistic flat style
-date: 2023-03-27
+date: 2024-03-27
 categories: [android]
 permalink: android/automatically-test-android-ui
 tags: [Android, Jetpack Compose, UI, App Development, UI testing, Automated testing, unit test]
