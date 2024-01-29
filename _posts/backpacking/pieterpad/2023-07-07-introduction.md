@@ -16,7 +16,7 @@ related_to: [pieterpad, backpacking]
 
 For the non-Dutch people it might not sound familiar, “het Pieterpad”, but in the Netherlands it’s one of the most well known long distance trails that has been laid out [(Stichting Pieterpad, n.d.)](https://www.pieterpad.nl/pieterpad/introductie). It has been layed out in 26 legs that are somewhere between 15 and 22 kilometers each.
 
-There is a foundation that looks after the trail, called the _Pieterpad Stichting_ (roughly translated: Pieterpad Foundation). They look after the trail and provide a lot of information on their website, [pieterpad.nl](https://pieterpad.nl). This is also were we get our information.
+There is a foundation that looks after the trail, called the _Pieterpad Stichting_ (roughly translated: Pieterpad Foundation). They look after the trail and provide a lot of information on their website, [pieterpad.nl](https://pieterpad.nl). This is also where we get our information.
 
 As for walking the trail there is a guide they sell, but we use the [komoot](https://komoot.com) app where we've laid out our own Pieterpad legs. As an example, see our first leg here: [komoot.com/tour/1072268722](https://www.komoot.com/tour/1072268722). I'll be posting about each leg we walk, so you'll be seeing a lot of these komoots in the future!
 
