@@ -7,7 +7,7 @@ $ bundle exec jekyll serve
 
 When getting errors that your ruby version is out-of-date, please check if you use the ruby that's installed through brew because the one macOS ships is probably outdated.
 
-To (temporarily) set the `$PATH` to the brew ruby location execute this command (update the version if neccessary).
+To (temporarily) set the `$PATH` to the brew ruby location execute this command (update the version if necessary).
 
 ```zsh
 $ export PATH=/usr/local/Cellar/ruby/3.3.O/bin:$PATH
