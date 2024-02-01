@@ -6,7 +6,7 @@ layout: post
 image: assets/images/kotlin/empty-char-literal-error.png
 caption: This image is generated using Dall-E
 prompt: Generate an image of a computer screen with a terminal on it displaying a large error message in a minimalistic flat style
-date: 2023-05-05 12:00
+date: 2023-05-05
 categories: [kotlin]
 permalink: kotlin/empty-char-literal
 tags: [kotlin, error, problem, char, literal, solution]

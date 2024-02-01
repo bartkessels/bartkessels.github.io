@@ -18,6 +18,22 @@ In our [previous post](./2024-02-21-set-up-jetpack-compose.md) we've built a bas
 
 If we look at the `MainActivity.kt` file we see that we directly call UI elements, this is not the way we actually want to build our entire application. If we choose to keep the UI and the logic in the same file, we can't run a unit test to test our logic, we'd need an Android UI test for that. This is possible, but I'd strongly advise against it. To solve this problem, we can use [ViewModels](https://developer.android.com/topic/libraries/architecture/viewmodel).
 
+## Add a dependency
+
+Before we get started by creating a view model, we're going to need an extra dependency which will allow us to couple our own view model to the Android lifecycle automatically. This means that our view model won't go out of scope until the view model owner goes out of scope [(Google, 2024)](https://developer.android.com/topic/libraries/architecture/viewmodel).
+
+Add the `lifecycle-viewmodel-compose` dependency to the `build.gradle.kts` file in the `app` module.
+
+```kotlin
+dependencies {
+    // ...
+    
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose")
+    
+    // ...
+}
+```
+
 ## Create the view model
 
 For our small use case, we'll be building an application that displays _Hello World_, but when you click on the text, it changes to _Hello again_. This is a fairly small change as to what we had, but it gives us a little bit of insights in how we can update the UI from the view model.
@@ -108,8 +124,8 @@ Update the `onCreate` method with the following contents.
 // ...
 
 override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    val viewModel = MainViewModel()
+    super.onCreate(savedInstanceState) 
+    val viewModel: MainViewModel by viewModel()
 
     setContent {
         Main(viewModel)
@@ -118,6 +134,8 @@ override fun onCreate(savedInstanceState: Bundle?) {
 ```
 
 What has changed is that we instantiate our new view model and pass it into the call to our `Main` composable inside the `setContent` lambda. This will display our own composable with a reference to our view model making it functionally the same as before, but allows for separation of concerns just like we want to.
+
+You might notice that we instantiate the `MainViewModel` using a delegate `viewModel` interface instead of just calling the constructor using `MainViewModel()`. This is a method that will either return an existing instance of the view model we specify using generics or will instantiate a new instance [(Google, 2024)](https://developer.android.com/reference/kotlin/androidx/lifecycle/viewmodel/compose/package-summary#viewModel(androidx.lifecycle.ViewModelStoreOwner,kotlin.String,kotlin.Function1)).
 
 ## Run the application
 
