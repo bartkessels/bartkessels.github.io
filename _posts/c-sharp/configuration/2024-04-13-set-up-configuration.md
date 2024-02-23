@@ -17,7 +17,7 @@ related: csharp_configuration
 related_to: [csharp]
 ---
 
-In your C# application it's pretty likely that you will be needing some sort of configuration. This can be anything from uri's pointing to external API's you need to access to feature flags that need to be flipped when you've deployed your application.
+In your C# application, it's pretty likely that you will be needing some sort of configuration. This can be anything from uri's pointing to external API's you need to access to feature flags that need to be flipped when you've deployed your application.
 
 Luckily .NET has us covered with [ConfigurationBuilder](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.configurationbuilder?view=dotnet-plat-ext-8.0). This builder is used to store and retrieve key-value settings. These can, for example, be stored in a JSON file and retrieved during run time [(Microsoft, n.d.)](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.configuration.configurationbuilder?view=dotnet-plat-ext-8.0).
 
@@ -30,4 +30,11 @@ If we take a look at the documentation for the `IConfigurationSource` interface,
 * File configuration
 * Memory configuration
 
-In the upcoming blog posts we'll dive deeper into the specifics of the C# configuration capabilities.
+In the upcoming blog posts, we'll dive deeper into the specifics of the C# configuration capabilities.
+
+## Project setup
+
+In the following posts, we'll be using the following project setup for our test application.
+
+@TODO: Describe the set up of the .NET project
+@TODO: Describe the prerequisites (.NET 8, Azure subscription)
