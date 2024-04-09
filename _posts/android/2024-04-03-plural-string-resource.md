@@ -6,7 +6,7 @@ layout: post
 image: assets/images/android/plural-string-resource.png
 caption: This image is generated using Dall-E
 prompt: Generate an image of a phone displaying an xml file with multiple lines of text with numbers in a minimalistic flat style
-date: 2024-03-04
+date: 2024-04-03
 categories: [android]
 permalink: android/plural-string-resource
 tags: [Android, UI, App Development, Multiple languages, i8n]
