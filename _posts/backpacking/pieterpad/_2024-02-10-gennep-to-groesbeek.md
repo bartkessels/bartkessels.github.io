@@ -17,7 +17,7 @@ Before we began, we thought that this was going to be the last leg of our vacati
 
 ## The leg
 
-The last leg of our vacation started in Ven-Zelderheide because of some troubles we had with the camping, as you can read in the [previous post](./2024-02-03-vierlingsbeek-to-gennep.md). This isn't captured in the route because it was a last-minute decision.
+The last leg of our vacation started in Ven-Zelderheide because of some troubles we had with the camping, as you can read in the [previous post](./_2024-02-03-vierlingsbeek-to-gennep). This isn't captured in the route because it was a last-minute decision.
 
 ![The leg we've created for walking from Gennep to Groesbeek](/assets/images/backpacking/pieterpad/leg-gennep-to-groesbeek.png)
 > This image is captured from [Komoot, where we've laid out our own leg](https://www.komoot.com/nl-nl/tour/1258364493)
