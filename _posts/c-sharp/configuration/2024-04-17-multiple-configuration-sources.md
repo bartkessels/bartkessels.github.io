@@ -8,7 +8,7 @@ caption: This image is generated using Dall-E
 prompt: Generate an image of computer screen which displays a piece of paper and a vault in a minimalistic flat style
 featured: false
 mermaid: true
-date: 2023-04-20
+date: 2023-04-17
 categories: [c-sharp]
 permalink: csharp/configuration/multiple-configuration-sources
 tags: [.NET, Microsoft, C#, C# 12]
@@ -16,7 +16,7 @@ related: csharp_configuration
 related_to: [csharp, csharp_configuration]
 ---
 
-In our [previous post](./2024-04-13-set-up-configuration.md) we've learned that we can have multiple configuration sources, but how does .NET handle multiple sources which might contain the same key. Say, we have the following situation.
+In our [previous post](./2024-04-10-set-up-configuration) we've learned that we can have multiple configuration sources, but how does .NET handle multiple sources which might contain the same key. Say, we have the following situation.
 
 On our developer machine we use a value from `appsettings.json` but when deploying it to something like Azure we want to use Keyvault to access the `GoogleMapsApiKey` value.
 
@@ -55,3 +55,5 @@ IConfigurationRoot config = new ConfigurationBuilder()
     )
     .Build();
 ```
+
+TODO: Setup a base project, to proof the above statement.

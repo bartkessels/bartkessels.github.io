@@ -15,7 +15,7 @@ related: csharp12
 related_to: [csharp12, csharp]
 ---
 
-When reading through the [what's new in C# 12](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-12) post from Microsoft I was really happy when I saw _'Collection expressions`_. Because at work we use both C# and Kotlin, and initializing a list with a default set of values in Kotlin looks a lot cleaner to me than the current C# initialization does.
+When reading through the [what's new in C# 12](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-12) post from Microsoft, I was really happy when I saw _'Collection expressions`_. Because at work, we use both C# and Kotlin, and initializing a list with a default set of values in Kotlin looks a lot cleaner to me than the current C# initialization does.
 
 So I'm really eager to start playing with this and using it in production code-bases to improve the readability.
 
@@ -40,7 +40,7 @@ But if we change this code to the new collection expressions, we get this much c
 List<string> names = ["Jane Doe", "John Doe"];
 ```
 
-The only downside for me is, that I can't use the `var` keyword. But that is not that weird because the compiler needs to know which type of list is being created. But, I would like to see the compiler getting a bit smarter and guess the type from the assigned value. In our example a list of `string`s.
+The only downside for me is that I can't use the `var` keyword. But that is not that weird because the compiler needs to know which type of list is being created. But I would like to see the compiler getting a bit smarter and guess the type from the assigned value. In our example a list of `string`s.
 
 ## How does it work
 
@@ -55,4 +55,4 @@ List<string> list2 = list;
 
 ## Use case
 
-For me, I'll be using this syntax everytime I need to initialize a list with default values. For example in test projects when I need to test a method that needs a list as an input. For now, I don't have exact use cases for an actual production application which has a defined set of values, because the applications I work on mostly get their data from a database or another source.
+For me, I'll be using this syntax everytime I need to initialize a list with default values. For example, in test projects when I need to test a method that needs a list as an input. For now, I don't have exact use cases for an actual production application which has a defined set of values, because the applications I work on mostly get their data from a database or another source.

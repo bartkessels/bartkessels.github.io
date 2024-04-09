@@ -15,9 +15,9 @@ related: csharp12
 related_to: [csharp12, csharp]
 ---
 
-On the C# 12 website Microsoft has written a little bit about default parameters for lambda's, and in the documentation for lambda's I can't find it.
+On the C# 12 website, Microsoft has written a little bit about default parameters for lambda's, and in the documentation for lambda's I can't find it.
 
-I can understand why Microsoft hasn't written a lot about it, because the title says it all. But what's weird to me is that they don't acknowledge this feature in their documentation. And in a way I think that's pretty obvious given the nature of lambda's. But more on that later.
+I can understand why Microsoft hasn't written a lot about it, because the title says it all. But what's weird to me is that they don't acknowledge this feature in their documentation. And in a way, I think that's pretty evident given the nature of lambda's. But more on that later.
 
 ## Implementation
 
@@ -38,9 +38,9 @@ foreach (var name in names)
 }
 ```
 
-This is a pretty straight forward application, it just prints the names from the names list to the console.
+This is a pretty straight forward application, it just prints the names from the list to the console.
 
-Now the lambda-expression is inside the `ForEach` call on the `names` list. So if we extract it into a named lambda we need to add a parameter with the name we want to print.
+Now the lambda-expression is inside the `ForEach` call on the `names` list. So if we extract it into a named lambda, we need to add a parameter with the name we want to print.
 
 ```csharp
 var printName = (string name) => { Console.WriteLine(name); };
@@ -64,7 +64,7 @@ foreach (var name in names)
 }
 ```
 
-This doesn't change anything in our output, because we give a name everytime we run the lambda-expression.
+This doesn't change anything in our output, because we give a name every time we run the lambda-expression.
 
 The only difference in behaviour would be if we run the lambda-expression without an argument. But that does not justify our use case. So let's try it out with a null value and see if that calls the default parameter value. For this to work we need to change our datatypes (the `string`s to nullable `string`s).
 
@@ -90,10 +90,10 @@ As you see, we get an empty line because our `null` value does not resolve into 
 
 ## How does it work
 
-The default parameter value is only used when the lambda-expression is executed without an argument. When using a nullable datatype, the default parameter is overwritten by the null-pointer which in a way gives us more control over our application flow because we might expect a nullable type.
+The default parameter value is only used when the lambda-expression is executed without an argument. When using a nullable datatype, the default parameter is overwritten by the null-pointer, which in a way gives us more control over our application flow because we might expect a nullable type.
 
 ## Use case
 
 However, given the nature of lambdas which are usually used without being assigned to a variable, or let alone being used twice without being converted into a method or extension method. For me the default parameter value doesn't have any use case in an object-oriented project. This may be useful to functional applications where you might need to access a lambda expression a couple of times with or without a parameter. But then to me the question arises, why not just turn it into a function. Because the lambda already has a name, it's basically already a function (especially because they both live on the stack).
 
-For my own needs, I don't see the need for default parameters or named lambda's for that matter. And for pure functional applications I'd rather use a function than a named lambda because that looks cleaner to me. So, this might be a personal preference whether it's a good feature for you.
+For my own needs, I don't see the need for default parameters or named lambda's for that matter. And for pure functional applications, I'd rather use a function than a named lambda because that looks cleaner to me. So, this might be a personal preference whether it's a good feature for you.

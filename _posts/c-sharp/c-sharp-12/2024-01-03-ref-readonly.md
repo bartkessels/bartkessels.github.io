@@ -74,7 +74,7 @@ This gives us the following error-message when we try to access the `context` pa
 cannot use 'ref readonly' primary constructor parameter 'context' inside an instance member
 ```
 
-When looking back at the documentation it's pretty obvious because it clearly states _'...must be present in the method declaration. ...'_. So we can only use it for methods. Let's update our `PersonRepository` to pass the `DbContext` as a readonly reference to the `GetName` method.
+When looking back at the documentation, it's pretty obvious because it clearly states _'...must be present in the method declaration. ...'_. So we can only use it for methods. Let's update our `PersonRepository` to pass the `DbContext` as a readonly reference to the `GetName` method.
 
 ```csharp
 public class PersonRepository()
@@ -106,7 +106,7 @@ This attribute makes sure that the `context` is passed as a reference [(Microsof
 > The `in` modifier allows the compiler to create a temporary variable for the argument and pass a readonly reference to that argument.
 > * [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters#in-parameter-modifier).
 
-This is the attribute that makes sure we cannot change to location of the pointer at the call-site of our method.
+This is the attribute that makes sure we cannot change the location of the pointer at the call-site of our method.
 
 ### RequiresLocation attribute
 

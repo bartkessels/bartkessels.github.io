@@ -42,7 +42,7 @@ _*Note_ the `@8` is not required since the latest version of the formula is alre
 
 ### Set up the solution
 
-All features will be added as a project to the `csharp-12-features` solution on [github.com/bartkessels/dotnet-8-features](https://github.com/bartkessels/dotnet-8-features).
+All features will be added as a project to the `csharp-12-features` solution on [github.com/bartkessels/csharp-12-features](https://github.com/bartkessels/csharp-12-features).
 
 The solution is created using the .NET cli.
 

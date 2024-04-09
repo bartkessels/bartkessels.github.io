@@ -9,7 +9,7 @@ caption: This image is generated using Dall-E
 prompt: Generate an image of computer screen with multiple screens which all have a arrow pointing at the center most screen in a minimalistic flat style
 featured: true
 mermaid: false
-date: 2023-04-13
+date: 2024-04-10
 categories: [c-sharp]
 permalink: csharp/configuration/set-up-configuration
 tags: [.NET, Microsoft, C#, C# 12]
@@ -36,5 +36,33 @@ In the upcoming blog posts, we'll dive deeper into the specifics of the C# confi
 
 In the following posts, we'll be using the following project setup for our test application.
 
-@TODO: Describe the set up of the .NET project
-@TODO: Describe the prerequisites (.NET 8, Azure subscription)
+### Install .NET 8
+
+Before I can dive into .NET, I have installed it using [Homebrew](https://homebrew.sh) on macOS.
+
+```shell
+$ brew install dotnet@8
+```
+
+_*Note_ the `@8` is not required since the latest version of the formula is already _8_. But for repeatability’s sake, I've included it.
+
+### Set up the solution
+
+All features will be added as a project to the `csharp-configuration` solution on [github.com/bartkessels/csharp-configuration](https://github.com/bartkessels/csharp-configuration).
+
+The solution is created using the .NET cli.
+
+```shell
+$ mkdir csharp-configuration
+$ cd csharp-configuration
+$ dotnet new sln
+```
+
+And now the projects where each feature will live, this step assumes you're still in the `csharp-configuration` folder from creating the solution.
+
+```shell
+$ dotnet new console -n ProjectName
+$ dotnet sln add ProjectName
+```
+
+_*Note_ each project will be a console project because it's pretty assumable that something is going to be printed to an output.
