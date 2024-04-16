@@ -20,7 +20,6 @@ In our [previous post](./2024-04-10-set-up-configuration) we've learned that we 
 
 On our developer machine we use a value from `appsettings.json` but when deploying it to something like Azure we want to use Keyvault to access the `GoogleMapsApiKey` value.
 
-
 ```mermaid
 flowchart LR
 
@@ -47,7 +46,7 @@ Let's say, we need two configuration sources. One from our `appsettings.json` an
 ```csharp
 var azureKeyvaultAddress = "https://somekeyvault.vault.azure.net/";
 
-IConfigurationRoot config = new ConfigurationBuilder()
+var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .AddAzureKeyVault(
         new Uri(azureKeyvaultAddress),
@@ -56,4 +55,71 @@ IConfigurationRoot config = new ConfigurationBuilder()
     .Build();
 ```
 
-TODO: Setup a base project, to proof the above statement.
+Let's create the Bicep te deploy our keyvault to Azure with the expected `GoogleMapsApiKey` secret.
+
+```bicep
+resource keyvaultDeployment 'Microsoft.KeyVault/vaults@2022-07-01' = {
+  name: 'keyvault-bartkessels-20240417'
+  location: 'string'
+  properties: {
+    accessPolicies: [
+      {
+        applicationId: 'string'
+        objectId: 'string'
+        permissions: {
+          certificates: [
+            'string'
+          ]
+          keys: [
+            'string'
+          ]
+          secrets: [
+            'string'
+          ]
+          storage: [
+            'string'
+          ]
+        }
+        tenantId: 'string'
+      }
+    ]
+    createMode: 'string'
+    enabledForDeployment: bool
+    enabledForDiskEncryption: bool
+    enabledForTemplateDeployment: bool
+    enablePurgeProtection: bool
+    enableRbacAuthorization: bool
+    enableSoftDelete: bool
+    networkAcls: {
+      bypass: 'string'
+      defaultAction: 'string'
+      ipRules: [
+        {
+          value: 'string'
+        }
+      ]
+      virtualNetworkRules: [
+        {
+          id: 'string'
+          ignoreMissingVnetServiceEndpoint: bool
+        }
+      ]
+    }
+    provisioningState: 'string'
+    publicNetworkAccess: 'string'
+    sku: {
+      family: 'A'
+      name: 'string'
+    }
+    softDeleteRetentionInDays: int
+    tenantId: 'string'
+    vaultUri: 'string'
+  }
+}
+```
+
+Save the Bicep-file as `main.bicep` and run the following Azure CLI command.
+
+```shell
+$ az deployment group create --resource-group myResourceGroup --template-file ./main.bicep
+```
