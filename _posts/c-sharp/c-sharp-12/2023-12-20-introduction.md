@@ -1,6 +1,6 @@
 ---
 title: C# 12 updates - Introduction
-description: A couple of weeks ago Microsoft has released C# 12 which packed a lot of new features. In the upcoming weeks I'll be diving into these update and writing about it.
+description: A couple of weeks ago Microsoft has released C# 12 which packed a lot of new features. In the upcoming weeks I'll be diving into these updates and writing about it.
 story: true
 author: bart
 layout: post
@@ -42,7 +42,7 @@ _*Note_ the `@8` is not required since the latest version of the formula is alre
 
 ### Set up the solution
 
-All features will be added as a project to the `csharp-12-features` solution on [github.com/bartkessels/dotnet-8-features](https://github.com/bartkessels/dotnet-8-features).
+All features will be added as a project to the `csharp-12-features` solution on [github.com/bartkessels/csharp-12-features](https://github.com/bartkessels/csharp-12-features).
 
 The solution is created using the .NET cli.
 
