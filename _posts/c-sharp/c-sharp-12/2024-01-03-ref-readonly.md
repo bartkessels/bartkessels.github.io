@@ -74,7 +74,8 @@ This gives us the following error-message when we try to access the `context` pa
 cannot use 'ref readonly' primary constructor parameter 'context' inside an instance member
 ```
 
-When looking back at the documentation it's pretty obvious because it clearly states _'...must be present in the method declaration. ...'_. So we can only use it for methods. Let's update our `PersonRepository` to pass the `DbContext` as a readonly reference to the `GetName` method.
+When looking back at the documentation, it's pretty obvious because it clearly states _'...must be present in the method declaration. ...'_. So we can only use it for methods.
+Let's update our `PersonRepository` to pass the `DbContext` as a readonly reference to the `GetName` method.
 
 ```csharp
 public class PersonRepository()
