@@ -11,7 +11,7 @@ date: 2024-01-03
 categories: [c-sharp]
 permalink: csharp/csharp-12/ref-readonly
 tags: [.NET, Microsoft, C#, C# 12]
-related: csharp12
+r[2023-12-20-introduction.md](2023-12-20-introduction.md)elated: csharp12
 related_to: [csharp12, csharp]
 ---
 
