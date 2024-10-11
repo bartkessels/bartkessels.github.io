@@ -18,8 +18,8 @@ related_to: [ csharp, dotnet ]
 Recently I came across the [BenchmarkDotNet](https://benchmarkdotnet.org/) library, which is an open source library
 maintained by the .NET foundation.
 
-This library allows us to write benchmarks for our own C# code, just by lookin at the readme on Github, it seems like an
-easy to use library. So let's check it out.
+This library allows us to write benchmarks for our own C# code, just by looking at the readme on Github, it seems like an
+easy-to-use library. So let's check it out.
 
 ## Set up the project
 
@@ -50,7 +50,7 @@ And that's all for the installation part.
 
 Before we create our first benchmark, let's first think of a use case where we can benchmark multiple implementations.
 Let's create a small method that adds multiple numbers.
-Yes, I hear you think how is this usefull for two methods? Well, we'll make one method that uses a for loop with a
+Yes, I hear you think how is this useful for two methods? Well, we'll make one method that uses a for loop with a
 counter and another method that uses LINQ.
 
 ```csharp
