@@ -1,0 +1,88 @@
+---
+import { Github, Linkedin, Mail } from 'lucide-astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="Learn more about Bart Kessels, software developer and outdoor enthusiast.">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {/* Header */}
+    <header class="mb-12 text-center">
+      <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-muted overflow-hidden">
+        <img
+          src="/images/avatar.jpg"
+          alt="Bart Kessels"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">Bart Kessels</h1>
+      <p class="text-xl text-muted">Software Developer & Outdoor Enthusiast</p>
+    </header>
+
+    {/* Bio */}
+    <section class="prose max-w-none mb-12">
+      <p>
+        Hi! I'm Bart, a software developer based in the Netherlands. I'm passionate about creating 
+        clean, maintainable software and exploring the great outdoors.
+      </p>
+
+      <h2>What I Do</h2>
+      <p>
+        By day, I work as a software developer focusing on C# and .NET applications. I enjoy solving 
+        complex problems and building tools that make developers' lives easier.
+      </p>
+      <p>
+        In my spare time, I contribute to open source projects, explore Android and Kotlin development, 
+        and tinker with native Linux applications using GTK.
+      </p>
+
+      <h2>Beyond Code</h2>
+      <p>
+        When I'm not coding, you'll find me either on a hiking trail with my backpack or in my 
+        vegetable garden. I believe in balancing screen time with time in nature.
+      </p>
+      <p>
+        Backpacking has taught me patience, planning, and the importance of traveling light - 
+        lessons that surprisingly apply well to software development too.
+      </p>
+
+      <h2>This Blog</h2>
+      <p>
+        I started this blog to share what I learn along the way. Whether it's a tricky CMake 
+        configuration, a beautiful hiking route, or tips for growing tomatoes in a Dutch climate - 
+        if I found it useful, maybe you will too.
+      </p>
+    </section>
+
+    {/* Social Links */}
+    <section class="border-t border-border pt-8">
+      <h2 class="text-xl font-semibold text-foreground mb-6 text-center">Get in Touch</h2>
+      <div class="flex items-center justify-center gap-6">
+        <a
+          href="https://github.com/bartkessels"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:border-accent hover:bg-accent/5 transition-all text-muted hover:text-foreground"
+        >
+          <Github class="h-5 w-5" />
+          GitHub
+        </a>
+        <a
+          href="https://linkedin.com/in/bartkessels"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:border-accent hover:bg-accent/5 transition-all text-muted hover:text-foreground"
+        >
+          <Linkedin class="h-5 w-5" />
+          LinkedIn
+        </a>
+        <a
+          href="mailto:hello@bartkessels.net"
+          class="flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:border-accent hover:bg-accent/5 transition-all text-muted hover:text-foreground"
+        >
+          <Mail class="h-5 w-5" />
+          Email
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

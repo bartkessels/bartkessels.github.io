@@ -1,0 +1,44 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page Not Found" description="The page you are looking for does not exist.">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+    <p class="text-8xl font-bold text-accent mb-6" aria-hidden="true">404</p>
+    <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-4">Page not found</h1>
+    <p class="text-lg text-muted mb-12 max-w-md mx-auto">
+      The page you are looking for doesn't exist or has been moved. Try one of the links below.
+    </p>
+
+    <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 max-w-xl mx-auto mb-12">
+      <a href="/blog" class="flex flex-col items-center gap-2 p-5 rounded-xl border border-border hover:border-accent/40 hover:bg-accent/5 transition-all">
+        <span class="font-medium text-foreground">Blog</span>
+        <span class="text-xs text-muted text-center">Articles on software development</span>
+      </a>
+      <a href="/stories" class="flex flex-col items-center gap-2 p-5 rounded-xl border border-border hover:border-accent/40 hover:bg-accent/5 transition-all">
+        <span class="font-medium text-foreground">Stories</span>
+        <span class="text-xs text-muted text-center">In-depth multi-part series</span>
+      </a>
+      <a href="/software" class="flex flex-col items-center gap-2 p-5 rounded-xl border border-border hover:border-accent/40 hover:bg-accent/5 transition-all">
+        <span class="font-medium text-foreground">Software</span>
+        <span class="text-xs text-muted text-center">Open-source projects</span>
+      </a>
+      <a href="/backpacking" class="flex flex-col items-center gap-2 p-5 rounded-xl border border-border hover:border-accent/40 hover:bg-accent/5 transition-all">
+        <span class="font-medium text-foreground">Backpacking</span>
+        <span class="text-xs text-muted text-center">Trail journals</span>
+      </a>
+      <a href="/gardening" class="flex flex-col items-center gap-2 p-5 rounded-xl border border-border hover:border-accent/40 hover:bg-accent/5 transition-all">
+        <span class="font-medium text-foreground">Gardening</span>
+        <span class="text-xs text-muted text-center">Plant journals</span>
+      </a>
+      <a href="/about" class="flex flex-col items-center gap-2 p-5 rounded-xl border border-border hover:border-accent/40 hover:bg-accent/5 transition-all">
+        <span class="font-medium text-foreground">About</span>
+        <span class="text-xs text-muted text-center">Who is Bart?</span>
+      </a>
+    </div>
+
+    <a href="/" class="inline-flex items-center gap-2 text-accent hover:text-accent/80 transition-colors font-medium">
+      ← Back to homepage
+    </a>
+  </div>
+</BaseLayout>

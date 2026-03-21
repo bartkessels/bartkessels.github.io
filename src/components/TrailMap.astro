@@ -1,0 +1,33 @@
+---
+/**
+ * Thin Astro wrapper around the <trail-map> Web Component.
+ * Zero Leaflet knowledge lives here — all map logic is in TrailMapElement.ts.
+ * To swap the underlying map library, only TrailMapElement.ts needs to change.
+ */
+interface Props {
+  gpxUrl: string;
+  /** Height of the map container (any valid CSS value). Default: 420px */
+  height?: string;
+  /** Accessible label for the map. Defaults to "Interactive trail map". */
+  label?: string;
+}
+
+const { gpxUrl, height = '420px', label = 'Interactive trail map' } = Astro.props;
+---
+
+<trail-map
+  gpx={gpxUrl}
+  role="img"
+  aria-label={label}
+  class="block w-full rounded-xl border border-border overflow-hidden my-8"
+  style={`height: ${height};`}
+>
+  <p class="sr-only">
+    Interactive map showing the trail route. Enable JavaScript and a modern browser to view.
+  </p>
+</trail-map>
+
+<script>
+  import '@/components/TrailMapElement';
+</script>
+

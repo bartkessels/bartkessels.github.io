@@ -1,0 +1,77 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import { Leaf } from 'lucide-astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getGardeningViewModel } from '@/factories/view-model.factory';
+import type { GardeningPlantViewState } from '@/viewModels/gardening.view-model';
+
+export const getStaticPaths = (async () => {
+  const viewModel = getGardeningViewModel();
+  const plants: GardeningPlantViewState[] = await viewModel.getPlantPages();
+
+  return plants.map(page => ({
+    params: { slug: page.slug },
+    props: { plant: page.content.plant }
+  }));
+}) satisfies GetStaticPaths;
+
+const { plant } = Astro.props;
+const { Content } = await render(plant);
+
+const { name, image, caption, category, years } = plant.data;
+---
+
+<BaseLayout 
+  title={`Growing ${name}`} 
+  description={`Complete guide to growing ${name} in your garden.`}
+  image={image}
+>
+  <article>
+    <figure>
+      <div class="w-full aspect-[21/9] bg-muted overflow-hidden">
+        <img
+          src={image}
+          alt={name}
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <figcaption class="text-center text-xs text-muted/70 italic py-2 px-4 border-t border-border/50">
+        {caption}
+      </figcaption>
+    </figure>
+
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Header */}
+      <header class="mb-8">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent/10 text-accent">
+            <Leaf class="h-3.5 w-3.5" />
+            Plant Profile
+          </span>
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-violet-100 text-violet-800">
+              {category}
+            </span>
+          {years.sort((a, b) => b - a).map((year) => (
+            <a
+              href={`/gardening/${year}`}
+              class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-sky-100 text-sky-800 hover:bg-sky-200 transition-colors"
+            >
+              {year}
+            </a>
+          ))}
+        </div>
+
+        <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
+          {name}
+        </h1>
+
+        <div class="border-b border-border pb-6" />
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

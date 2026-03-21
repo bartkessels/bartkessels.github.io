@@ -1,0 +1,72 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import { getSoftware } from '@/repositories/software.repository';
+import { ExternalLink, Github } from 'lucide-astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+export const getStaticPaths = (async () => {
+  const projects = await getSoftware();
+
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}) satisfies GetStaticPaths;
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+
+const { name, description, logo, repository, website } = project.data;
+---
+
+<BaseLayout title={name} description={description} image={logo}>
+  <article>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <header class="mb-10">
+        <div class="flex items-start gap-5 mb-6">
+          <img
+              src={logo}
+              alt={`${name} logo`}
+              class="w-20 h-20 rounded-2xl object-contain bg-muted/50 flex-shrink-0"
+            />
+
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h1 class="text-3xl md:text-4xl font-bold text-foreground leading-tight">{name}</h1>
+            </div>
+            <p class="text-lg text-muted">{description}</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 border-b border-border pb-8">
+          <a
+            href={repository}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground text-background text-sm font-medium hover:text-background hover:opacity-90 transition-opacity"
+          >
+            <Github class="h-4 w-4" />
+            View on GitHub
+          </a>
+          {website && (
+            <a
+              href={website}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium hover:border-accent/40 hover:text-accent transition-colors"
+            >
+              <ExternalLink class="h-4 w-4" />
+              Visit website
+            </a>
+          )}
+        </div>
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+    </div>
+  </article>
+</BaseLayout>

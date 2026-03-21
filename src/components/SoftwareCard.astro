@@ -1,0 +1,69 @@
+---
+import { ExternalLink, Github } from 'lucide-astro';
+
+interface Props {
+  slug: string;
+  name: string;
+  description: string;
+  logo: string;
+  repository: string;
+  website?: string;
+}
+
+const { slug, name, description, logo, repository, website } = Astro.props;
+---
+
+<article class="group relative bg-card rounded-xl border border-border hover:border-accent/30 hover:shadow-lg transition-all duration-300 overflow-hidden focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-background focus-within:rounded-xl">
+  <div class="p-6">
+    <div class="flex items-start gap-4">
+      {/* Logo */}
+      <div class="flex-shrink-0">
+        <img
+            src={logo}
+            alt={`${name} logo`}
+            class="w-14 h-14 rounded-xl object-contain bg-muted/50"
+            loading="lazy"
+          />
+      </div>
+
+      {/* Content */}
+      <div class="flex-1 min-w-0">
+        <h3 class="text-lg font-semibold text-card-foreground mb-1 line-clamp-2 h-14">
+          <a
+            href={`/software/${slug}`}
+            class="text-current hover:text-current after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+          >
+            {name}
+          </a>
+        </h3>
+        <p class="text-sm text-muted mb-4 line-clamp-2">
+          {description}
+        </p>
+
+        {/* Links */}
+        <div class="flex items-center gap-3">
+          <a
+            href={repository}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="relative z-10 inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition-colors"
+          >
+            <Github class="h-4 w-4" aria-hidden="true" />
+            Repository
+          </a>
+          {website && (
+            <a
+              href={website}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="relative z-10 inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition-colors"
+            >
+              <ExternalLink class="h-4 w-4" aria-hidden="true" />
+              Website
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

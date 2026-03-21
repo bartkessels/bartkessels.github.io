@@ -1,0 +1,38 @@
+---
+import { getStories } from '@/repositories/stories.repository';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StoryCard from '@/components/StoryCard.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import { getPageById } from '@/repositories/pages.repository';
+
+const storiesPage = await getPageById('stories');
+const stories = await getStories();
+const sortedStories = stories.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title={storiesPage!.data.title} description={storiesPage!.data.description}>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {/* Header */}
+    <SectionHeader page={storiesPage!} />
+
+    {/* Stories Grid */}
+    {sortedStories.length > 0 ? (
+      <div class="grid gap-8 md:grid-cols-2">
+        {sortedStories.map((story) => (
+          <StoryCard
+            title={story.data.title}
+            description={story.data.description}
+            date={story.data.date}
+            image={story.data.image}
+            slug={story.id}
+            postCount={story.data.posts.length}
+          />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-12">
+        <p class="text-muted text-lg">No stories published yet. Check back soon!</p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

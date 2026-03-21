@@ -1,0 +1,121 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import { Calendar, MapPin, Ruler, List } from 'lucide-astro';
+import { getSectionLabel, sectionSlug } from '@/utils/content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContentListItem from '@/components/ContentListItem.astro';
+import { getBackpackingViewModel } from '@/factories/view-model.factory';
+
+
+export const getStaticPaths = (async () => {
+    const viewModel = getBackpackingViewModel();
+    const trailPages = await viewModel.getTrailPages();
+
+    return trailPages.map((page) => ({
+        params: { trail: page.trail.id },
+        props: {
+            trail: page.trail,
+            distanceInMiles: page.distanceInMiles,
+            formattedDate: page.formattedDate,
+            sections: page.sections
+        },
+    }));
+}) satisfies GetStaticPaths;
+
+const { trail, formattedDate, distanceInMiles, sections } = Astro.props;
+const { Content } = await render(trail);
+
+const sectionLabel = getSectionLabel(sections.length, trail.data.totalSections);
+---
+
+<BaseLayout title={trail.data.title} description={trail.data.description} image={trail.data.image}>
+  <article>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      
+      {/* Hero Image */}
+      <figure class="mb-8">
+        <div class="w-full aspect-[21/9] bg-muted overflow-hidden rounded-lg">
+          <img
+            src={trail.data.image}
+            alt={trail.data.title}
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <figcaption class="text-center text-xs text-muted italic py-2 px-4 border-t border-border/50">
+          {trail.data.caption}
+        </figcaption>
+      </figure>
+
+      {/* Header */}
+      <header class="mb-8">
+        <div class="flex items-center gap-1.5 text-sm text-muted mb-3">
+          <MapPin class="h-4 w-4 text-accent" aria-hidden="true" />
+          <span>{trail.data.location}, {trail.data.country}</span>
+        </div>
+
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
+          {trail.data.title}
+        </h1>
+
+        <p class="text-lg text-muted mb-6">
+          {trail.data.description}
+        </p>
+
+        {/* Stats bar */}
+        <dl class={`grid gap-4 p-5 bg-card rounded-xl border border-border mb-6 ${sections.length > 0 || trail.data.totalSections ? 'grid-cols-3' : 'grid-cols-2'}`}>
+          <div class="flex flex-col items-center justify-center gap-1 py-2 border-r border-border">
+            <Ruler class="h-5 w-5 text-accent mb-1" aria-hidden="true" />
+            <dd class="text-3xl font-bold text-foreground">{trail.data.distanceKm}</dd>
+            <dt class="text-sm font-medium text-accent">km</dt>
+          </div>
+          <div class={`flex flex-col items-center justify-center gap-1 py-2 ${sections.length > 0 || trail.data.totalSections ? 'border-r border-border' : ''}`}>
+            <Ruler class="h-5 w-5 text-muted mb-1" aria-hidden="true" />
+            <dd class="text-3xl font-bold text-foreground">{distanceInMiles}</dd>
+            <dt class="text-sm font-medium text-muted">mi</dt>
+          </div>
+          {(sections.length > 0 || trail.data.totalSections) && (
+            <div class="flex flex-col items-center justify-center gap-1 py-2">
+              <List class="h-5 w-5 text-accent mb-1" aria-hidden="true" />
+              <dd class="text-3xl font-bold text-foreground">{sections.length}</dd>
+              <dt class="text-sm font-medium text-accent text-center leading-tight">
+                {trail.data.totalSections ? `of ${trail.data.totalSections} sections` : `${sections.length === 1 ? 'section' : 'sections'}`}
+              </dt>
+            </div>
+          )}
+        </dl>
+
+        <time datetime={trail.data.date.toISOString()} class="flex items-center gap-2 text-sm text-muted border-b border-border pb-6">
+          <Calendar class="h-4 w-4" aria-hidden="true" />
+          {formattedDate}
+        </time>
+      </header>
+
+      {/* Content */}
+      <div class="prose">
+        <Content />
+      </div>
+
+      {/* Sections list */}
+      {sections.length > 0 && (
+        <section class="mt-12 pt-8 border-t border-border">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-semibold text-foreground">Sections</h2>
+            <span class="text-sm text-muted">{sectionLabel}</span>
+          </div>
+          <div class="space-y-3">
+            {sections.map((section, i) => (
+              <ContentListItem
+                href={`/backpacking/${trail.id}/${sectionSlug(section.id)}`}
+                index={i + 1}
+                title={section.data.title}
+                description={section.data.description}
+                image={section.data.image}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </article>
+</BaseLayout>

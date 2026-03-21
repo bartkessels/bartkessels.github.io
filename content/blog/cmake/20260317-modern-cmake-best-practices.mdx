@@ -1,0 +1,125 @@
+---
+title: "Modern CMake Best Practices"
+description: "Learn modern CMake patterns for building C++ projects with proper target-based configuration and dependency management."
+date: 2024-02-05
+author: "Bart Kessels"
+subject: cmake
+slug: modern-cmake-best-practices
+image: /images/blog/cmake-modern.jpg
+caption: "Image generated using AI"
+---
+
+CMake has evolved significantly over the years. Modern CMake (3.x+) emphasizes targets and properties over variables, making build configurations more maintainable.
+
+## The Modern CMake Philosophy
+
+The key principle: **Think in terms of targets, not variables.**
+
+### Old Style (Avoid)
+
+```cmake
+# CMakeLists.txt - Old style
+include_directories(${PROJECT_SOURCE_DIR}/include)
+link_directories(${PROJECT_SOURCE_DIR}/lib)
+add_definitions(-DSOME_DEFINE)
+
+add_executable(myapp main.cpp)
+target_link_libraries(myapp somelib)
+```
+
+### Modern Style (Preferred)
+
+```cmake
+# CMakeLists.txt - Modern style
+add_executable(myapp main.cpp)
+
+target_include_directories(myapp 
+    PRIVATE ${PROJECT_SOURCE_DIR}/include
+)
+
+target_compile_definitions(myapp 
+    PRIVATE SOME_DEFINE
+)
+
+target_link_libraries(myapp 
+    PRIVATE somelib
+)
+```
+
+## Understanding PUBLIC, PRIVATE, and INTERFACE
+
+These keywords control how properties propagate:
+
+| Keyword | Used by target | Propagated to dependents |
+|---------|---------------|-------------------------|
+| **PRIVATE** | Yes | No |
+| **PUBLIC** | Yes | Yes |
+| **INTERFACE** | No | Yes |
+
+```cmake
+# CMakeLists.txt
+add_library(mylib src/mylib.cpp)
+
+target_include_directories(mylib
+    PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include  # Users need this
+    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src      # Internal only
+)
+```
+
+## Creating a Library
+
+Here's a complete example of a modern CMake library:
+
+```cmake
+# CMakeLists.txt
+cmake_minimum_required(VERSION 3.20)
+project(MyLibrary VERSION 1.0.0 LANGUAGES CXX)
+
+# Require C++17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Create the library
+add_library(mylib
+    src/feature_a.cpp
+    src/feature_b.cpp
+)
+
+# Add an alias for consistent usage
+add_library(MyLib::mylib ALIAS mylib)
+
+# Configure include directories
+target_include_directories(mylib
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+)
+
+# Link dependencies
+find_package(fmt REQUIRED)
+target_link_libraries(mylib PUBLIC fmt::fmt)
+```
+
+## FetchContent for Dependencies
+
+Modern CMake can fetch dependencies at configure time:
+
+```cmake
+# CMakeLists.txt
+include(FetchContent)
+
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG v1.14.0
+)
+
+FetchContent_MakeAvailable(googletest)
+
+# Now you can link against gtest
+target_link_libraries(mytest PRIVATE GTest::gtest_main)
+```
+
+## Conclusion
+
+Modern CMake is about targets and their properties. Use `target_*` commands, understand the visibility keywords, and leverage FetchContent for dependencies.

@@ -1,0 +1,108 @@
+---
+title: "Building Android Apps with Jetpack Compose"
+description: "A comprehensive guide to building modern Android UIs with Jetpack Compose and Kotlin."
+date: 2024-03-10
+author: "Bart Kessels"
+subject: "android"
+slug: "building-android-apps-with-jetpack-compose"
+image: "/images/blog/jetpack-compose.jpg"
+caption: "Image generated using AI"
+draft: false
+---
+
+Jetpack Compose has revolutionized Android UI development. This modern toolkit allows us to build native UIs with less code and more intuitive patterns. Let's dive into how to get started.
+
+## What is Jetpack Compose?
+
+Jetpack Compose is Android's modern toolkit for building native UI. It simplifies and accelerates UI development on Android by using a declarative approach with Kotlin.
+
+## Setting Up Your Project
+
+First, ensure your `build.gradle.kts` includes the Compose dependencies:
+
+```kotlin
+// build.gradle.kts (Module: app)
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+}
+
+android {
+    compileSdk = 34
+    
+    buildFeatures {
+        compose = true
+    }
+    
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.8"
+    }
+}
+
+dependencies {
+    implementation(platform("androidx.compose:compose-bom:2024.02.00"))
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.activity:activity-compose:1.8.2")
+}
+```
+
+## Your First Composable
+
+Composables are the building blocks of Compose. Here's a simple example:
+
+```kotlin
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Text(
+        text = "Hello, $name!",
+        modifier = modifier.padding(16.dp),
+        style = MaterialTheme.typography.headlineMedium
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    MyAppTheme {
+        Greeting("World")
+    }
+}
+```
+
+## State Management
+
+Compose uses a unidirectional data flow. Here's how to manage state:
+
+```kotlin
+@Composable
+fun Counter() {
+    var count by remember { mutableStateOf(0) }
+    
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(16.dp)
+    ) {
+        Text(
+            text = "Count: $count",
+            style = MaterialTheme.typography.displaySmall
+        )
+        
+        Spacer(modifier = Modifier.height(8.dp))
+        
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Button(onClick = { count-- }) {
+                Text("-")
+            }
+            Button(onClick = { count++ }) {
+                Text("+")
+            }
+        }
+    }
+}
+```
+
+## Conclusion
+
+Jetpack Compose offers a fresh, modern approach to Android UI development. Its declarative nature makes it easier to reason about your UI and reduces boilerplate significantly.

@@ -1,0 +1,196 @@
+---
+import { Menu, X } from 'lucide-astro';
+import { getEntry } from 'astro:content';
+import { subjectSlug } from '@/utils/content';
+import { getSubjectsForSection } from '@/repositories/subject.repository';
+
+const currentPath = Astro.url.pathname;
+
+const pageLinks = [
+  { href: '/blog', label: 'Blog' },
+  { href: '/stories', label: 'Stories' },
+  { href: '/software', label: 'Software' },
+  { href: '/backpacking', label: 'Backpacking' },
+  { href: '/gardening', label: 'Gardening' },
+];
+const personalLinks = [
+  { href: '/about', label: 'About' },
+];
+
+const blogSubjects = await getSubjectsForSection('blog');
+const blogSubjectPrefixes = blogSubjects.map(s => '/' + subjectSlug(s.id));
+const isOnBlogSubjectPath = blogSubjectPrefixes.some(prefix => currentPath.startsWith(prefix));
+
+const currentPageSlug = currentPath === '/'
+  ? 'index'
+  : currentPath.startsWith('/blog') || isOnBlogSubjectPath
+  ? 'blog'
+  : pageLinks.find(l => l.href !== '/blog' && currentPath.startsWith(l.href))?.href.slice(1);
+
+// Reuse already-fetched blog subjects; fetch for other sections
+const subjects = currentPageSlug === 'blog'
+  ? blogSubjects.sort((a, b) => a.data.name.localeCompare(b.data.name))
+  : currentPageSlug
+  ? (await getSubjectsForSection(currentPageSlug)).sort((a, b) => a.data.name.localeCompare(b.data.name))
+  : [];
+
+const currentPage = currentPageSlug ? await getEntry('pages', currentPageSlug) : undefined;
+const showSubjects = currentPage?.data.show_subjects ?? false;
+
+// Build subject href: blog subjects live at /{slug}, all other sections at /{section}/{slug}
+function subjectHref(subjectId: string): string {
+  const slug = subjectSlug(subjectId);
+  return currentPageSlug === 'blog' ? `/${slug}` : `/${currentPageSlug}/${slug}`;
+}
+
+function isActive(href: string): boolean {
+  if (href === '/blog') {
+    return currentPath.startsWith('/blog') || isOnBlogSubjectPath;
+  }
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/" class="text-2xl tracking-tighter transition-opacity hover:opacity-75 select-none">
+        <span class="font-light text-accent">//</span><span class="font-light text-muted"> Bart Kessels </span><span class="font-light text-accent">//</span>
+
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Main">
+        {pageLinks.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? 'page' : undefined}
+            class:list={[
+              'px-3 py-2 text-sm font-medium rounded-md transition-colors',
+              isActive(link.href)
+                ? 'text-accent bg-accent/10'
+                : 'text-muted hover:text-foreground hover:bg-muted/10'
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+
+        <span class="mx-2 h-5 w-px bg-border" aria-hidden="true"></span>
+
+        <div class="hidden lg:flex items-center gap-1">
+        {personalLinks.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? 'page' : undefined}
+            class:list={[
+              'px-3 py-2 text-sm font-medium rounded-md transition-colors',
+              isActive(link.href)
+                ? 'text-accent bg-accent/10'
+                : 'text-muted hover:text-foreground hover:bg-muted/10'
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+
+        </div>
+      </nav>
+
+      <!-- Mobile menu button -->
+      <button
+        type="button"
+        class="lg:hidden p-2 rounded-md text-muted hover:text-foreground hover:bg-muted/10 transition-colors"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        id="mobile-menu-button"
+      >
+        <Menu class="h-6 w-6 block" id="menu-icon-open" aria-hidden="true" />
+        <X class="h-6 w-6 hidden" id="menu-icon-close" aria-hidden="true" />
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <nav class="lg:hidden hidden pb-4" id="mobile-menu" aria-label="Mobile menu">
+      <div class="flex flex-col gap-1">
+        {pageLinks.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? 'page' : undefined}
+            class:list={[
+              'px-3 py-2 text-sm font-medium rounded-md transition-colors',
+              isActive(link.href)
+                ? 'text-accent bg-accent/10'
+                : 'text-muted hover:text-foreground hover:bg-muted/10'
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+        <span class="mx-2 w-100 h-px bg-border" aria-hidden="true"></span>
+        {personalLinks.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? 'page' : undefined}
+            class:list={[
+              'px-3 py-2 text-sm font-medium rounded-md transition-colors',
+              isActive(link.href)
+                ? 'text-accent bg-accent/10'
+                : 'text-muted hover:text-foreground hover:bg-muted/10'
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+    </nav>
+  </div>
+
+  <!-- Subjects bar -->
+  {showSubjects && subjects.length > 0 && (
+    <div class="border-t border-border">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex items-center gap-1 overflow-x-auto py-1 scrollbar-none" aria-label="Topics">
+          {subjects.map((subject) => (
+            <a
+              href={subjectHref(subject.id)}
+              aria-current={isActive(subjectHref(subject.id)) ? 'page' : undefined}
+              class:list={[
+                'flex-shrink-0 px-3 py-1.5 text-xs font-medium rounded-md transition-colors whitespace-nowrap',
+                isActive(subjectHref(subject.id))
+                  ? 'text-accent bg-accent/10'
+                  : 'text-muted hover:text-foreground hover:bg-muted/10'
+              ]}
+            >
+              {subject.data.name}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </div>
+  )}
+</header>
+
+<script>
+  const button = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+
+  button?.addEventListener('click', () => {
+    const isOpen = menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden', !isOpen);
+    iconOpen?.classList.toggle('hidden', isOpen);
+    iconOpen?.classList.toggle('block', !isOpen);
+    iconClose?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('block', isOpen);
+    button?.setAttribute('aria-expanded', String(!!isOpen));
+    if (isOpen) {
+      // Menu just opened — move focus to first link
+      const firstLink = menu?.querySelector<HTMLAnchorElement>('a');
+      firstLink?.focus();
+    }
+  });
+</script>

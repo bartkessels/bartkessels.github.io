@@ -1,0 +1,129 @@
+---
+title: "State Management in Jetpack Compose"
+description: "Understand how to effectively manage state in Jetpack Compose applications using remember, mutableStateOf, and ViewModel."
+date: 2024-01-10
+author: "Bart Kessels"
+subject: android
+slug: jetpack-compose-state-management
+image: /images/blog/compose-state.jpg
+caption: "Image generated using AI"
+---
+
+State management is at the heart of Jetpack Compose. Understanding how state works is essential for building reactive Android UIs.
+
+## The Basics of State
+
+In Compose, state drives the UI. When state changes, the UI automatically recomposes to reflect those changes.
+
+```kotlin
+// CounterScreen.kt
+@Composable
+fun Counter() {
+    var count by remember { mutableStateOf(0) }
+    
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Count: $count",
+            style = MaterialTheme.typography.headlineMedium
+        )
+        
+        Button(onClick = { count++ }) {
+            Text("Increment")
+        }
+    }
+}
+```
+
+## remember vs rememberSaveable
+
+Use `rememberSaveable` when you need state to survive configuration changes:
+
+```kotlin
+// FormScreen.kt
+@Composable
+fun LoginForm() {
+    // Survives configuration changes
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    
+    Column {
+        TextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") }
+        )
+        TextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Password") },
+            visualTransformation = PasswordVisualTransformation()
+        )
+    }
+}
+```
+
+## State Hoisting
+
+For reusable components, hoist state to the caller:
+
+```kotlin
+// Components.kt
+@Composable
+fun StatelessCounter(
+    count: Int,
+    onIncrement: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        Text("Count: $count")
+        Button(onClick = onIncrement) {
+            Text("Increment")
+        }
+    }
+}
+
+// Usage
+@Composable
+fun CounterScreen() {
+    var count by remember { mutableStateOf(0) }
+    StatelessCounter(
+        count = count,
+        onIncrement = { count++ }
+    )
+}
+```
+
+## ViewModel Integration
+
+For complex state, use a ViewModel:
+
+```kotlin
+// CounterViewModel.kt
+class CounterViewModel : ViewModel() {
+    private val _count = MutableStateFlow(0)
+    val count: StateFlow<Int> = _count.asStateFlow()
+    
+    fun increment() {
+        _count.value++
+    }
+}
+
+// CounterScreen.kt
+@Composable
+fun CounterScreen(
+    viewModel: CounterViewModel = viewModel()
+) {
+    val count by viewModel.count.collectAsState()
+    
+    StatelessCounter(
+        count = count,
+        onIncrement = viewModel::increment
+    )
+}
+```
+
+## Conclusion
+
+Start with `remember` for simple local state, use `rememberSaveable` for state that should survive configuration changes, and reach for ViewModel when managing complex business logic.

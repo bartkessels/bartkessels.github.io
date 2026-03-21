@@ -1,0 +1,101 @@
+---
+import { getSectionLabel, formatDate } from '@/utils/content';
+import { Calendar, FileText } from 'lucide-astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TrailCard from '@/components/TrailCard.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import { getPageById } from '@/repositories/pages.repository';
+import { getBackpackingViewModel } from '@/factories/view-model.factory';
+
+const backpackingPage = await getPageById('backpacking');
+const viewModel = getBackpackingViewModel();
+const overview = await viewModel.getOverviewPage();
+---
+
+<BaseLayout title={backpackingPage!.data.title} description={backpackingPage!.data.description}>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+    <SectionHeader page={backpackingPage!} />
+
+    {Array.from(overview.trails.keys()).length === 0 && overview.posts.length === 0 ? (
+      <p class="text-muted">Nothing here yet. Check back soon!</p>
+    ) : (
+      <div class="grid gap-10 lg:grid-cols-3">
+
+        {/* Left: trails grouped by year */}
+        <div class="lg:col-span-2 space-y-16">
+          {overview.trails.map(trailByYear => (
+            <section>
+              <div class="flex items-center gap-3 mb-4 pb-3 border-b border-border">
+                <span class="text-lg font-semibold text-foreground">{trailByYear.year}</span>
+                <span class="text-sm text-muted">
+                  {trailByYear.trails.length} {trailByYear.trails.length === 1 ? 'trail' : 'trails'}
+                </span>
+              </div>
+
+              <div class="space-y-4">
+                {trailByYear.trails.map((trail) => {
+                  const publishedSections = trail.data.sections.length;
+                  const sectionLabel = getSectionLabel(publishedSections, trail.data.totalSections) ?? undefined;
+                  return (
+                    <TrailCard
+                      title={trail.data.title}
+                      description={trail.data.description}
+                      date={trail.data.date}
+                      country={trail.data.country}
+                      location={trail.data.location}
+                      distanceKm={trail.data.distanceKm}
+                      image={trail.data.image}
+                      slug={trail.id}
+                      sectionLabel={sectionLabel}
+                    />
+                  );
+                })}
+              </div>
+            </section>
+          ))}
+        </div>
+
+        {/* Right: posts sidebar */}
+        {overview.posts.length > 0 && (
+          <div>
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-border">
+              <FileText class="h-4 w-4 text-accent" aria-hidden="true" />
+              <h2 class="text-lg font-semibold text-foreground">Posts</h2>
+            </div>
+            <div class="space-y-2">
+              {overview.posts.map((post) => {
+                const formattedDate = formatDate(post.data.date);
+                return (
+                  <a
+                    href={`/backpacking/posts/${post.id}`}
+                    class="group flex items-start gap-3 p-3 rounded-lg border border-border hover:border-accent/30 hover:bg-accent/5 transition-all"
+                  >
+                    <div class="w-10 h-10 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                      <img
+                        src={post.data.image}
+                        alt={post.data.title}
+                        class="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div class="min-w-0">
+                      <p class="text-sm font-medium text-foreground group-hover:text-accent transition-colors line-clamp-2">
+                        {post.data.title}
+                      </p>
+                      <div class="flex items-center gap-1 text-xs text-muted mt-1">
+                        <Calendar class="h-3 w-3 flex-shrink-0" aria-hidden="true" />
+                        <time datetime={post.data.date.toISOString()}>{formattedDate}</time>
+                      </div>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+      </div>
+    )}
+  </div>
+</BaseLayout>

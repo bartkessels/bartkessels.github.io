@@ -1,0 +1,45 @@
+---
+import { Github, Linkedin, Rss } from 'lucide-astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-border bg-card">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <!-- Copyright -->
+      <p class="text-sm text-muted">
+        &copy; {currentYear} Bart Kessels. All rights reserved.
+      </p>
+
+      <!-- Social Links -->
+      <div class="flex items-center gap-4">
+        <a
+          href="https://github.com/bartkessels"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="p-2 text-muted hover:text-foreground transition-colors"
+          aria-label="GitHub"
+        >
+          <Github class="h-5 w-5" />
+        </a>
+        <a
+          href="https://linkedin.com/in/bartkessels"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="p-2 text-muted hover:text-foreground transition-colors"
+          aria-label="LinkedIn"
+        >
+          <Linkedin class="h-5 w-5" />
+        </a>
+        <a
+          href="/rss.xml"
+          class="p-2 text-muted hover:text-foreground transition-colors"
+          aria-label="RSS Feed"
+        >
+          <Rss class="h-5 w-5" />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

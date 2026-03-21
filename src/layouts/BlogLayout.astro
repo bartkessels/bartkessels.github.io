@@ -1,0 +1,102 @@
+---
+import { Calendar, User, Clock } from 'lucide-astro';
+import ArticleLayout from './ArticleLayout.astro';
+import SubjectBadge from '@/components/SubjectBadge.astro';
+import RelatedPosts from '@/components/RelatedPosts.astro';
+import StoryNavigation from '@/components/StoryNavigation.astro';
+import { formatDate } from '@/utils/content';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  author: string;
+  subject: string;
+  image: string;
+  imageCaption: string;
+  readingTime?: number;
+  story?: {
+    title: string;
+    slug: string;
+    prevPost?: { title: string; slug: string; subject: string };
+    nextPost?: { title: string; slug: string; subject: string };
+  };
+  currentSlug: string;
+}
+
+const { title, description, date, author, subject, image, imageCaption, readingTime, story, currentSlug } = Astro.props;
+
+const formattedDate = formatDate(date);
+
+const blogPostingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  author: {
+    '@type': 'Person',
+    name: author,
+    url: 'https://bartkessels.net/about',
+  },
+  datePublished: date.toISOString(),
+  dateModified: date.toISOString(),
+  url: Astro.url.href,
+  image: new URL(image, Astro.site).href,
+};
+---
+
+<ArticleLayout title={title} description={description} image={image} imageCaption={imageCaption} type="article">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
+
+  {/* Article Header */}
+  <header class="mb-8">
+    <div class="mb-4">
+      <SubjectBadge subject={subject} size="md" />
+    </div>
+
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
+      {title}
+    </h1>
+
+    <p class="text-lg text-muted mb-6">
+      {description}
+    </p>
+
+    <div class="flex items-center gap-6 text-sm text-muted border-b border-border pb-6">
+      <span class="flex items-center gap-2">
+        <User class="h-4 w-4" aria-hidden="true" />
+        {author}
+      </span>
+      <time datetime={date.toISOString()} class="flex items-center gap-2">
+        <Calendar class="h-4 w-4" aria-hidden="true" />
+        {formattedDate}
+      </time>
+      {readingTime && (
+        <span class="flex items-center gap-2">
+          <Clock class="h-4 w-4" aria-hidden="true" />
+          {readingTime} min read
+        </span>
+      )}
+    </div>
+
+    {/* Story link */}
+    {story && (
+      <div class="mt-6 p-4 bg-accent/5 rounded-lg border border-accent/20">
+        <p class="text-sm text-muted mb-1">Part of the series</p>
+        <a
+          href={`/stories/${story.slug}`}
+          class="font-semibold text-accent hover:text-accent/80 transition-colors"
+        >
+          {story.title}
+        </a>
+      </div>
+    )}
+  </header>
+
+  <div class="prose">
+    <slot />
+  </div>
+
+  <StoryNavigation prevPost={story?.prevPost} nextPost={story?.nextPost} />
+  <RelatedPosts subject={subject} currentSlug={currentSlug} />
+</ArticleLayout>

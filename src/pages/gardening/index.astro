@@ -1,0 +1,120 @@
+---
+import { BookOpen, Leaf } from 'lucide-astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getReadingTime } from '@/utils/content';
+import SectionHeader from '@/components/SectionHeader.astro';
+import GardeningJournalCard from '@/components/GardeningJournalCard.astro';
+import { getPageById } from '@/repositories/pages.repository';
+import { getGardeningViewModel } from '@/factories/view-model.factory';
+import type { CollectionEntry } from 'astro:content';
+
+const viewModel = getGardeningViewModel();
+const gardeningPage = await getPageById('gardening');
+const overviewPage = await viewModel.getOverviewPage();
+
+const getJournalEntries = (year: CollectionEntry<'subjects/gardening'>): CollectionEntry<'gardening/journal'>[] =>
+  overviewPage.content.pagesPerYear.get(year)?.journalEntries ?? [];
+const getPlants = (year: CollectionEntry<'subjects/gardening'>): Map<string, CollectionEntry<'gardening/plants'>[]> =>
+  overviewPage.content.pagesPerYear.get(year)?.plants ?? new Map();
+const getNumberOfPlants = (year: CollectionEntry<'subjects/gardening'>): number =>
+  Array.from(getPlants(year))
+    .flatMap(plant => plant[1].length)
+    .reduce((sum, cur) => sum + cur, 0);
+
+const { pagesPerYear } = overviewPage.content;
+---
+
+<BaseLayout title={gardeningPage!.data.title} description={gardeningPage!.data.description}>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    {/* Header */}
+    <SectionHeader page={gardeningPage} />
+
+    {pagesPerYear.size === 0 ? (
+      <p class="text-muted">Nothing here yet. Check back soon!</p>
+    ) : (
+      <div class="space-y-16">
+        {pagesPerYear.keys().map(year => (
+          <section>
+            {/* Year heading */}
+            <div class="flex items-center gap-3 mb-8 pb-3 border-b border-border">
+              <a
+                href={`/gardening/${year.id}`}
+                class="text-3xl font-bold text-foreground hover:text-accent transition-colors"
+              >
+                {year.data.name}
+              </a>
+              <span class="text-sm text-muted">
+                {getJournalEntries(year).length} {getJournalEntries(year).length === 1 ? 'journal entry' : 'journal entries'} &middot; {getNumberOfPlants(year)} plants
+              </span>
+            </div>
+
+            <div class="grid gap-10 lg:grid-cols-3">
+              <div class="lg:col-span-2">
+                <div class="flex items-center gap-2 mb-4">
+                  <BookOpen class="h-4 w-4 text-accent" aria-hidden="true" />
+                  <h3 class="text-lg font-semibold text-foreground">Journal</h3>
+                </div>
+                {getJournalEntries(year).length > 0 ? (
+                  <div class="space-y-4">
+                    {getJournalEntries(year).map((journalEntry) => (
+                      <GardeningJournalCard
+                        title={journalEntry.data.title}
+                        description={journalEntry.data.description}
+                        date={journalEntry.data.date}
+                        author={journalEntry.data.author}
+                        image={journalEntry.data.image}
+                        slug={journalEntry.id}
+                        readingTime={getReadingTime(journalEntry.body)}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p class="text-sm text-muted">No journal entries for {year}.</p>
+                )}
+              </div>
+
+              <div>
+                <div class="flex items-center gap-2 mb-4">
+                  <Leaf class="h-4 w-4 text-accent" aria-hidden="true" />
+                  <h3 class="text-lg font-semibold text-foreground">Plants</h3>
+                </div>
+                {getPlants(year).size > 0 ? (
+                  <div class="space-y-5">
+                    {getPlants(year).keys().map(key => (
+                      <div>
+                        <h4 class="text-xs font-semibold text-muted uppercase tracking-wide mb-2">{key}</h4>
+                        <div class="space-y-2">
+                          {getPlants(year).get(key)?.map((plant) => (
+                            <a
+                              href={`/gardening/plants/${plant.id.split('/').at(-1)}`}
+                              class="group flex items-center gap-3 p-2.5 rounded-lg border border-border hover:border-accent/30 hover:bg-accent/5 transition-all"
+                            >
+                              <div class="w-9 h-9 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                                <img
+                                  src={plant.data.image}
+                                  alt={plant.data.name}
+                                  class="w-full h-full object-cover"
+                                  loading="lazy"
+                                />
+                              </div>
+                              <span class="text-sm font-medium text-foreground group-hover:text-accent transition-colors">
+                                {plant.data.name}
+                              </span>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p class="text-sm text-muted">No plants recorded for {year}.</p>
+                )}
+              </div>
+            </div>
+          </section>
+        ))}
+      </div>
+    )}
+  </div>
+</BaseLayout>
+

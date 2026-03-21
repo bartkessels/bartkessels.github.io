@@ -1,0 +1,94 @@
+---
+title: "Getting Started with Dependency Injection in C#"
+description: "Learn how to implement dependency injection in your C# applications using the built-in Microsoft.Extensions.DependencyInjection container."
+date: 2024-03-15
+author: "Bart Kessels"
+subject: csharp
+slug: getting-started-with-csharp-dependency-injection
+image: /images/blog/csharp-di.jpg
+caption: "Image generated using AI"
+story: dependency-injection-series
+storyOrder: 1
+---
+
+Dependency Injection (DI) is a fundamental design pattern in modern C# development. It helps create loosely coupled, testable, and maintainable code. In this post, we'll explore how to use the built-in DI container in .NET.
+
+## What is Dependency Injection?
+
+Dependency Injection is a technique where an object receives its dependencies from external sources rather than creating them itself. This follows the **Dependency Inversion Principle** - one of the SOLID principles.
+
+### Without Dependency Injection
+
+```csharp
+// Program.cs - Tightly coupled code
+public class OrderService
+{
+    private readonly EmailService _emailService;
+    
+    public OrderService()
+    {
+        // Hard dependency - difficult to test
+        _emailService = new EmailService();
+    }
+    
+    public void PlaceOrder(Order order)
+    {
+        // Process order...
+        _emailService.SendConfirmation(order.CustomerEmail);
+    }
+}
+```
+
+### With Dependency Injection
+
+```csharp
+// Program.cs - Loosely coupled code
+public class OrderService
+{
+    private readonly IEmailService _emailService;
+    
+    public OrderService(IEmailService emailService)
+    {
+        // Dependency injected from outside
+        _emailService = emailService;
+    }
+    
+    public void PlaceOrder(Order order)
+    {
+        // Process order...
+        _emailService.SendConfirmation(order.CustomerEmail);
+    }
+}
+```
+
+## Setting Up DI in .NET
+
+The .NET framework includes a built-in DI container. Here's how to configure it:
+
+```csharp
+// Program.cs
+using Microsoft.Extensions.DependencyInjection;
+
+var services = new ServiceCollection();
+
+// Register services
+services.AddTransient<IEmailService, EmailService>();
+services.AddScoped<IOrderService, OrderService>();
+services.AddSingleton<IConfiguration, Configuration>();
+
+var serviceProvider = services.BuildServiceProvider();
+```
+
+## Service Lifetimes
+
+Understanding service lifetimes is crucial for proper DI usage:
+
+| Lifetime | Description |
+|----------|-------------|
+| **Transient** | Created each time they're requested |
+| **Scoped** | Created once per request/scope |
+| **Singleton** | Created once for the application lifetime |
+
+## Conclusion
+
+Dependency Injection is a powerful pattern that improves code quality. In the next post, we'll explore advanced DI scenarios including factory patterns and decorators.

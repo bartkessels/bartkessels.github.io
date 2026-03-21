@@ -1,0 +1,72 @@
+---
+import { MapPin, Ruler, Calendar, List } from 'lucide-astro';
+import { kmToMiles, formatDate } from '@/utils/content';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  country: string;
+  location: string;
+  distanceKm: number;
+  image: string;
+  slug: string;
+  sectionLabel?: string;
+}
+
+const { title, description, date, country, location, distanceKm, image, slug, sectionLabel } = Astro.props;
+const distanceMi = kmToMiles(distanceKm);
+
+const formattedDate = formatDate(date);
+---
+
+<article class="group relative focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-background focus-within:rounded-xl">
+  <div class="bg-card rounded-xl overflow-hidden border border-border hover:border-accent/30 hover:shadow-lg transition-all duration-300">
+    <div class="aspect-video overflow-hidden bg-muted">
+      <img
+        src={image}
+        alt={title}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        loading="lazy"
+      />
+    </div>
+    <div class="p-6">
+      <div class="flex items-center gap-1.5 text-xs text-muted mb-3">
+        <MapPin class="h-3.5 w-3.5 text-accent flex-shrink-0" aria-hidden="true" />
+        <span>{location}, {country}</span>
+      </div>
+
+      <h3 class="text-xl font-semibold text-card-foreground group-hover:text-accent transition-colors mb-2 line-clamp-2 h-14">
+        <a
+          href={`/backpacking/${slug}`}
+          class="text-current hover:text-current after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+        >
+          {title}
+        </a>
+      </h3>
+
+      <p class="text-muted text-sm mb-4 line-clamp-2">
+        {description}
+      </p>
+
+      <div class="flex items-center gap-3 mb-4">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 text-accent text-sm font-semibold">
+          <Ruler class="h-3.5 w-3.5" aria-hidden="true" />
+          {distanceKm} km
+        </span>
+        <span class="text-xs text-muted">{distanceMi} mi</span>
+        {sectionLabel && (
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-muted/40 text-muted text-xs font-medium">
+            <List class="h-3 w-3" aria-hidden="true" />
+            {sectionLabel}
+          </span>
+        )}
+      </div>
+
+      <time datetime={date.toISOString()} class="flex items-center gap-1.5 text-xs text-muted border-t border-border pt-3">
+        <Calendar class="h-3.5 w-3.5" aria-hidden="true" />
+        {formattedDate}
+      </time>
+    </div>
+  </div>
+</article>

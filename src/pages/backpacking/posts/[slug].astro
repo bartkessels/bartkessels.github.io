@@ -1,0 +1,67 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import { Calendar, User } from 'lucide-astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getBackpackingViewModel } from '@/factories/view-model.factory';
+
+export const getStaticPaths = (async () => {
+  const viewModel = getBackpackingViewModel();
+  const postPages = await viewModel.getPostsPage();
+
+  return postPages.map(page => ({
+    params: { slug: page.slug },
+    props: {
+      post: page.post,
+      formattedDate: page.formattedDate
+    }
+  }));
+}) satisfies GetStaticPaths;
+
+const { post, formattedDate } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} image={post.data.image}>
+  <article>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <figure class="mb-8">
+        <div class="w-full aspect-[21/9] bg-muted overflow-hidden rounded-lg">
+          <img
+            src={post.data.image}
+            alt={post.data.title}
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <figcaption class="text-center text-xs text-muted/70 italic py-2 px-4 border-t border-border/50">
+          {post.data.caption}
+        </figcaption>
+      </figure>
+
+      <header class="mb-8">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
+          {post.data.title}
+        </h1>
+
+        <p class="text-lg text-muted mb-6">
+          {post.data.description}
+        </p>
+
+        <div class="flex items-center gap-6 text-sm text-muted border-b border-border pb-6">
+          <span class="flex items-center gap-2">
+            <User class="h-4 w-4" />
+            {post.data.author}
+          </span>
+          <span class="flex items-center gap-2">
+            <Calendar class="h-4 w-4" />
+            {formattedDate}
+          </span>
+        </div>
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,63 @@
+---
+import { Calendar, User, Clock } from 'lucide-astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  date: Date;
+  author: string;
+  image: string;
+  slug: string;
+  readingTime?: number;
+}
+
+const { title, description, date, author, image, slug, readingTime } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<article class="group relative focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2 focus-within:ring-offset-background focus-within:rounded-xl">
+  <div class="bg-card rounded-xl overflow-hidden border border-border hover:border-accent/30 hover:shadow-md transition-all">
+    <div class="flex flex-col sm:flex-row">
+      <div class="sm:w-40 aspect-video sm:aspect-square overflow-hidden bg-muted flex-shrink-0">
+        <img
+          src={image}
+          alt={title}
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
+        />
+      </div>
+      <div class="p-4 flex-1 flex flex-col">
+        <h4 class="font-semibold text-foreground group-hover:text-accent transition-colors mb-1 line-clamp-2 h-14">
+          <a
+            href={`/gardening/journal/${slug}`}
+            class="text-current hover:text-current after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+          >
+            {title}
+          </a>
+        </h4>
+
+        {description && (
+          <p class="text-sm text-muted mb-3 line-clamp-2">{description}</p>
+        )}
+
+        <div class="flex items-center gap-3 text-xs text-muted flex-wrap mt-auto">
+          <span class="flex items-center gap-1.5 whitespace-nowrap">
+            <User class="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            {author}
+          </span>
+          <time datetime={date.toISOString()} class="flex items-center gap-1.5 whitespace-nowrap">
+            <Calendar class="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+            {formattedDate}
+          </time>
+          {readingTime && (
+            <span class="flex items-center gap-1.5 whitespace-nowrap">
+              <Clock class="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+              {readingTime} min
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

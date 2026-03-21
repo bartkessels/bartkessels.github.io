@@ -1,0 +1,58 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import { Calendar, BookOpen } from 'lucide-astro';
+import ArticleLayout from '@/layouts/ArticleLayout.astro';
+import { getGardeningViewModel } from '@/factories/view-model.factory';
+
+export const getStaticPaths = (async () => {
+  const viewModel = getGardeningViewModel();
+  const journalEntries = await viewModel.getJournalPages();
+
+  return journalEntries.map(page => ({
+    params: { year: page.year.id, slug: page.slug },
+    props: {
+      journal: page.content.journalEntry
+    }
+  }));
+}) satisfies GetStaticPaths;
+
+const { journal } = Astro.props;
+const { Content } = await render(journal);
+
+const formattedDate = journal.data.date.toLocaleDateString('en-US', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<ArticleLayout
+  title={journal.data.title}
+  description={`Garden journal entry from ${formattedDate}`}
+  image={journal.data.image}
+  imageCaption={journal.data.caption}
+>
+  <header class="mb-8">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent/10 text-accent">
+        <BookOpen class="h-3.5 w-3.5" />
+        Journal Entry
+      </span>
+    </div>
+
+    <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
+      {journal.data.title}
+    </h1>
+
+    <div class="flex items-center gap-2 text-sm text-muted border-b border-border pb-6">
+      <Calendar class="h-4 w-4" />
+      {formattedDate}
+    </div>
+  </header>
+
+  <div class="prose">
+    <Content />
+  </div>
+</ArticleLayout>

@@ -1,0 +1,41 @@
+---
+import { getSoftware } from '@/repositories/software.repository';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SoftwareCard from '@/components/SoftwareCard.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import { getPageById } from '@/repositories/pages.repository';
+
+const software = await getSoftware();
+const softwarePage = await getPageById('software');
+
+const sortedSoftware = software.sort((a, b) => a.data.name.localeCompare(b.data.name))
+---
+
+<BaseLayout title={softwarePage!.data.title} description={softwarePage!.data.description}>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <SectionHeader page={softwarePage!} />
+
+    {sortedSoftware.length > 0 && (
+      <section class="mb-16">
+        <div class="grid gap-6 md:grid-cols-2">
+          {sortedSoftware.map((project) => (
+            <SoftwareCard
+              slug={project.id}
+              name={project.data.name}
+              description={project.data.description}
+              logo={project.data.logo}
+              repository={project.data.repository}
+              website={project.data.website}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {software.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-muted text-lg">No projects published yet. Check back soon!</p>
+      </div>
+    )}
+  </div>
+</BaseLayout>

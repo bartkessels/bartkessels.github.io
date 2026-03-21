@@ -1,0 +1,129 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import { Calendar, ChevronLeft, ChevronRight, MapPin } from 'lucide-astro';
+import { getSectionOrderLabel, sectionSlug } from '@/utils/content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TrailMap from '@/components/TrailMap.astro';
+import { getBackpackingViewModel } from '@/factories/view-model.factory';
+
+export const getStaticPaths = (async () => {
+  const viewModel = getBackpackingViewModel();
+  const sectionsPage = await viewModel.getSectionsPage();
+
+  return sectionsPage.map(page => ({
+    params: {
+      trail: page.trail.id,
+      section: sectionSlug(page.section.id)
+    },
+    props: {
+      section: page.section,
+      formattedDate: page.formattedDate,
+      trail: page.trail,
+      previousSection: page.prevSection,
+      nextSection: page.nextSection,
+      sectionOrder: page.sectionOrder
+    }
+  }));
+}) satisfies GetStaticPaths;
+
+const { section, formattedDate, trail, previousSection, nextSection, sectionOrder } = Astro.props;
+const { Content } = await render(section);
+
+const totalLabel = getSectionOrderLabel(sectionOrder, trail.data.totalSections);
+---
+
+<BaseLayout title={`${trail.data.title} - ${section.data.title}`} description={section.data.description}>
+  <article>
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <figure class="mb-8">
+          <div class="w-full aspect-[21/9] bg-muted overflow-hidden rounded-lg">
+          <img
+            src={section.data.image}
+            alt={section.data.title}
+            class="w-full h-full object-cover"
+          />
+        </div>
+          <figcaption class="text-center text-xs text-muted italic py-2 px-4">
+            {section.data.caption}
+          </figcaption>
+        </figure>
+
+      <header class="mb-8">
+        {trail && (
+          <div class="flex items-center gap-1.5 text-sm text-muted mb-2">
+            <MapPin class="h-4 w-4 text-accent flex-shrink-0" aria-hidden="true" />
+            <a
+              href={`/backpacking/${trail.id}`}
+              class="hover:text-accent transition-colors"
+            >
+              {trail.data.title}
+            </a>
+            <span class="mx-1">·</span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-accent/10 text-accent text-xs font-semibold">
+              {totalLabel}
+            </span>
+          </div>
+        )}
+
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
+          {section.data.title}
+        </h1>
+
+        <p class="text-lg text-muted mb-6">
+          {section.data.description}
+        </p>
+
+        <time datetime={section.data.date.toISOString()} class="flex items-center gap-2 text-sm text-muted border-b border-border pb-6">
+          <Calendar class="h-4 w-4" aria-hidden="true" />
+          {formattedDate}
+        </time>
+      </header>
+
+      <div class="mb-8 w-full aspect-[21/9]">
+        <TrailMap gpxUrl={section.data.gpx} height="420px" label={`${section.data.title} route map`} />
+      </div>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      {(previousSection || nextSection) && (
+        <nav class="mt-12 pt-8 border-t border-border">
+          <div class="grid gap-4 sm:grid-cols-2">
+            {previousSection ? (
+              <a
+                href={`/backpacking/${trail.id}/${sectionSlug(previousSection.id)}`}
+                class="group p-4 rounded-lg border border-border hover:border-accent/30 hover:bg-accent/5 transition-all"
+              >
+                <span class="flex items-center gap-1 text-sm text-muted mb-1">
+                  <ChevronLeft class="h-4 w-4" aria-hidden="true" />
+                  Section {sectionOrder - 1}
+                </span>
+                <span class="font-medium text-foreground group-hover:text-accent transition-colors line-clamp-1">
+                  {previousSection.data.title}
+                </span>
+              </a>
+            ) : (
+              <div />
+            )}
+            {nextSection && (
+              <a
+                href={`/backpacking/${trail.id}/${sectionSlug(nextSection.id)}`}
+                class="group p-4 rounded-lg border border-border hover:border-accent/30 hover:bg-accent/5 transition-all text-right"
+              >
+                <span class="flex items-center justify-end gap-1 text-sm text-muted mb-1">
+                  Section {sectionOrder + 1}
+                  <ChevronRight class="h-4 w-4" aria-hidden="true" />
+                </span>
+                <span class="font-medium text-foreground group-hover:text-accent transition-colors line-clamp-1">
+                  {nextSection.data.title}
+                </span>
+              </a>
+            )}
+          </div>
+        </nav>
+      )}
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+
+interface Props {
+  page: CollectionEntry<'pages'>;
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<header class="mb-12">
+  <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+    <span class="title-marker">{page.data.title}</span>
+  </h1>
+  <div class="text-lg max-w-2xl prose prose-muted [&_p]:text-muted-foreground/75">
+    <Content />
+  </div>
+</header>
+
+<style>
+  .title-marker {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 0.2em;
+  }
+
+  .title-marker::after {
+    content: '';
+    position: absolute;
+    left: -0.1em;
+    right: -0.1em;
+    bottom: 0.05em;
+    height: .8em;
+    background-color: rgb(var(--color-accent) / 0.3);
+    clip-path: polygon(0 55%, 100% 0%, 100% 45%, 0% 100%);
+    pointer-events: none;
+  }
+</style>
+</header>
