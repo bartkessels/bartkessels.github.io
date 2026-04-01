@@ -1,6 +1,7 @@
 ---
 name: Kotlin
 color: bg-orange-100 text-orange-800
+href: kotlin
 ---
 
-The language that C# was meant to be
+Everything Kotlin and sometimes a little JVM.

@@ -1,6 +1,7 @@
 ---
 name: C#.NET
 color: bg-purple-100 text-purple-800
+href: csharp
 ---
 
-Why do Java-developers wear glasses?
+Getting to know C# and the .NET framework.

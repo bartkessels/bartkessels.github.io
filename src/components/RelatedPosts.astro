@@ -1,26 +1,19 @@
 ---
-import { getBlogPosts } from '@/repositories/blog.repository';
 import ContentListItem from './ContentListItem.astro';
+import type { CollectionEntry } from 'astro:content';
 
 interface Props {
-  subject: string;
-  currentSlug: string;
+  relatedPosts: CollectionEntry<'blog'>[]
 }
 
-const { subject, currentSlug } = Astro.props;
-
-const allPosts = await getBlogPosts();
-const related = allPosts
-  .filter((p) => p.data.subject === subject && p.id !== currentSlug)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 4);
+const { relatedPosts } = Astro.props;
 ---
 
-{related.length > 0 && (
+{relatedPosts.length > 0 && (
   <aside class="mt-12 pt-10 border-t border-border">
     <h2 class="text-2xl font-semibold text-foreground mb-6">Related Posts</h2>
     <div class="space-y-3">
-      {related.map((post) => (
+      {relatedPosts.map(post => (
         <ContentListItem
           href={`/${post.data.subject}/${post.id}`}
           title={post.data.title}

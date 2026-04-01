@@ -7,34 +7,41 @@ import StoryCard from '@/components/StoryCard.astro';
 import Pagination from '@/components/Pagination.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
 import { getBlogViewModel } from '@/factories/view-model.factory';
+import SubjectsBar from '@/components/SubjectsBar.astro';
 
 export const getStaticPaths = (async ({ paginate }) => {
   const viewModel = getBlogViewModel();
-  const overview = await viewModel.getOverview();
+  const overview = await viewModel.getOverviewPage();
   
   return paginate(overview.posts, {
       pageSize: overview.postsPerPage,
       props: {
         stories: overview.stories,
-        blogPage: overview.page
+        blogPage: overview.page,
+        subjects: overview.subjects
     }
   });
 }) satisfies GetStaticPaths;
 
-const { page, stories, blogPage } = Astro.props;
+const { page, stories, blogPage, subjects } = Astro.props;
 ---
 
-<BaseLayout title={blogPage.data.title} description={blogPage.data.description}>
+<BaseLayout
+  title={blogPage.data.title}
+  description={blogPage.data.description}
+  showSubjectsBar={blogPage.data.show_subjects}
+  activePageId={blogPage.id}>
+  <SubjectsBar subjects={subjects} slot="subjects-bar" />
+  
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Header -->
     <SectionHeader page={blogPage} />
 
-    {/* Featured Stories Section - only on first page */}
     {page.currentPage === 1 && stories.length > 0 && (
       <section data-section="stories" class="mb-16">
         <h2 class="text-2xl font-semibold text-foreground mb-6">Featured Stories</h2>
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {stories.map((story) => (
+          {stories.map(story => (
             <StoryCard
               title={story.data.title}
               description={story.data.description}
@@ -55,16 +62,18 @@ const { page, stories, blogPage } = Astro.props;
       </h2>
       
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
-        {page.data.map((post) => (
+        {page.data.map(post => (
           <BlogCard
-            title={post.data.title}
-            description={post.data.description}
-            date={post.data.date}
-            author={post.data.author}
-            subject={post.data.subject}
-            image={post.data.image}
-            slug={post.id}
-            readingTime={getReadingTime(post.body)}
+            title={post.post.data.title}
+            description={post.post.data.description}
+            date={post.post.data.date}
+            author={post.post.data.author}
+            subjectId={post.subject.id}
+            subject={post.subject.data.name}
+            subjectColor={post.subject.data.color}
+            image={post.post.data.image}
+            slug={post.post.id}
+            readingTime={getReadingTime(post.post.body)}
           />
         ))}
       </div>

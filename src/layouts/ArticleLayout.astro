@@ -1,5 +1,7 @@
 ---
+import type { SimplifiedSubject } from '@/models/subject.model';
 import BaseLayout from './BaseLayout.astro';
+import SubjectsBar from '@/components/SubjectsBar.astro';
 
 interface Props {
   title: string;
@@ -7,12 +9,18 @@ interface Props {
   image: string;
   imageCaption: string;
   type?: 'website' | 'article';
+  subjects?: SimplifiedSubject[],
+  showSubjectsBar?: boolean;
+  activePageId: string;
+  tags?: string[];
 }
 
-const { title, description, image, imageCaption, type = 'article' } = Astro.props;
+const { title, tags = [], activePageId, description, image, imageCaption, subjects = [], showSubjectsBar = false, type = 'article' } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} image={image} type={type}>
+<BaseLayout title={title} description={description} image={image} type={type} showSubjectsBar={showSubjectsBar} activePageId={activePageId} tags={tags}>
+  <SubjectsBar subjects={subjects} slot="subjects-bar" />
+
   <article>
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <figure class="mb-8">

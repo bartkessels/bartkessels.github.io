@@ -1,6 +1,7 @@
 ---
 name: Android
 color: bg-green-100 text-green-800
+href: android
 ---
 
-Android doesn't develop it's own apps
+Develop apps you can use on your own Android device.

@@ -1,37 +1,16 @@
 ---
-import { subjectSlug } from '@/utils/content';
-import { getAllSubjects } from '@/repositories/subject.repository';
-
 interface Props {
   subject: string;
   size?: 'sm' | 'md';
-  /** Pre-resolved display name — skips the collection fetch when provided. */
-  name?: string;
-  /** Pre-resolved Tailwind color classes — skips the collection fetch when provided. */
   color?: string;
 }
 
-const { subject, size = 'sm', name: nameProp, color: colorProp } = Astro.props;
-
-let label = nameProp ?? subject;
-let colorClass = colorProp ?? 'bg-gray-100 text-gray-800';
-
-if (!nameProp || !colorProp) {
-  const allSubjects = await getAllSubjects();
-  const entry = allSubjects.find((s) => subjectSlug(s.id) === subject);
-  label = entry?.data.name ?? subject;
-  colorClass = entry?.data.color ?? 'bg-gray-100 text-gray-800';
-}
-
+const { subject, size = 'sm', color = 'bg-gray-100 text-gray-800' } = Astro.props;
 const sizeClasses = size === 'sm' 
   ? 'px-2.5 py-0.5 text-xs' 
   : 'px-3 py-1 text-sm';
 ---
 
-<span class:list={[
-  'inline-flex items-center rounded-full font-medium',
-  colorClass,
-  sizeClasses,
-]}>
-  <span class="sr-only">Category: </span>{label}
+<span class=`inline-flex items-center rounded-full font-medium ${color} ${sizeClasses}`>
+  <span class="sr-only">Category: </span>{subject}
 </span>

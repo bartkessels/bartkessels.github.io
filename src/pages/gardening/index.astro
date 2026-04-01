@@ -1,50 +1,43 @@
 ---
-import { BookOpen, Leaf } from 'lucide-astro';
+import { BookOpen, Leaf } from '@lucide/astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getReadingTime } from '@/utils/content';
 import SectionHeader from '@/components/SectionHeader.astro';
 import GardeningJournalCard from '@/components/GardeningJournalCard.astro';
-import { getPageById } from '@/repositories/pages.repository';
 import { getGardeningViewModel } from '@/factories/view-model.factory';
-import type { CollectionEntry } from 'astro:content';
+import SubjectsBar from '@/components/SubjectsBar.astro';
 
 const viewModel = getGardeningViewModel();
-const gardeningPage = await getPageById('gardening');
 const overviewPage = await viewModel.getOverviewPage();
-
-const getJournalEntries = (year: CollectionEntry<'subjects/gardening'>): CollectionEntry<'gardening/journal'>[] =>
-  overviewPage.content.pagesPerYear.get(year)?.journalEntries ?? [];
-const getPlants = (year: CollectionEntry<'subjects/gardening'>): Map<string, CollectionEntry<'gardening/plants'>[]> =>
-  overviewPage.content.pagesPerYear.get(year)?.plants ?? new Map();
-const getNumberOfPlants = (year: CollectionEntry<'subjects/gardening'>): number =>
-  Array.from(getPlants(year))
-    .flatMap(plant => plant[1].length)
-    .reduce((sum, cur) => sum + cur, 0);
-
-const { pagesPerYear } = overviewPage.content;
 ---
 
-<BaseLayout title={gardeningPage!.data.title} description={gardeningPage!.data.description}>
+<BaseLayout
+  title={overviewPage.page.data.title}
+  description={overviewPage.page.data.description}
+  showSubjectsBar={overviewPage.page.data.show_subjects}
+  activePageId={overviewPage.page.id}>
+  <SubjectsBar subjects={overviewPage.subjects} slot="subjects-bar" />
+  
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     {/* Header */}
-    <SectionHeader page={gardeningPage} />
+    <SectionHeader page={overviewPage.page} />
 
-    {pagesPerYear.size === 0 ? (
+    {overviewPage.itemsPerYear.length === 0 ? (
       <p class="text-muted">Nothing here yet. Check back soon!</p>
     ) : (
       <div class="space-y-16">
-        {pagesPerYear.keys().map(year => (
+        {overviewPage.itemsPerYear.map(year => (
           <section>
             {/* Year heading */}
             <div class="flex items-center gap-3 mb-8 pb-3 border-b border-border">
               <a
-                href={`/gardening/${year.id}`}
+                href={`/gardening/${year.year.id}`}
                 class="text-3xl font-bold text-foreground hover:text-accent transition-colors"
               >
-                {year.data.name}
+                {year.year.data.name}
               </a>
               <span class="text-sm text-muted">
-                {getJournalEntries(year).length} {getJournalEntries(year).length === 1 ? 'journal entry' : 'journal entries'} &middot; {getNumberOfPlants(year)} plants
+                {year.journalEntries.length} {year.journalEntries.length === 1 ? 'journal entry' : 'journal entries'} &middot; {year.plants.length} plants
               </span>
             </div>
 
@@ -54,9 +47,9 @@ const { pagesPerYear } = overviewPage.content;
                   <BookOpen class="h-4 w-4 text-accent" aria-hidden="true" />
                   <h3 class="text-lg font-semibold text-foreground">Journal</h3>
                 </div>
-                {getJournalEntries(year).length > 0 ? (
+                {year.journalEntries.length > 0 ? (
                   <div class="space-y-4">
-                    {getJournalEntries(year).map((journalEntry) => (
+                    {year.journalEntries.map(journalEntry => (
                       <GardeningJournalCard
                         title={journalEntry.data.title}
                         description={journalEntry.data.description}
@@ -69,7 +62,7 @@ const { pagesPerYear } = overviewPage.content;
                     ))}
                   </div>
                 ) : (
-                  <p class="text-sm text-muted">No journal entries for {year}.</p>
+                  <p class="text-sm text-muted">No journal entries for {year.year.data.name}.</p>
                 )}
               </div>
 
@@ -77,14 +70,20 @@ const { pagesPerYear } = overviewPage.content;
                 <div class="flex items-center gap-2 mb-4">
                   <Leaf class="h-4 w-4 text-accent" aria-hidden="true" />
                   <h3 class="text-lg font-semibold text-foreground">Plants</h3>
+                  <a
+                    href={`/gardening/${year.year.id}/schedule`}
+                    class="ml-auto text-xs text-accent hover:underline"
+                  >
+                    View schedule &RightArrow;
+                  </a>
                 </div>
-                {getPlants(year).size > 0 ? (
+                {year.plants.length > 0 ? (
                   <div class="space-y-5">
-                    {getPlants(year).keys().map(key => (
+                    {year.plants.map(plantsPerYear => (
                       <div>
-                        <h4 class="text-xs font-semibold text-muted uppercase tracking-wide mb-2">{key}</h4>
+                        <h4 class="text-xs font-semibold text-muted uppercase tracking-wide mb-2">{plantsPerYear.category}</h4>
                         <div class="space-y-2">
-                          {getPlants(year).get(key)?.map((plant) => (
+                          {plantsPerYear.plants.map(plant => (
                             <a
                               href={`/gardening/plants/${plant.id.split('/').at(-1)}`}
                               class="group flex items-center gap-3 p-2.5 rounded-lg border border-border hover:border-accent/30 hover:bg-accent/5 transition-all"
@@ -107,7 +106,7 @@ const { pagesPerYear } = overviewPage.content;
                     ))}
                   </div>
                 ) : (
-                  <p class="text-sm text-muted">No plants recorded for {year}.</p>
+                  <p class="text-sm text-muted">No plants recorded for {year.year.data.name}.</p>
                 )}
               </div>
             </div>

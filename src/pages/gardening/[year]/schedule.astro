@@ -1,0 +1,88 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { CalendarDays } from '@lucide/astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SubjectsBar from '@/components/SubjectsBar.astro';
+import PlantScheduleList from '@/components/PlantScheduleList.astro';
+import { getGardeningViewModel } from '@/factories/view-model.factory';
+
+export const getStaticPaths = (async () => {
+  const viewModel = getGardeningViewModel();
+  const overviewPages = await viewModel.getYearOverviewPages();
+
+  return overviewPages.map(page => {
+    const plants = page.plants
+      .flatMap(category => category.plants)
+      .map(plant => ({
+        name: plant.data.name,
+        slug: plant.id,
+        sowIndoors: plant.data.sowIndoors,
+        moveOutdoors: plant.data.moveOutdoors,
+        harvest: plant.data.harvest,
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+
+    return {
+      params: { year: page.year.id },
+      props: {
+        subjectName: page.year.data.name,
+        plants,
+        subjects: page.subjects,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { subjectName, plants, subjects } = Astro.props;
+---
+
+<BaseLayout
+  title={`${subjectName} Planting Schedule`}
+  description={`A full-year schedule showing when to sow indoors, move outdoors, and harvest each plant in ${subjectName}.`}
+  activePageId="gardening"
+  showSubjectsBar={true}
+>
+  <SubjectsBar subjects={subjects} slot="subjects-bar" />
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <header class="mb-12">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent/10 text-accent">
+          <CalendarDays class="h-3.5 w-3.5" />
+          {subjectName}
+        </span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+        <span class="title-marker">Schedule</span>
+      </h1>
+      <p class="text-lg text-muted max-w-2xl">
+        An overview of all plants grown in {subjectName} and when to sow indoors, move outdoors and harvest them. The current month is highlighted.
+      </p>
+    </header>
+
+    {plants.length === 0 ? (
+      <p class="text-muted">No plants with schedule data for {subjectName} yet.</p>
+    ) : (
+      <PlantScheduleList plants={plants} />
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .title-marker {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 0.2em;
+  }
+
+  .title-marker::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-accent);
+    border-radius: 2px;
+  }
+</style>

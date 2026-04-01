@@ -3,34 +3,38 @@ import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
 import { getReadingTime } from '@/utils/content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { BookOpen, Leaf } from 'lucide-astro';
+import { BookOpen, Leaf } from '@lucide/astro';
 import GardeningJournalCard from '@/components/GardeningJournalCard.astro';
 import { getGardeningViewModel } from '@/factories/view-model.factory';
+import SubjectsBar from '@/components/SubjectsBar.astro';
 
 export const getStaticPaths = (async () => {
   const viewModel = getGardeningViewModel();
-  const overview = await viewModel.getYearPages();
+  const overviewPages = await viewModel.getYearOverviewPages();
 
-  return overview.map((page) => ({
-    params: { year: page.slug },
+  return overviewPages.map(page => ({
+    params: { year: page.year.id },
     props: {
       subjectName: page.year.data.name,
       subjectEntry: page.year,
-      journals: page.content.journalEntries,
-      plants: page.content.plants,
-      categories: page.years
+      journals: page.journalEntries,
+      plants: page.plants,
+      subjects: page.subjects
     },
   }));
 }) satisfies GetStaticPaths;
 
-const { subjectName, subjectEntry, journals, plants, categories } = Astro.props;
+const { subjectName, subjects, subjectEntry, journals, plants } = Astro.props;
 const { Content } = await render(subjectEntry);
 ---
 
 <BaseLayout
   title={`${subjectName} — Gardening`}
   description={`Gardening journal entries and plant profiles for ${subjectName}.`}
+  activePageId="gardening"
+  showSubjectsBar={true}
 >
+  <SubjectsBar subjects={subjects} slot="subjects-bar" />
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <header class="mb-12">
       <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">{subjectName}</h1>
@@ -39,7 +43,7 @@ const { Content } = await render(subjectEntry);
       </div>
     </header>
 
-    {journals.length === 0 && plants.size === 0 ? (
+    {journals.length === 0 && plants.length === 0 ? (
       <div class="text-center py-12">
         <p class="text-muted text-lg">No entries found yet.</p>
         <a href="/gardening" class="inline-block mt-4 text-accent hover:text-accent/80 transition-colors">
@@ -78,14 +82,20 @@ const { Content } = await render(subjectEntry);
           <div class="flex items-center gap-2 mb-6">
             <Leaf class="h-5 w-5 text-accent" />
             <h2 class="text-2xl font-semibold text-foreground">Plants</h2>
+            <a
+              href={`/gardening/${Astro.params.year}/schedule`}
+              class="ml-auto text-xs text-accent hover:underline"
+            >
+              View schedule &RightArrow;
+            </a>
           </div>
-          {plants.size > 0 ? (
+          {plants.length > 0 ? (
             <div class="space-y-6">
-              {plants.keys().map(key => (
+              {plants.map(plantsByCategory => (
                 <div>
-                  <h3 class="text-xs font-semibold text-muted uppercase tracking-wide mb-2">{key}</h3>
+                  <h3 class="text-xs font-semibold text-muted uppercase tracking-wide mb-2">{plantsByCategory.category}</h3>
                   <div class="space-y-2">
-                    {plants.get(key)?.map(plant => (
+                    {plantsByCategory.plants.map(plant => (
                       <a
                         href={`/gardening/plants/${plant.id.split('/').pop()!.replace(/\.mdx?$/, '')}`}
                         class="group flex items-center gap-3 p-3 rounded-lg border border-border hover:border-accent/30 hover:bg-accent/5 transition-all"
@@ -117,4 +127,3 @@ const { Content } = await render(subjectEntry);
     )}
   </div>
 </BaseLayout>
-

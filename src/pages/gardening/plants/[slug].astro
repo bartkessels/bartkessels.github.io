@@ -1,47 +1,51 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
-import { Leaf } from 'lucide-astro';
+import { Calendar, Leaf } from '@lucide/astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import TagsList from '@/components/TagsList.astro';
+import PlantSchedule from '@/components/PlantSchedule.astro';
 import { getGardeningViewModel } from '@/factories/view-model.factory';
-import type { GardeningPlantViewState } from '@/viewModels/gardening.view-model';
 
 export const getStaticPaths = (async () => {
   const viewModel = getGardeningViewModel();
-  const plants: GardeningPlantViewState[] = await viewModel.getPlantPages();
+  const plants = await viewModel.getPlantPages();
 
   return plants.map(page => ({
-    params: { slug: page.slug },
-    props: { plant: page.content.plant }
+    params: { slug: page.plant.id },
+    props: { plant: page.plant }
   }));
 }) satisfies GetStaticPaths;
 
 const { plant } = Astro.props;
 const { Content } = await render(plant);
 
-const { name, image, caption, category, years } = plant.data;
+const { name, image, caption, category, years, sowIndoors, moveOutdoors, harvest } = plant.data;
+const hasSchedule = sowIndoors || moveOutdoors || harvest;
 ---
 
 <BaseLayout 
   title={`Growing ${name}`} 
   description={`Complete guide to growing ${name} in your garden.`}
   image={image}
+  activePageId="gardening"
+  tags={plant.data.tags}
 >
   <article>
-    <figure>
-      <div class="w-full aspect-[21/9] bg-muted overflow-hidden">
-        <img
-          src={image}
-          alt={name}
-          class="w-full h-full object-cover"
-        />
-      </div>
-      <figcaption class="text-center text-xs text-muted/70 italic py-2 px-4 border-t border-border/50">
-        {caption}
-      </figcaption>
-    </figure>
-
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <figure class="mb-8">
+        <div class="w-full aspect-[21/9] bg-muted overflow-hidden rounded-lg">
+          <img
+            src={image}
+            alt={name}
+            class="w-full h-full object-cover"
+          />
+        </div>
+        <figcaption class="text-center text-xs text-muted/70 italic py-2 px-4 border-t border-border/50">
+          {caption}
+        </figcaption>
+      </figure>
+
       {/* Header */}
       <header class="mb-8">
         <div class="flex flex-wrap items-center gap-2 mb-4">
@@ -49,9 +53,11 @@ const { name, image, caption, category, years } = plant.data;
             <Leaf class="h-3.5 w-3.5" />
             Plant Profile
           </span>
-          <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-violet-100 text-violet-800">
+          {category && (
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-medium bg-violet-100 text-violet-800">
               {category}
             </span>
+          )}
           {years.sort((a, b) => b - a).map((year) => (
             <a
               href={`/gardening/${year}`}
@@ -61,17 +67,45 @@ const { name, image, caption, category, years } = plant.data;
             </a>
           ))}
         </div>
+        {(plant.data.tags ?? []).length > 0 && (
+          <div class="mb-4">
+            <TagsList tags={plant.data.tags ?? []} />
+          </div>
+        )}
 
-        <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-4 leading-tight">
+        <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-2 leading-tight">
           {name}
         </h1>
-
         <div class="border-b border-border pb-6" />
       </header>
 
-      <div class="prose">
-        <Content />
-      </div>
+
+      {/* Personal Notes */}
+      <section>
+        <div class="prose">
+          <Content />
+        </div>
+      </section>
+
+      <br>
+
+      {/* Growing Schedule */}
+      <section class="mb-10">
+        <div class="flex items-center gap-2 mb-1">
+          <Calendar class="h-4 w-4 text-accent flex-shrink-0" />
+          <h2 class="text-lg font-semibold text-foreground">Schedule</h2>
+        </div>
+        <p class="text-sm text-muted mb-4">My planting calendar &mdash; when to sow, move outdoors, and harvest.</p>
+        {hasSchedule ? (
+          <PlantSchedule
+            sowIndoors={sowIndoors}
+            moveOutdoors={moveOutdoors}
+            harvest={harvest}
+          />
+        ) : (
+          <p class="text-sm text-muted italic">No schedule recorded yet for this plant.</p>
+        )}
+      </section>
     </div>
   </article>
 </BaseLayout>

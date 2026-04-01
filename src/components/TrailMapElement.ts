@@ -1,6 +1,6 @@
-import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { gpx } from '@tmcw/togeojson';
+import maplibregl from 'maplibre-gl';
 
 /**
  * <trail-map gpx="/path/to/track.gpx"></trail-map>
@@ -13,73 +13,73 @@ import { gpx } from '@tmcw/togeojson';
  * To swap the map library or tile provider, only this file needs to change.
  */
 class TrailMapElement extends HTMLElement {
-  private map: maplibregl.Map | null = null;
+    private map: maplibregl.Map | null = null;
 
-  async connectedCallback() {
-    const gpxUrl = this.getAttribute('gpx');
-    if (!gpxUrl) return;
+    async connectedCallback(): Promise<void> {
+        const gpxUrl = this.getAttribute('gpx');
+        if (!gpxUrl) return;
 
-    this.style.display = 'block';
+        this.style.display = 'block';
 
-    this.map = new maplibregl.Map({
-      container: this,
-      // OpenFreeMap "liberty" style — vector tiles, no API key, no tracking.
-      // Other styles: bright, positron  (all at tiles.openfreemap.org/styles/*)
-      style: '/openfreemap/tiles/liberty.json',
-      scrollZoom: false,
-      attributionControl: { compact: true },
-    });
+        this.map = new maplibregl.Map({
+            container: this,
+            // OpenFreeMap "liberty" style — vector tiles, no API key, no tracking.
+            // Other styles: bright, positron  (all at tiles.openfreemap.org/styles/*)
+            style: '/openfreemap/tiles/liberty.json',
+            scrollZoom: false,
+            attributionControl: { compact: true },
+        });
 
-    // Race-condition fix: start both the map style load and the GPX fetch at
-    // the same time, then proceed only once BOTH are ready.
-    const [, gpxText] = await Promise.all([
-      new Promise<void>((resolve) => this.map!.once('load', resolve)),
-      fetch(gpxUrl).then((r) => r.text()),
-    ]);
+        // Race-condition fix: start both the map style load and the GPX fetch at
+        // the same time, then proceed only once BOTH are ready.
+        const [, gpxText] = await Promise.all([
+            new Promise<void>((resolve: () => void) => this.map!.once('load', resolve)),
+            fetch(gpxUrl).then((r: Response) => r.text()),
+        ]);
 
-    const gpxDoc = new DOMParser().parseFromString(gpxText, 'text/xml');
-    const geojson = gpx(gpxDoc);
-    const map = this.map!;
+        const gpxDoc = new DOMParser().parseFromString(gpxText, 'text/xml');
+        const geojson = gpx(gpxDoc);
+        const map = this.map!;
 
-    map.addSource('trail', { type: 'geojson', data: geojson });
+        map.addSource('trail', { type: 'geojson', data: geojson });
 
-    // Subtle casing so the line pops against any background
-    map.addLayer({
-      id: 'trail-casing',
-      type: 'line',
-      source: 'trail',
-      layout: { 'line-join': 'round', 'line-cap': 'round' },
-      paint: { 'line-color': '#fff', 'line-width': 7, 'line-opacity': 0.6 },
-    });
+        // Subtle casing so the line pops against any background
+        map.addLayer({
+            id: 'trail-casing',
+            type: 'line',
+            source: 'trail',
+            layout: { 'line-join': 'round', 'line-cap': 'round' },
+            paint: { 'line-color': '#fff', 'line-width': 7, 'line-opacity': 0.6 },
+        });
 
-    map.addLayer({
-      id: 'trail-line',
-      type: 'line',
-      source: 'trail',
-      layout: { 'line-join': 'round', 'line-cap': 'round' },
-      paint: { 'line-color': '#e05d12', 'line-width': 4, 'line-opacity': 0.95 },
-    });
+        map.addLayer({
+            id: 'trail-line',
+            type: 'line',
+            source: 'trail',
+            layout: { 'line-join': 'round', 'line-cap': 'round' },
+            paint: { 'line-color': '#e05d12', 'line-width': 4, 'line-opacity': 0.95 },
+        });
 
-    // Fit the viewport to the track
-    const coords = geojson.features.flatMap((f) => {
-      if (f.geometry.type === 'LineString') return f.geometry.coordinates;
-      if (f.geometry.type === 'MultiLineString') return f.geometry.coordinates.flat();
-      return [];
-    }) as [number, number][];
+        // Fit the viewport to the track
+        const coords = geojson.features.flatMap((f: GeoJSON.Feature) => {
+            if (f.geometry.type === 'LineString') return f.geometry.coordinates;
+            if (f.geometry.type === 'MultiLineString') return f.geometry.coordinates.flat();
+            return [];
+        }) as [number, number][];
 
-    if (coords.length > 0) {
-      const bounds = coords.reduce(
-        (b, c) => b.extend(c),
-        new maplibregl.LngLatBounds(coords[0], coords[0])
-      );
-      map.fitBounds(bounds, { padding: 40, animate: false });
+        if (coords.length > 0) {
+            const bounds = coords.reduce(
+                (b: maplibregl.LngLatBounds, c: [number, number]) => b.extend(c),
+                new maplibregl.LngLatBounds(coords[0], coords[0])
+            );
+            map.fitBounds(bounds, { padding: 40, animate: false });
+        }
     }
-  }
 
-  disconnectedCallback() {
-    this.map?.remove();
-    this.map = null;
-  }
+    disconnectedCallback(): void {
+        this.map?.remove();
+        this.map = null;
+    }
 }
 
 customElements.define('trail-map', TrailMapElement);

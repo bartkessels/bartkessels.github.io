@@ -13,7 +13,7 @@ import CodeBlock from '@/components/CodeBlock.astro';
 
 ## Introduction
 
-As you might have seen in my earlier [Upset](../upset/2023-12-13-introduction.md) post, I had to install my work laptop quite few times. And each time I had to look up the way I have to set up Oh My Posh.
+As you might have seen in my earlier [Upset](../../software/upset.mdx) post, I had to install my work laptop quite few times. And each time I had to look up the way I have to set up Oh My Posh.
 So I decided to write a small blog post about it, mainly because I think the documentation for Oh My Posh isn't as clear as I'd like it to be.
 
 But first things first, what is Oh My Posh?
@@ -28,7 +28,7 @@ Run the following command to install the latest Powershell from the Microsoft St
 This will be the same Powershell version that you'd otherwise install through the Microsoft Store application that is bundled with Windows.
 
 <CodeBlock filename="Powershell">
-```pwsh
+```powershell
 > winget install Microsoft.Powershell -s msstore
 ```
 </CodeBlock>
@@ -36,7 +36,7 @@ This will be the same Powershell version that you'd otherwise install through th
 Next to Powershell, I also use the Windows terminal that can be installed through the Microsoft Store or `winget`.
 
 <CodeBlock filename="Powershell">
-```pwsh
+```powershell
 > winget install Microsoft.WindowsTerminal -s msstore
 ```
 </CodeBlock>
@@ -44,7 +44,7 @@ Next to Powershell, I also use the Windows terminal that can be installed throug
 ### Install Oh My Posh
 
 <CodeBlock filename="Powershell">
-```pwsh
+```powershell
 > winget install JanDeDobbeleer.OhMyPosh -s winget
 ```
 </CodeBlock>
@@ -56,7 +56,7 @@ You can find this `PATH` variable inside the `$profile` that your Powershell ins
 If you get an error message stating that the `$profile` file cannot be found, you can create this file using the following Powershell command.
 
 <CodeBlock filename="Powershell">
-```pwsh
+```powershell
 > New-Item -Path $PROFILE -Type File -Force
 ```
 </CodeBlock>
@@ -70,7 +70,7 @@ As, unfortunately, I've had that problem myself.
 You can either install the fonts for your current user or for all users on your device. If you choose to install the fonts for all users, you must open the terminal/powershell application as administrator before executing the following command.
 
 <CodeBlock filename="Powershell">
-```pwsh
+```powershell
 > oh-my-posh font install
 ```
 </CodeBlock>
@@ -117,7 +117,7 @@ oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/<FILE_OF_THE_THEME>.json" |
 This will execute the `init` command from Oh My Posh and set the theme to the file you copied before. To see your changes, you can either close the current Powershell instance and open another one, or load the altered `$profile` file into your current session by running
 
 <CodeBlock filename="Powershell">
-```pwsh
+```powershell
 > . $profile
 ```
 </CodeBlock>

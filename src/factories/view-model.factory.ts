@@ -1,40 +1,45 @@
-import { BackpackingManager } from "@/managers/backpacking.manager";
-import { BlogManager } from "@/managers/blog.manager";
-import { GardeningManager } from "@/managers/gardening.manager";
-import { StoriesManager } from "@/managers/stories.manager";
-import { BackpackingRepository } from "@/repositories/backpacking.repository";
-import { BlogRepository } from "@/repositories/blog.repository";
-import { GardeningRepository } from "@/repositories/gardening.repository";
-import { PagesRepository } from "@/repositories/pages.repository";
-import { StoriesRepository } from "@/repositories/stories.repository";
-import { SubjectsRepository } from "@/repositories/subject.repository";
+import { getBackpackingManager, getBlogManager, getCertificateManager, getGardeningManager, getPageManager, getSoftwareManager, getStoriesManager, getSubjectManager } from "./manager-factory";
+import { AboutViewModel } from "@/viewModels/about.view-model";
 import { BackpackingViewModel } from "@/viewModels/backpacking.view-model";
 import { BlogViewModel } from "@/viewModels/blog.view-model";
 import { GardeningViewModel } from "@/viewModels/gardening.view-model";
+import { HomeViewModel } from "@/viewModels/home.view-model";
+import { SoftwareViewModel } from "@/viewModels/software.view-model";
+import { StoriesViewModel } from "@/viewModels/stories.view-model";
 
-const subjectsRepository = new SubjectsRepository();
-const pagesRepository = new PagesRepository();
-const storiesRepository = new StoriesRepository();
+const backpackingManager = getBackpackingManager();
+const blogManager = getBlogManager();
+const certificateManager = getCertificateManager();
+const gardeningManager = getGardeningManager();
+const pageManager = getPageManager();
+const softwareManager = getSoftwareManager();
+const storiesManager = getStoriesManager();
+const subjectManager = getSubjectManager();
 
-const storiesManager = new StoriesManager(storiesRepository);
+export const getAboutViewModel = (): AboutViewModel => {
+    return new AboutViewModel(pageManager, certificateManager);
+}
+
+export const getHomeViewModel = (): HomeViewModel => {
+    return new HomeViewModel(pageManager, blogManager, softwareManager, backpackingManager, storiesManager, subjectManager);
+}
 
 export const getGardeningViewModel = (): GardeningViewModel => {
-    const gardeningRepository = new GardeningRepository();
-    const gardeningManager = new GardeningManager(subjectsRepository, gardeningRepository);
-
-    return new GardeningViewModel(gardeningManager);
+    return new GardeningViewModel(gardeningManager, pageManager);
 }
 
 export const getBackpackingViewModel = (): BackpackingViewModel => {
-    const backpackingRepository = new BackpackingRepository();
-    const backpackingManager = new BackpackingManager(subjectsRepository, backpackingRepository);
-
-    return new BackpackingViewModel(backpackingManager);
+    return new BackpackingViewModel(backpackingManager, pageManager);
 }
 
 export const getBlogViewModel = (): BlogViewModel => {
-    const blogRepository = new BlogRepository();
-    const blogManager = new BlogManager(subjectsRepository, pagesRepository, blogRepository);
+    return new BlogViewModel(blogManager, pageManager, storiesManager, subjectManager);
+}
 
-    return new BlogViewModel(blogManager, storiesManager);
+export const getSoftwareViewModel = (): SoftwareViewModel => {
+    return new SoftwareViewModel(softwareManager, pageManager);
+}
+
+export const getStoriesViewModel = (): StoriesViewModel => {
+    return new StoriesViewModel(storiesManager, pageManager);
 }

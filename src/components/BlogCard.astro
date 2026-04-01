@@ -1,5 +1,5 @@
 ---
-import { Calendar, User, Clock } from 'lucide-astro';
+import { Calendar, User, Clock } from '@lucide/astro';
 import SubjectBadge from './SubjectBadge.astro';
 
 
@@ -8,14 +8,16 @@ interface Props {
   description: string;
   date: Date;
   author: string;
+  subjectId?: string;
   subject?: string;
+  subjectColor?: string;
   image: string;
   slug: string;
   href?: string;
   readingTime?: number;
 }
 
-const { title, description, date, author, subject, image, slug, href, readingTime } = Astro.props;
+const { title, description, date, author, subjectId, subject, subjectColor, image, slug, href, readingTime } = Astro.props;
 
 const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
@@ -34,13 +36,13 @@ const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month:
     <div class="p-6">
       {subject && (
         <div class="mb-3">
-          <SubjectBadge subject={subject} />
+          <SubjectBadge subject={subject} color={subjectColor} />
         </div>
       )}
 
       <h3 class="text-xl font-semibold text-card-foreground group-hover:text-accent transition-colors mb-2 line-clamp-2 h-14">
         <a
-          href={href ?? `/${subject}/${slug}`}
+          href={href ?? `/${subjectId}/${slug}`}
           class="text-current hover:text-current after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
         >
           {title}

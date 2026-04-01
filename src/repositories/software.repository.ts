@@ -1,5 +1,8 @@
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { type CollectionEntry, getCollection } from 'astro:content';
 import { notUnderscored } from '@/utils/content';
 
-export const getSoftware = (): Promise<CollectionEntry<'software'>[]> =>
-  getCollection('software', (e) => notUnderscored(e) && !e.data.draft);
+export class SoftwareRepository {
+    public async getProjects(): Promise<CollectionEntry<'software'>[]> {
+        return await getCollection('software', notUnderscored);
+    }
+}

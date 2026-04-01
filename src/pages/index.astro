@@ -1,54 +1,32 @@
 ---
-import { Github, Linkedin, ArrowRight } from 'lucide-astro';
+import { ArrowRight } from '@lucide/astro';
+import GitHubIcon from '@/components/GitHubIcon.astro';
+import LinkedInIcon from '@/components/LinkedInIcon.astro';
 import { render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import BlogCard from '@/components/BlogCard.astro';
 import SoftwareCard from '@/components/SoftwareCard.astro';
 import TrailCard from '@/components/TrailCard.astro';
 import StoryCard from '@/components/StoryCard.astro';
-import { getBlogPosts } from '@/repositories/blog.repository';
-import { getSoftware } from '@/repositories/software.repository';
-import { getBackpackingTrails } from '@/repositories/backpacking.repository';
-import { getStories } from '@/repositories/stories.repository';
 import { getReadingTime, getSectionLabel } from '@/utils/content';
-import { getPageById } from '@/repositories/pages.repository';
+import { getHomeViewModel } from '@/factories/view-model.factory';
 
-const homePage = await getPageById('index');
-const { Content } = await render(homePage!);
+const viewModel = getHomeViewModel();
+const overviewPage = await viewModel.getOverviewPage();
 
-const [allPosts, allSoftware, allTrails, allStories] = await Promise.all([
-  getBlogPosts(),
-  getSoftware(),
-  getBackpackingTrails(),
-  getStories(),
-]);
-
-const latestPosts = allPosts
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
-
-const featuredSoftware = allSoftware
-  .sort((a, b) => a.data.name.localeCompare(b.data.name))
-  .slice(0, 2);
-
-const latestTrail = allTrails
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 1);
-
-const latestStory = allStories
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 1);
+const { Content } = await render(overviewPage.page);
 ---
 
 <BaseLayout
   title="Bart Kessels — Software Developer & Outdoor Enthusiast"
-  description={homePage!.data.description}
+  description={overviewPage.page.data.description}
+  activePageId={overviewPage.page.id}
 >
   <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
     <div class="max-w-3xl">
       <div class="w-20 h-20 mb-8 rounded-full bg-muted overflow-hidden">
         <img
-          src="/images/avatar.jpg"
+          src="/images/bartkessels.jpg"
           alt="Bart Kessels"
           class="w-full h-full object-cover"
           width="80"
@@ -80,11 +58,11 @@ const latestStory = allStories
       </div>
       <div class="flex items-center gap-4 mt-8">
         <a href="https://github.com/bartkessels" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-foreground transition-colors no-underline">
-          <Github class="h-5 w-5" />
+          <GitHubIcon class="h-5 w-5" />
           <span class="sr-only">GitHub</span>
         </a>
         <a href="https://linkedin.com/in/bartkessels" target="_blank" rel="noopener noreferrer" class="text-muted hover:text-foreground transition-colors no-underline">
-          <Linkedin class="h-5 w-5" />
+          <LinkedInIcon class="h-5 w-5" />
           <span class="sr-only">LinkedIn</span>
         </a>
       </div>
@@ -92,25 +70,27 @@ const latestStory = allStories
   </section>
 
   {/* Latest Blog Posts */}
-  {latestPosts.length > 0 && (
+  {overviewPage.latestPosts.length > 0 && (
     <section data-section="blog" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-border">
       <div class="flex items-center justify-between mb-8">
-        <h2 class="text-2xl font-semibold text-foreground">Latest Posts</h2>
+        <h2 class="text-2xl font-semibold text-foreground">Latest posts</h2>
         <a href="/blog" class="inline-flex items-center gap-1 text-sm text-accent hover:text-accent/80 transition-colors no-underline font-medium">
           All posts <ArrowRight class="h-4 w-4" />
         </a>
       </div>
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {latestPosts.map((post) => (
+        {overviewPage.latestPosts.map(post => (
           <BlogCard
-            title={post.data.title}
-            description={post.data.description}
-            date={post.data.date}
-            author={post.data.author}
-            subject={post.data.subject}
-            image={post.data.image}
-            slug={post.id}
-            readingTime={getReadingTime(post.body)}
+            title={post.post.data.title}
+            description={post.post.data.description}
+            date={post.post.data.date}
+            author={post.post.data.author}
+            subject={post.subject.data.name}
+            subjectColor={post.subject.data.color}
+            subjectId={post.subject.id}
+            image={post.post.data.image}
+            slug={post.post.id}
+            readingTime={getReadingTime(post.post.body)}
           />
         ))}
       </div>
@@ -118,16 +98,16 @@ const latestStory = allStories
   )}
 
   {/* Featured Story */}
-  {latestStory.length > 0 && (
+  {overviewPage.latestStories.length > 0 && (
     <section data-section="stories" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-border">
       <div class="flex items-center justify-between mb-8">
-        <h2 class="text-2xl font-semibold text-foreground">Featured Series</h2>
+        <h2 class="text-2xl font-semibold text-foreground">Featured stories</h2>
         <a href="/stories" class="inline-flex items-center gap-1 text-sm text-accent hover:text-accent/80 transition-colors no-underline font-medium">
           All stories <ArrowRight class="h-4 w-4" />
         </a>
       </div>
       <div class="grid gap-6 md:grid-cols-2">
-        {latestStory.map((story) => (
+        {overviewPage.latestStories.map(story => (
           <StoryCard
             title={story.data.title}
             description={story.data.description}
@@ -142,7 +122,7 @@ const latestStory = allStories
   )}
 
   {/* Software Projects */}
-  {featuredSoftware.length > 0 && (
+  {overviewPage.featuredSoftwareProjects.length > 0 && (
     <section data-section="software" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-border">
       <div class="flex items-center justify-between mb-8">
         <h2 class="text-2xl font-semibold text-foreground">Software Projects</h2>
@@ -151,7 +131,7 @@ const latestStory = allStories
         </a>
       </div>
       <div class="grid gap-6 md:grid-cols-2">
-        {featuredSoftware.map((project) => (
+        {overviewPage.featuredSoftwareProjects.map(project => (
           <SoftwareCard
             slug={project.id}
             name={project.data.name}
@@ -166,16 +146,16 @@ const latestStory = allStories
   )}
 
   {/* Latest Trail */}
-  {latestTrail.length > 0 && (
+  {overviewPage.latestTrails.length > 0 && (
     <section data-section="backpacking" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-border">
       <div class="flex items-center justify-between mb-8">
-        <h2 class="text-2xl font-semibold text-foreground">Latest Trail</h2>
+        <h2 class="text-2xl font-semibold text-foreground">Latest trails</h2>
         <a href="/backpacking" class="inline-flex items-center gap-1 text-sm text-accent hover:text-accent/80 transition-colors no-underline font-medium">
           All trails <ArrowRight class="h-4 w-4" />
         </a>
       </div>
       <div class="max-w-sm">
-        {latestTrail.map((trail) => {
+        {overviewPage.latestTrails.map(trail => {
           const sectionLabel = getSectionLabel(trail.data.sections.length, trail.data.totalSections) ?? undefined;
           return (
             <TrailCard

@@ -1,70 +1,66 @@
-import type { BackpackingManager } from "@/managers/backpacking.manager";
 import { formatDate, kmToMiles } from "@/utils/content";
+import type { BackpackingManager } from "@/managers/backpacking.manager";
 import type { CollectionEntry } from "astro:content";
+import type { PageManager } from "@/managers/page.manager";
 
 export class BackpackingViewModel {
     constructor(
-        private readonly manager: BackpackingManager
+        private readonly backpackingManager: BackpackingManager,
+        private readonly pageManager: PageManager
     ) {
 
     }
 
-    public async getOverviewPage(): Promise<BackpackingOverviewViewState> {
-        const trails = await this.manager.getTrails();
-        const posts = await this.manager.getPosts();
-
-        const years = trails.map(t => t.data.date.getFullYear());
-        const trailsByYear: TrailsByYear[] = years.map(year => {
-            const currentTrails = trails.filter(t => t.data.date.getFullYear() === year);
-
-            return {
-                year: year,
-                trails: currentTrails
-            };
-        });
+    public async getOverviewPage(): Promise<OverviewPage> {
+        const page = await this.pageManager.getBackpackingPage();
+        const trails = await this.getTrailsByYear();
+        const posts = await this.backpackingManager.getPosts();
 
         return {
-            trails: trailsByYear,
+            page: page,
+            trailsByYear: trails,
             posts: posts
         };
     }
 
-    public async getTrailPages(): Promise<BackpackingTrailViewState[]> {
-        const trails = await this.manager.getTrails();
-        const result: BackpackingTrailViewState[] = [];
+    public async getTrailPages(): Promise<TrailPage[]> {
+        const trails = await this.backpackingManager.getTrails();
+        const result: TrailPage[] = [];
 
         for (const trail of trails) {
-            const sections = await this.manager.getSections(trail);
+            const sections = await this.backpackingManager.getSections(trail);
             const distanceInMiles = kmToMiles(trail.data.distanceKm);
 
             result.push({
                 trail: trail,
-                distanceInMiles: distanceInMiles,
+                sections: sections,
                 formattedDate: formatDate(trail.data.date),
-                sections: sections
+                distanceInMiles: distanceInMiles
             });
         }
 
         return result;
     }
 
-    public async getSectionsPage(): Promise<BackpackingSectionPageViewState[]> {
-        const trails = await this.manager.getTrails();
-        const result: BackpackingSectionPageViewState[] = [];
+    public async getSectionPages(): Promise<SectionPage[]> {
+        const trails = await this.backpackingManager.getTrails();
+        const result: SectionPage[] = [];
 
         for (const trail of trails) {
-            const sections = await this.manager.getSections(trail);
-
-            sections.forEach((section, idx) => {
+            const sections = await this.backpackingManager.getSections(trail);
+            
+            sections.forEach((section: CollectionEntry<'backpacking/sections'>, index: number) => {
                 const formattedDate = formatDate(section.data.date);
-                
+                const previousSection = this.backpackingManager.getPreviousSection(sections, section);
+                const nextSection = this.backpackingManager.getNextSection(sections, section);
+
                 result.push({
                     trail: trail,
                     section: section,
                     formattedDate: formattedDate,
-                    prevSection: idx > 0 ? sections[idx - 1] : null,
-                    nextSection: idx < sections.length - 1 ? sections[idx + 1] : null,
-                    sectionOrder: idx + 1
+                    sectionNumber: index + 1,
+                    previousSection: previousSection,
+                    nextSection: nextSection
                 });
             });
         }
@@ -72,42 +68,56 @@ export class BackpackingViewModel {
         return result;
     }
 
-    public async getPostsPage(): Promise<BackpackingPostsPageViewState[]> {
-        const posts = await this.manager.getPosts();
+    public async getPostPages(): Promise<PostPage[]> {
+        const posts = await this.backpackingManager.getPosts();
 
-        return posts.map(p => ({
-            formattedDate: formatDate(p.data.date),
-            slug: p.id,
-            post: p
+        return posts.map((post: CollectionEntry<'backpacking/posts'>) => ({
+            post: post,
+            formattedDate: formatDate(post.data.date)
         }));
+    }
+
+    private async getTrailsByYear(): Promise<TrailsByYear[]> {
+        const trails = await this.backpackingManager.getTrails();
+        const years = trails.map((t: CollectionEntry<'backpacking/trails'>) => t.data.date.getFullYear());
+        
+        return years.map((year: number) => {
+            const currentTrails = trails
+                .filter((t: CollectionEntry<'backpacking/trails'>) => t.data.date.getFullYear() === year);
+
+            return {
+                year: year,
+                trails: currentTrails
+            };
+        });
     }
 }
 
-export interface BackpackingOverviewViewState {
-    trails: TrailsByYear[],
+export interface OverviewPage {
+    page: CollectionEntry<'pages'>,
+    trailsByYear: TrailsByYear[],
     posts: CollectionEntry<'backpacking/posts'>[]
 }
 
-export interface BackpackingSectionPageViewState {
+export interface TrailPage {
     trail: CollectionEntry<'backpacking/trails'>,
+    sections: CollectionEntry<'backpacking/sections'>[],
     formattedDate: string,
+    distanceInMiles: number
+}
+
+export interface SectionPage {
+    trail: CollectionEntry<'backpacking/trails'>,
     section: CollectionEntry<'backpacking/sections'>,
-    prevSection: CollectionEntry<'backpacking/sections'> | null,
-    nextSection: CollectionEntry<'backpacking/sections'> | null,
-    sectionOrder: number
+    formattedDate: string,
+    sectionNumber: number,
+    previousSection: CollectionEntry<'backpacking/sections'> | null,
+    nextSection: CollectionEntry<'backpacking/sections'> | null
 }
 
-export interface BackpackingPostsPageViewState {
-    slug: string,
-    formattedDate: string,
-    post: CollectionEntry<'backpacking/posts'>
-}
-
-export interface BackpackingTrailViewState {
-    trail: CollectionEntry<'backpacking/trails'>,
-    distanceInMiles: number,
-    formattedDate: string,
-    sections: CollectionEntry<'backpacking/sections'>[]
+export interface PostPage {
+    post: CollectionEntry<'backpacking/posts'>,
+    formattedDate: string
 }
 
 export interface TrailsByYear {

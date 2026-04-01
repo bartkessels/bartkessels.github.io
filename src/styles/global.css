@@ -6,9 +6,8 @@
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/500.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../tailwind.config.mjs";
 
 @layer base {
   * {
@@ -131,7 +130,7 @@
   }
 
   .prose pre {
-    @apply rounded-lg overflow-x-auto my-6;
+    @apply rounded-lg overflow-x-auto my-6 px-4 py-4;
     white-space: pre;
   }
 
@@ -208,7 +207,7 @@
 }
 
 .code-block pre {
-  @apply rounded-t-none m-0 overflow-x-auto;
+  @apply rounded-t-none m-0 overflow-x-auto px-4 py-4;
   white-space: pre;
 }
 
@@ -216,6 +215,26 @@
   white-space: pre;
   word-break: normal;
   overflow-wrap: normal;
+}
+
+/* Line numbers for all code blocks */
+pre code {
+  counter-reset: line;
+}
+
+pre code .line {
+  counter-increment: line;
+}
+
+pre code .line::before {
+  content: counter(line);
+  display: inline-block;
+  width: 1.25rem;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: #9ca3af;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* Mermaid diagrams */

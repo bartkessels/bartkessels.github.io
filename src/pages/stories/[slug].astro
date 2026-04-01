@@ -1,40 +1,36 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
-import { getStories } from '@/repositories/stories.repository';
-import { getBlogPostBySlug } from '@/repositories/blog.repository';
-import { Calendar, BookOpen } from 'lucide-astro';
+import { Calendar, BookOpen } from '@lucide/astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContentListItem from '@/components/ContentListItem.astro';
-import { formatDate } from '@/utils/content';
+import TagsList from '@/components/TagsList.astro';
+import { getStoriesViewModel } from '@/factories/view-model.factory';
 
 export const getStaticPaths = (async () => {
-  const stories = await getStories();
-  
-  return stories.map((story) => ({
-    params: { slug: story.id },
-    props: { story },
+  const viewModel = getStoriesViewModel();
+  const pages = await viewModel.getStoryPages();
+
+  return pages.map(page => ({
+    params: { slug: page.story.id },
+    props: {
+      story: page.story,
+      posts: page.posts,
+      formattedDate: page.formattedDate
+    }
   }));
 }) satisfies GetStaticPaths;
 
-const { story } = Astro.props;
+const { story, posts, formattedDate } = Astro.props;
 const { Content } = await render(story);
-
-// Get all posts in this story
-const storyPosts = await Promise.all(
-  story.data.posts.map(async (postSlug) => {
-    const post = await getBlogPostBySlug(postSlug);
-    return post;
-  })
-);
-
-const formattedDate = formatDate(story.data.date);
 ---
 
 <BaseLayout 
   title={story.data.title} 
   description={story.data.description}
   image={story.data.image}
+  activePageId="stories"
+  tags={story.data.tags}
 >
   <article>
     {/* Hero Image */}
@@ -54,15 +50,20 @@ const formattedDate = formatDate(story.data.date);
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Header */}
       <header class="mb-12">
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex flex-wrap items-center gap-2 mb-2">
           <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent/10 text-accent">
             <BookOpen class="h-3.5 w-3.5" />
             Story Series
           </span>
           <span class="text-sm text-muted">
-            {storyPosts.length} {storyPosts.length === 1 ? 'post' : 'posts'}
+            {posts.length} {posts.length === 1 ? 'post' : 'posts'}
           </span>
         </div>
+        {(story.data.tags ?? []).length > 0 && (
+          <div class="mb-4">
+            <TagsList tags={story.data.tags ?? []} />
+          </div>
+        )}
 
         <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
           {story.data.title}
@@ -72,9 +73,11 @@ const formattedDate = formatDate(story.data.date);
           {story.data.description}
         </p>
 
-        <div class="flex items-center gap-2 text-sm text-muted border-b border-border pb-6">
-          <Calendar class="h-4 w-4" />
-          Started {formattedDate}
+        <div class="flex flex-wrap items-center gap-6 text-sm text-muted border-b border-border pb-6">
+          <span class="flex items-center gap-2">
+            <Calendar class="h-4 w-4" />
+            Started {formattedDate}
+          </span>
         </div>
       </header>
 
@@ -88,7 +91,7 @@ const formattedDate = formatDate(story.data.date);
         <h2 class="text-2xl font-semibold text-foreground mb-6">Posts in this series</h2>
         
         <div class="space-y-3">
-          {storyPosts.map((post, index) => (
+          {posts.map((post, index) => (
             <ContentListItem
               href={`/${post.data.subject}/${post.id}`}
               index={index + 1}

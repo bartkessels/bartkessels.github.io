@@ -1,39 +1,44 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
-import { Calendar, ChevronLeft, ChevronRight, MapPin } from 'lucide-astro';
-import { getSectionOrderLabel, sectionSlug } from '@/utils/content';
+import { Calendar, ChevronLeft, ChevronRight, MapPin } from '@lucide/astro';
+import { getSectionOrderLabel } from '@/utils/content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TrailMap from '@/components/TrailMap.astro';
+import TagsList from '@/components/TagsList.astro';
 import { getBackpackingViewModel } from '@/factories/view-model.factory';
 
 export const getStaticPaths = (async () => {
   const viewModel = getBackpackingViewModel();
-  const sectionsPage = await viewModel.getSectionsPage();
+  const pages = await viewModel.getSectionPages();
 
-  return sectionsPage.map(page => ({
+  return pages.map(page => ({
     params: {
       trail: page.trail.id,
-      section: sectionSlug(page.section.id)
+      section: page.section.id
     },
     props: {
       section: page.section,
       formattedDate: page.formattedDate,
       trail: page.trail,
-      previousSection: page.prevSection,
+      previousSection: page.previousSection,
       nextSection: page.nextSection,
-      sectionOrder: page.sectionOrder
+      sectionNumber: page.sectionNumber
     }
   }));
 }) satisfies GetStaticPaths;
 
-const { section, formattedDate, trail, previousSection, nextSection, sectionOrder } = Astro.props;
+const { section, formattedDate, trail, previousSection, nextSection, sectionNumber } = Astro.props;
 const { Content } = await render(section);
 
-const totalLabel = getSectionOrderLabel(sectionOrder, trail.data.totalSections);
+const totalLabel = getSectionOrderLabel(sectionNumber, trail.data.totalSections);
 ---
 
-<BaseLayout title={`${trail.data.title} - ${section.data.title}`} description={section.data.description}>
+<BaseLayout
+  title={`${trail.data.title} - ${section.data.title}`}
+  description={section.data.description}
+  activePageId="backpacking"
+  tags={section.data.tags}>
   <article>
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <figure class="mb-8">
@@ -65,6 +70,11 @@ const totalLabel = getSectionOrderLabel(sectionOrder, trail.data.totalSections);
             </span>
           </div>
         )}
+        {(section.data.tags ?? []).length > 0 && (
+          <div class="mb-4">
+            <TagsList tags={section.data.tags ?? []} />
+          </div>
+        )}
 
         <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
           {section.data.title}
@@ -74,10 +84,12 @@ const totalLabel = getSectionOrderLabel(sectionOrder, trail.data.totalSections);
           {section.data.description}
         </p>
 
-        <time datetime={section.data.date.toISOString()} class="flex items-center gap-2 text-sm text-muted border-b border-border pb-6">
-          <Calendar class="h-4 w-4" aria-hidden="true" />
-          {formattedDate}
-        </time>
+        <div class="flex flex-wrap items-center gap-6 text-sm text-muted border-b border-border pb-6">
+          <time datetime={section.data.date.toISOString()} class="flex items-center gap-2">
+            <Calendar class="h-4 w-4" aria-hidden="true" />
+            {formattedDate}
+          </time>
+        </div>
       </header>
 
       <div class="mb-8 w-full aspect-[21/9]">
@@ -93,12 +105,12 @@ const totalLabel = getSectionOrderLabel(sectionOrder, trail.data.totalSections);
           <div class="grid gap-4 sm:grid-cols-2">
             {previousSection ? (
               <a
-                href={`/backpacking/${trail.id}/${sectionSlug(previousSection.id)}`}
+                href={`/backpacking/${trail.id}/${previousSection.id}`}
                 class="group p-4 rounded-lg border border-border hover:border-accent/30 hover:bg-accent/5 transition-all"
               >
                 <span class="flex items-center gap-1 text-sm text-muted mb-1">
                   <ChevronLeft class="h-4 w-4" aria-hidden="true" />
-                  Section {sectionOrder - 1}
+                  Section {sectionNumber - 1}
                 </span>
                 <span class="font-medium text-foreground group-hover:text-accent transition-colors line-clamp-1">
                   {previousSection.data.title}
@@ -109,11 +121,11 @@ const totalLabel = getSectionOrderLabel(sectionOrder, trail.data.totalSections);
             )}
             {nextSection && (
               <a
-                href={`/backpacking/${trail.id}/${sectionSlug(nextSection.id)}`}
+                href={`/backpacking/${trail.id}/${nextSection.id}`}
                 class="group p-4 rounded-lg border border-border hover:border-accent/30 hover:bg-accent/5 transition-all text-right"
               >
                 <span class="flex items-center justify-end gap-1 text-sm text-muted mb-1">
-                  Section {sectionOrder + 1}
+                  Section {sectionNumber + 1}
                   <ChevronRight class="h-4 w-4" aria-hidden="true" />
                 </span>
                 <span class="font-medium text-foreground group-hover:text-accent transition-colors line-clamp-1">

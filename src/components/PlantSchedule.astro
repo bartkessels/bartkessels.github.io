@@ -1,0 +1,97 @@
+---
+interface Props {
+  sowIndoors?: number[];
+  moveOutdoors?: number[];
+  harvest?: number[];
+}
+
+const { sowIndoors = [], moveOutdoors = [], harvest = [] } = Astro.props;
+
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const SOW_COLOR    = '#3B82F6';
+const MOVE_COLOR   = '#059669';
+const HARVEST_COLOR = '#F59E0B';
+const EMPTY_COLOR  = '#E5E7EB';
+
+function getBlockStyle(month: number): string {
+  const colors: string[] = [];
+  if (sowIndoors.includes(month))   colors.push(SOW_COLOR);
+  if (moveOutdoors.includes(month)) colors.push(MOVE_COLOR);
+  if (harvest.includes(month))      colors.push(HARVEST_COLOR);
+
+  if (colors.length === 0) return `background-color: ${EMPTY_COLOR}`;
+  if (colors.length === 1) return `background-color: ${colors[0]}`;
+  if (colors.length === 2)
+    return `background: linear-gradient(135deg, ${colors[0]} 50%, ${colors[1]} 50%)`;
+  return `background: linear-gradient(135deg, ${colors[0]} 33.33%, ${colors[1]} 33.33%, ${colors[1]} 66.66%, ${colors[2]} 66.66%)`;
+}
+
+function getAriaLabel(month: number, label: string): string {
+  const events: string[] = [];
+  if (sowIndoors.includes(month))   events.push('sow indoors');
+  if (moveOutdoors.includes(month)) events.push('move outdoors');
+  if (harvest.includes(month))      events.push('harvest');
+  return events.length ? `${label}: ${events.join(', ')}` : label;
+}
+---
+
+<div class="plant-schedule not-prose my-6">
+  <div class="grid grid-cols-12 gap-1">
+    {months.map((label, i) => {
+      const month = i + 1;
+      return (
+        <div class="flex flex-col items-center gap-1" data-month={month}>
+          <div
+            class="w-full aspect-square rounded-sm"
+            style={getBlockStyle(month)}
+            aria-label={getAriaLabel(month, label)}
+            role="img"
+          />
+          <span class="month-label text-xs text-muted text-center leading-none hidden sm:block">{label}</span>
+        </div>
+      );
+    })}
+  </div>
+
+  <div class="flex flex-wrap gap-4 mt-4">
+    <span class="flex items-center gap-1.5 text-xs text-muted">
+      <span class="inline-block w-3 h-3 rounded-sm sow-indoors-swatch" aria-hidden="true" />
+      Sow indoors
+    </span>
+    <span class="flex items-center gap-1.5 text-xs text-muted">
+      <span class="inline-block w-3 h-3 rounded-sm move-outdoors-swatch" aria-hidden="true" />
+      Move outdoors
+    </span>
+    <span class="flex items-center gap-1.5 text-xs text-muted">
+      <span class="inline-block w-3 h-3 rounded-sm harvest-swatch" aria-hidden="true" />
+      Harvest
+    </span>
+  </div>
+</div>
+
+<style>
+  .sow-indoors-swatch  { background-color: #3B82F6; }
+  .move-outdoors-swatch { background-color: #059669; }
+  .harvest-swatch      { background-color: #F59E0B; }
+
+  [data-month].is-current-month .month-label {
+    font-weight: 700;
+    color: var(--color-accent, #059669);
+  }
+  [data-month].is-dimmed {
+    opacity: 0.45;
+  }
+</style>
+
+<script>
+  const currentMonth = new Date().getMonth() + 1;
+  document.querySelectorAll<HTMLElement>('.plant-schedule [data-month]').forEach(col => {
+    const month = Number(col.dataset.month);
+    if (month === currentMonth) {
+      col.classList.add('is-current-month');
+    } else {
+      col.classList.add('is-dimmed');
+    }
+  });
+</script>

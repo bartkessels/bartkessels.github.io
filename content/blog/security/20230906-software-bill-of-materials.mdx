@@ -3,9 +3,9 @@ slug: software-bill-of-materials
 title: Software Bill of Materials
 description: As a software developer it's important to keep your software safe and up-to-date, but can you rest assured that your dependencies are safe and up-to-date as well?
 author: Bart Kessels
+date: 2023-09-06
 image: /images/blog/security/sbom.png
 caption: This image is generated using Dall-E
-date: 2023-09-06
 subject: security
 ---
 
@@ -23,7 +23,7 @@ In order to know what your dependency tree looks like, you can generate a SBOM f
 
 Now that we know how we can extract all our dependencies from our system, we need to get a specification so multiple tools can work together for either the generating of the SBOM or the reading of the SBOM.
 
-Luckily, the Open World Wide Application Security Project or OWASP [(OWASP, nd.)](https://owasp.org/about/) has our covered. They've created a standard called CycloneDX which is a specification used to describe the structure of the SBOM file [(OWASP, nd.)](https://cyclonedx.org/capabilities/sbom/).
+Luckily, the Open World Wide Application Security Project or OWASP [(OWASP, nd.)](https://owasp.org/about/) has us covered. They've created a standard called CycloneDX which is a specification used to describe the structure of the SBOM file [(OWASP, nd.)](https://cyclonedx.org/capabilities/sbom/).
 
 ## Getting insights
 
@@ -42,4 +42,4 @@ Given the fact that vulnerabilities can be found at any time, I would recommend 
 
 In the current time and age, I assume you're already using a pipeline to build and deploy your application into production. In that same pipeline, you'd want to add an extra step to generate a SBOM based on the version that's going to be deployed. You should then upload this SBOM into your own _Dependency Track_ server and check the results. This has the benefit, that, when a vulnerability is found, your _Dependency Track_ server will notify you that you're using a vulnerable dependency in production without having to manually check which dependency or which version is vulnerable.
 
-If, however, you don't have the means to set up your own _Dependency Track_ server, I'd recommend to at least check your dependency versions by hand using something like [_It Depends_](../software/2023-09-06-releasing-it-depends.md) and keep an eye the updates of your dependencies or check your counties software security center updates.
+If, however, you don't have the means to set up your own _Dependency Track_ server, I'd recommend to at least check your dependency versions by hand using something like [_It Depends_](../../software/it-depends.mdx) and keep an eye the updates of your dependencies or check your counties software security center updates.

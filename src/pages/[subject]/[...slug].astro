@@ -1,0 +1,51 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import { getReadingTime } from '@/utils/content';
+import BlogLayout from '@/layouts/BlogLayout.astro';
+import { getBlogViewModel } from '@/factories/view-model.factory';
+
+export const getStaticPaths = (async () => {
+  const viewModel = getBlogViewModel();
+  const pages = await viewModel.getPostPages();
+
+  return pages.map(page => ({
+    params: { 
+      subject: page.subject.id,
+      slug: page.post.id
+    },
+    props: {
+      page: page.page,
+      post: page.post,
+      relatedPosts: page.relatedPosts,
+      story: page.story,
+      subject: page.subject,
+      subjects: page.subjects,
+      previousPost: page.previousPostInStory,
+      nextPost: page.nextPostInStory,
+      formattedDate: page.formattedDate
+    }
+  }));
+}) satisfies GetStaticPaths;
+
+const { post, relatedPosts, story, subject, subjects, previousPost, nextPost, formattedDate, page } = Astro.props;
+const { Content } = await render(post);
+const readingTime = getReadingTime(post.body);
+---
+
+<BlogLayout
+  post={post}
+  story={story}
+  formattedDate={formattedDate}
+  previousPost={previousPost}
+  nextPost={nextPost}
+  subject={subject}
+  readingTime={readingTime}
+  relatedPosts={relatedPosts}
+  subjects={subjects}
+  showSubjectsBar={page.data.show_subjects}
+  activePageId={page.id}
+  tags={post.data.tags}
+>
+  <Content />
+</BlogLayout>

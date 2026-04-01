@@ -1,57 +1,68 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
-import { getSoftware } from '@/repositories/software.repository';
-import { ExternalLink, Github } from 'lucide-astro';
+import { ExternalLink } from '@lucide/astro';
+import GitHubIcon from '@/components/GitHubIcon.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import TagsList from '@/components/TagsList.astro';
+import { getSoftwareViewModel } from '@/factories/view-model.factory';
 
 export const getStaticPaths = (async () => {
-  const projects = await getSoftware();
+  const viewModel = getSoftwareViewModel();
+  const pages = await viewModel.getSoftwarePages();
 
-  return projects.map((project) => ({
-    params: { slug: project.id },
-    props: { project },
+  return pages.map(page => ({
+    params: { slug: page.project.id },
+    props: { project: page.project },
   }));
 }) satisfies GetStaticPaths;
 
 const { project } = Astro.props;
 const { Content } = await render(project);
-
-const { name, description, logo, repository, website } = project.data;
 ---
 
-<BaseLayout title={name} description={description} image={logo}>
+<BaseLayout
+  title={project.data.name}
+  description={project.data.description}
+  image={project.data.logo}
+  activePageId="software"
+  tags={project.data.tags}>
   <article>
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <header class="mb-10">
         <div class="flex items-start gap-5 mb-6">
           <img
-              src={logo}
-              alt={`${name} logo`}
-              class="w-20 h-20 rounded-2xl object-contain bg-muted/50 flex-shrink-0"
+              src={project.data.logo}
+              alt={`${project.data.name} logo`}
+              class="w-20 h-20 rounded-2xl object-contain flex-shrink-0"
             />
 
           <div>
             <div class="flex items-center gap-2 mb-1">
-              <h1 class="text-3xl md:text-4xl font-bold text-foreground leading-tight">{name}</h1>
+              <h1 class="text-3xl md:text-4xl font-bold text-foreground leading-tight">{project.data.name}</h1>
             </div>
-            <p class="text-lg text-muted">{description}</p>
+            <p class="text-lg text-muted">{project.data.description}</p>
           </div>
         </div>
 
+        {(project.data.tags ?? []).length > 0 && (
+          <div class="mb-4">
+            <TagsList tags={project.data.tags ?? []} />
+          </div>
+        )}
         <div class="flex items-center gap-3 border-b border-border pb-8">
           <a
-            href={repository}
+            href={project.data.repository}
             target="_blank"
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-foreground text-background text-sm font-medium hover:text-background hover:opacity-90 transition-opacity"
           >
-            <Github class="h-4 w-4" />
+            <GitHubIcon class="h-4 w-4" />
             View on GitHub
           </a>
-          {website && (
+          {project.data.website && (
             <a
-              href={website}
+              href={project.data.website}
               target="_blank"
               rel="noopener noreferrer"
               class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium hover:border-accent/40 hover:text-accent transition-colors"

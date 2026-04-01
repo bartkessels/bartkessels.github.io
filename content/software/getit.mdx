@@ -1,24 +1,17 @@
 ---
-name: "GetIt"
-subject: desktop
-description: "A native HTTP client for Linux built with GTK4 and libadwaita. Test APIs, manage collections, and export requests with a beautiful, modern interface."
-logo: "/images/software/getit-logo.png"
+name: GetIt
+featured: true
+description: send HTTP requests to test your API endpoints.
+logo: /images/software/getit-logo.svg
 repository: https://github.com/bartkessels/getit
 website: https://getit.bartkessels.net
+tags: [Qt, C++]
 ---
 
-GetIt is a native HTTP client designed specifically for the Linux desktop. Built with GTK4 and libadwaita, it provides a beautiful, modern interface that integrates seamlessly with GNOME.
+GetIt is a small open source application to send API request using a cross-platform GUI. The main advantage of GetIt is the fact that it's native, no matter what platform you use, and it's completely open source.
 
-## Features
+## Sharing requests
 
-- **Native Experience**: Built with GTK4 for a true Linux-native feel
-- **Request Collections**: Organize your API requests into collections
-- **Environment Variables**: Manage different environments easily
-- **Code Generation**: Export requests to various programming languages
-- **Dark Mode**: Full support for light and dark themes
+GetIt uses the JSON-format to store request information, however, when you've got a request that uses files these files aren't incorporated into the GetIt request file.
 
-## Tech Stack
-
-- GTK4 / libadwaita
-- C / GLib
-- Meson build system
+The main features of GetIt compared to the alternatives are the way requests can be shared. There are other applications which let's you synchronise a number of requests using a proprietary cloud solution with a subscription. In the design of GetIt we took the sharing of requests very seriously but since we're not an entire company we can't setup an entire cloud solution. Thus we've made sure the file contents are human readable an easy to check-in using VCS.

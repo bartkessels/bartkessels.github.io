@@ -1,24 +1,28 @@
-import { GardeningRepository } from "@/repositories/gardening.repository";
-import type { SubjectsRepository } from "@/repositories/subject.repository";
 import type { CollectionEntry } from "astro:content";
+import type { GardeningRepository } from "@/repositories/gardening.repository";
+import type { SubjectsRepository } from "@/repositories/subject.repository";
 
 export class GardeningManager {
-    private static subject: string = 'gardening';
-
     constructor(
         private readonly subjectsRepository: SubjectsRepository,
-        private readonly gardeningRepository: GardeningRepository
+        private readonly gardeningRepository: GardeningRepository,
     ) {
 
     }
 
     public async getAllYears(): Promise<CollectionEntry<'subjects/gardening'>[]> {
-        return await this.subjectsRepository.getGardeningSubjects();
+        const subjects = await this.subjectsRepository.getGardeningSubjects();
+        
+        return subjects.sort((a: CollectionEntry<'subjects/gardening'>, b: CollectionEntry<'subjects/gardening'>) =>
+            a.data.name.localeCompare(b.data.name)
+        );
     }
 
     public async getYear(year: number): Promise<CollectionEntry<'subjects/gardening'>> {
         const allYears = await this.getAllYears();
-        const filteredYears = allYears.filter(y => y.id.startsWith(year.toString()));
+        const filteredYears = allYears.filter((y: CollectionEntry<'subjects/gardening'>) =>
+            y.id.startsWith(year.toString())
+        );
 
         if (filteredYears.length > 1) {
             throw new Error(`Duplicate years found for '${year}'`);
@@ -31,29 +35,39 @@ export class GardeningManager {
 
     public async getAllJournalEntries(): Promise<CollectionEntry<'gardening/journal'>[]> {
         const entries = await this.gardeningRepository.getJournalEntries();
-        return entries ?? [];
+        const sortedEntries = entries
+            ?.sort((a: CollectionEntry<'gardening/journal'>, b: CollectionEntry<'gardening/journal'>) =>
+                b.data.date.valueOf() - a.data.date.valueOf()
+            );
+
+        return sortedEntries ?? [];
     }
 
     public async getAllPlants(): Promise<CollectionEntry<'gardening/plants'>[]> {
         const plants = await this.gardeningRepository.getPlants();
-        return plants ?? [];
+        const sortedPlants = plants
+            ?.sort((a: CollectionEntry<'gardening/plants'>, b: CollectionEntry<'gardening/plants'>) =>
+                a.data.name.localeCompare(b.data.name)
+            );
+    
+        return sortedPlants ?? [];
     }
 
-    public async getJournalItemsForYear(year: string): Promise<CollectionEntry<'gardening/journal'>[]> {
+    public async getJournalEntriesForYear(year: CollectionEntry<'subjects/gardening'>): Promise<CollectionEntry<'gardening/journal'>[]> {
         const entries = await this.getAllJournalEntries();
-        const parsedYear = Number.parseInt(year);
 
         return entries
-            .filter(e => e.data.date.getFullYear() === parsedYear)
-            .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+            .filter((e: CollectionEntry<'gardening/journal'>) =>
+                year.id.includes(e.data.subject)
+            );
     }
 
-    public async getPlantsForYear(year: string): Promise<CollectionEntry<'gardening/plants'>[]> {
+    public async getPlantsForYear(year: CollectionEntry<'subjects/gardening'>): Promise<CollectionEntry<'gardening/plants'>[]> {
         const plants = await this.getAllPlants();
-        const parsedYear = Number.parseInt(year);
+        const parsedYear = Number.parseInt(year.id);
 
         return plants
-            .filter(p => p.data.years.includes(parsedYear))
-            .sort((a, b) => a.data.name.localeCompare(b.data.name));
+            .filter((p: CollectionEntry<'gardening/plants'>) => p.data.years.includes(parsedYear))
+            .sort((a: CollectionEntry<'gardening/plants'>, b: CollectionEntry<'gardening/plants'>) => a.data.name.localeCompare(b.data.name));
     }
 }

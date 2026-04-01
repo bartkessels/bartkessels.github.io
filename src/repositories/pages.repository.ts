@@ -1,27 +1,17 @@
-import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
-
-export const getPages = (): Promise<CollectionEntry<'pages'>[]> =>
-  getCollection('pages');
-
-export const getPageById = async (id: string): Promise<CollectionEntry<'pages'>> => {
-  const entry = await getEntry('pages', id);
-
-  if (entry) {
-    return entry;
-  }
-
-  throw new Error(`Page '${id}' not found`);
-};
-
+import { type CollectionEntry, getCollection, getEntry } from 'astro:content';
 
 export class PagesRepository {
-  public async getPage(name: string): Promise<CollectionEntry<'pages'>> {
-    const page = await getEntry('pages', name);
+    public async getPage(name: string): Promise<CollectionEntry<'pages'>> {
+        const page = await getEntry('pages', name);
 
-    if (!page) {
-      throw new Error(`Page '${page}' not found`);
+        if (!page) {
+            throw new Error(`Page '${page}' not found`);
+        }
+
+        return page;
     }
 
-    return page;
-  }
+    public async getPages(): Promise<CollectionEntry<'pages'>[]> {
+        return await getCollection('pages');
+    }
 }

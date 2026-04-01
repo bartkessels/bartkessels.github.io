@@ -1,5 +1,5 @@
-import { z } from 'astro/zod';
 import { baseContentSchema } from './base-content.model';
+import { z } from 'astro/zod';
 
 export const backpackingPostSchema = baseContentSchema;
 

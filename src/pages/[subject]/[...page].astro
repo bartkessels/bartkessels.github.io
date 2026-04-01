@@ -1,67 +1,64 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
-import { subjectSlug, getReadingTime } from '@/utils/content';
-import { getBlogPosts } from '@/repositories/blog.repository';
-import { getSubjectsForSection } from '@/repositories/subject.repository';
+import { getReadingTime } from '@/utils/content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import BlogCard from '@/components/BlogCard.astro';
 import Pagination from '@/components/Pagination.astro';
-import SubjectBadge from '@/components/SubjectBadge.astro';
+import { getBlogViewModel } from '@/factories/view-model.factory';
+import SubjectsBar from '@/components/SubjectsBar.astro';
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const subjects = await getSubjectsForSection('blog');
-  const allPosts = await getBlogPosts();
-  
-  return subjects.flatMap((subjectEntry) => {
-    const subject = subjectSlug(subjectEntry.id);
-    const filteredPosts = allPosts
-      .filter((post) => post.data.subject === subject)
-      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-    
-    return paginate(filteredPosts, {
-      params: { subject },
-      props: { subjectName: subjectEntry.data.name, subjectEntry },
-      pageSize: 9,
-    });
-  });
+  const viewModel = getBlogViewModel();
+  const overviewPages = await viewModel.getSubjectOverviewPages();
+
+  return overviewPages.flatMap(page => paginate(page.posts, {
+    params: {
+      subject: page.subject.id
+    },
+    props: {
+      subjectEntry: page.subject,
+      subjects: page.subjects,
+      pageEntry: page.page
+    },
+    pageSize: page.postsPerPage
+  }));
 }) satisfies GetStaticPaths;
 
-const { page, subjectName, subjectEntry } = Astro.props;
+const { page, pageEntry, subjectEntry, subjects } = Astro.props;
 const { subject } = Astro.params;
 const { Content } = await render(subjectEntry);
-
 ---
 
-<BaseLayout 
-  title={`${subjectName} Posts`} 
-  description={`Articles about ${subjectName} development and related topics.`}
->
+<BaseLayout
+  showSubjectsBar={pageEntry.data.show_subjects}
+  title={`${subjectEntry.data.name} Posts`} 
+  description={`Articles about ${subjectEntry} development and related topics.`}
+  activePageId={pageEntry.id}>
+  <SubjectsBar subjects={subjects} slot="subjects-bar" />
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    {/* Header */}
     <header class="mb-12">
-      <div class="mb-4">
-        <SubjectBadge subject={subject as string} size="md" />
-      </div>
       <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">
-        {subjectName}
+        {subjectEntry.data.name}
       </h1>
       <div class="text-lg text-muted max-w-2xl prose prose-muted">
         <Content />
       </div>
     </header>
 
-    {/* Posts Grid */}
     {page.data.length > 0 ? (
       <>
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
-          {page.data.map((post) => (
+          {page.data.map(post => (
             <BlogCard
               title={post.data.title}
               description={post.data.description}
               date={post.data.date}
               author={post.data.author}
               subject={post.data.subject}
+              subjectId={subjectEntry.id}
+              subject={subjectEntry.data.name}
+              subjectColor={subjectEntry.data.color}
               image={post.data.image}
               slug={post.id}
               readingTime={getReadingTime(post.body)}

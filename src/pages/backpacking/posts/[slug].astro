@@ -1,16 +1,17 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
-import { Calendar, User } from 'lucide-astro';
+import { Calendar, User } from '@lucide/astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import TagsList from '@/components/TagsList.astro';
 import { getBackpackingViewModel } from '@/factories/view-model.factory';
 
 export const getStaticPaths = (async () => {
   const viewModel = getBackpackingViewModel();
-  const postPages = await viewModel.getPostsPage();
+  const pages = await viewModel.getPostPages();
 
-  return postPages.map(page => ({
-    params: { slug: page.slug },
+  return pages.map(page => ({
+    params: { slug: page.post.id },
     props: {
       post: page.post,
       formattedDate: page.formattedDate
@@ -22,7 +23,12 @@ const { post, formattedDate } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description} image={post.data.image}>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.image}
+  activePageId="backpacking"
+  tags={post.data.tags}>
   <article>
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <figure class="mb-8">
@@ -39,6 +45,11 @@ const { Content } = await render(post);
       </figure>
 
       <header class="mb-8">
+        {(post.data.tags ?? []).length > 0 && (
+          <div class="mb-4">
+            <TagsList tags={post.data.tags ?? []} />
+          </div>
+        )}
         <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
           {post.data.title}
         </h1>
@@ -47,7 +58,7 @@ const { Content } = await render(post);
           {post.data.description}
         </p>
 
-        <div class="flex items-center gap-6 text-sm text-muted border-b border-border pb-6">
+        <div class="flex flex-wrap items-center gap-6 text-sm text-muted border-b border-border pb-6">
           <span class="flex items-center gap-2">
             <User class="h-4 w-4" />
             {post.data.author}

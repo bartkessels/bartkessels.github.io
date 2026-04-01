@@ -1,24 +1,24 @@
 ---
-import { getSoftware } from '@/repositories/software.repository';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SoftwareCard from '@/components/SoftwareCard.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
-import { getPageById } from '@/repositories/pages.repository';
+import { getSoftwareViewModel } from '@/factories/view-model.factory';
 
-const software = await getSoftware();
-const softwarePage = await getPageById('software');
-
-const sortedSoftware = software.sort((a, b) => a.data.name.localeCompare(b.data.name))
+const viewModel = getSoftwareViewModel();
+const overview = await viewModel.getOverview();
 ---
 
-<BaseLayout title={softwarePage!.data.title} description={softwarePage!.data.description}>
+<BaseLayout
+  title={overview.page.data.title}
+  description={overview.page.data.description}
+  activePageId={overview.page.id}>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <SectionHeader page={softwarePage!} />
+    <SectionHeader page={overview.page} />
 
-    {sortedSoftware.length > 0 && (
+    {overview.projects.length > 0 && (
       <section class="mb-16">
         <div class="grid gap-6 md:grid-cols-2">
-          {sortedSoftware.map((project) => (
+          {overview.projects.map(project => (
             <SoftwareCard
               slug={project.id}
               name={project.data.name}
@@ -32,7 +32,7 @@ const sortedSoftware = software.sort((a, b) => a.data.name.localeCompare(b.data.
       </section>
     )}
 
-    {software.length === 0 && (
+    {overview.projects.length === 0 && (
       <div class="text-center py-12">
         <p class="text-muted text-lg">No projects published yet. Check back soon!</p>
       </div>

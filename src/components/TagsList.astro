@@ -1,0 +1,26 @@
+---
+interface Props {
+  tags: string[];
+  size?: 'sm' | 'md';
+}
+
+const { tags, size = 'sm' } = Astro.props;
+const textSize = size === 'sm' ? 'text-xs' : 'text-sm';
+const bracketSize = size === 'sm' ? 'text-sm' : 'text-base';
+---
+
+{tags.length > 0 && (
+  <span
+    class={`inline-flex items-center gap-1 font-mono ${textSize}`}
+    aria-label="Tags"
+  >
+    <span class={`text-accent font-medium select-none ${bracketSize}`}>[</span>
+    {tags.map((tag, i) => (
+      <>
+        {i > 0 && <span class="text-accent/40 select-none">|</span>}
+        <span class="text-foreground/60">{tag}</span>
+      </>
+    ))}
+    <span class={`text-accent font-medium select-none ${bracketSize}`}>]</span>
+  </span>
+)}

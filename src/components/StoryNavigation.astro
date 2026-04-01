@@ -1,20 +1,21 @@
 ---
-import { ChevronLeft, ChevronRight } from 'lucide-astro';
+import type { CollectionEntry } from 'astro:content';
+import { ChevronLeft, ChevronRight } from '@lucide/astro';
 
 interface Props {
-  prevPost?: { title: string; slug: string; subject: string };
-  nextPost?: { title: string; slug: string; subject: string };
+  previousPost: CollectionEntry<'blog'> | null;
+  nextPost: CollectionEntry<'blog'> | null;
 }
 
-const { prevPost, nextPost } = Astro.props;
+const { previousPost, nextPost } = Astro.props;
 ---
 
-{(prevPost || nextPost) && (
+{(previousPost || nextPost) && (
   <nav class="mt-12 pt-8 border-t border-border">
     <div class="grid gap-4 sm:grid-cols-2">
-      {prevPost ? (
+      {previousPost ? (
         <a
-          href={`/${prevPost.subject}/${prevPost.slug}`}
+          href={`/${previousPost.data.subject}/${previousPost.id}`}
           class="group p-4 rounded-lg border border-border hover:border-accent/30 hover:bg-accent/5 transition-all"
         >
           <span class="flex items-center gap-1 text-sm text-muted mb-1">
@@ -22,7 +23,7 @@ const { prevPost, nextPost } = Astro.props;
             Previous in series
           </span>
           <span class="font-medium text-foreground group-hover:text-accent transition-colors line-clamp-1">
-            {prevPost.title}
+            {previousPost.data.title}
           </span>
         </a>
       ) : (
@@ -31,7 +32,7 @@ const { prevPost, nextPost } = Astro.props;
 
       {nextPost && (
         <a
-          href={`/${nextPost.subject}/${nextPost.slug}`}
+          href={`/${nextPost.data.subject}/${nextPost.id}`}
           class="group p-4 rounded-lg border border-border hover:border-accent/30 hover:bg-accent/5 transition-all text-right"
         >
           <span class="flex items-center justify-end gap-1 text-sm text-muted mb-1">
@@ -39,7 +40,7 @@ const { prevPost, nextPost } = Astro.props;
             <ChevronRight class="h-4 w-4" aria-hidden="true" />
           </span>
           <span class="font-medium text-foreground group-hover:text-accent transition-colors line-clamp-1">
-            {nextPost.title}
+            {nextPost.data.title}
           </span>
         </a>
       )}

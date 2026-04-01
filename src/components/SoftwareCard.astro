@@ -1,5 +1,6 @@
 ---
-import { ExternalLink, Github } from 'lucide-astro';
+import { ExternalLink } from '@lucide/astro';
+import GitHubIcon from './GitHubIcon.astro';
 
 interface Props {
   slug: string;
@@ -21,7 +22,7 @@ const { slug, name, description, logo, repository, website } = Astro.props;
         <img
             src={logo}
             alt={`${name} logo`}
-            class="w-14 h-14 rounded-xl object-contain bg-muted/50"
+            class="w-14 h-14 rounded-xl object-contain"
             loading="lazy"
           />
       </div>
@@ -48,8 +49,7 @@ const { slug, name, description, logo, repository, website } = Astro.props;
             rel="noopener noreferrer"
             class="relative z-10 inline-flex items-center gap-1.5 text-sm text-muted hover:text-foreground transition-colors"
           >
-            <Github class="h-4 w-4" aria-hidden="true" />
-            Repository
+            <GitHubIcon class="h-4 w-4" aria-hidden="true" />&nbsp;Repository
           </a>
           {website && (
             <a

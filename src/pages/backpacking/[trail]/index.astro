@@ -1,18 +1,19 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
-import { Calendar, MapPin, Ruler, List } from 'lucide-astro';
-import { getSectionLabel, sectionSlug } from '@/utils/content';
+import { Calendar, MapPin, Ruler, List } from '@lucide/astro';
+import { getSectionLabel } from '@/utils/content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContentListItem from '@/components/ContentListItem.astro';
+import TagsList from '@/components/TagsList.astro';
 import { getBackpackingViewModel } from '@/factories/view-model.factory';
 
 
 export const getStaticPaths = (async () => {
     const viewModel = getBackpackingViewModel();
-    const trailPages = await viewModel.getTrailPages();
+    const pages = await viewModel.getTrailPages();
 
-    return trailPages.map((page) => ({
+    return pages.map(page => ({
         params: { trail: page.trail.id },
         props: {
             trail: page.trail,
@@ -29,7 +30,11 @@ const { Content } = await render(trail);
 const sectionLabel = getSectionLabel(sections.length, trail.data.totalSections);
 ---
 
-<BaseLayout title={trail.data.title} description={trail.data.description} image={trail.data.image}>
+<BaseLayout
+  title={trail.data.title}
+  description={trail.data.description}
+  image={trail.data.image}
+  activePageId="backpacking">
   <article>
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       
@@ -49,10 +54,15 @@ const sectionLabel = getSectionLabel(sections.length, trail.data.totalSections);
 
       {/* Header */}
       <header class="mb-8">
-        <div class="flex items-center gap-1.5 text-sm text-muted mb-3">
+        <div class="flex items-center gap-1.5 text-sm text-muted mb-2">
           <MapPin class="h-4 w-4 text-accent" aria-hidden="true" />
           <span>{trail.data.location}, {trail.data.country}</span>
         </div>
+        {(trail.data.tags ?? []).length > 0 && (
+          <div class="mb-4">
+            <TagsList tags={trail.data.tags ?? []} />
+          </div>
+        )}
 
         <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
           {trail.data.title}
@@ -85,10 +95,12 @@ const sectionLabel = getSectionLabel(sections.length, trail.data.totalSections);
           )}
         </dl>
 
-        <time datetime={trail.data.date.toISOString()} class="flex items-center gap-2 text-sm text-muted border-b border-border pb-6">
-          <Calendar class="h-4 w-4" aria-hidden="true" />
-          {formattedDate}
-        </time>
+        <div class="flex flex-wrap items-center gap-6 text-sm text-muted border-b border-border pb-6">
+          <time datetime={trail.data.date.toISOString()} class="flex items-center gap-2">
+            <Calendar class="h-4 w-4" aria-hidden="true" />
+            {formattedDate}
+          </time>
+        </div>
       </header>
 
       {/* Content */}
@@ -106,7 +118,7 @@ const sectionLabel = getSectionLabel(sections.length, trail.data.totalSections);
           <div class="space-y-3">
             {sections.map((section, i) => (
               <ContentListItem
-                href={`/backpacking/${trail.id}/${sectionSlug(section.id)}`}
+                href={`/backpacking/${trail.id}/${section.id}`}
                 index={i + 1}
                 title={section.data.title}
                 description={section.data.description}

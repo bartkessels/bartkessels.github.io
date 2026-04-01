@@ -1,10 +1,10 @@
-_site
-.DS_Store
-*.swp
-.sass-cache
-*~
-.idea
-*.lock
-dist/
-.astro/
+# Environment variables
+.env*.local
+
+# Common ignores
 node_modules/
+.next/
+.DS_Store
+.astro/
+dist/
+test-results/

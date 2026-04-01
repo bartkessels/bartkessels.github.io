@@ -1,15 +1,28 @@
 ---
-import { Github, Linkedin, Mail } from 'lucide-astro';
+import { Mail } from '@lucide/astro';
+import CertificateCard from '@/components/CertificateCard.astro';
+import GitHubIcon from '@/components/GitHubIcon.astro';
+import LinkedInIcon from '@/components/LinkedInIcon.astro';
+import { render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getAboutViewModel } from '@/factories/view-model.factory';
+
+const viewModel = getAboutViewModel();
+const aboutPage = await viewModel.getPage();
+
+const { Content } = await render(aboutPage.page);
 ---
 
-<BaseLayout title="About" description="Learn more about Bart Kessels, software developer and outdoor enthusiast.">
+<BaseLayout
+  title={aboutPage.page.data.title}
+  description={aboutPage.page.data.description}
+  activePageId={aboutPage.page.id}>
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     {/* Header */}
     <header class="mb-12 text-center">
       <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-muted overflow-hidden">
         <img
-          src="/images/avatar.jpg"
+          src="/images/bartkessels.jpg"
           alt="Bart Kessels"
           class="w-full h-full object-cover"
         />
@@ -20,41 +33,33 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
     {/* Bio */}
     <section class="prose max-w-none mb-12">
-      <p>
-        Hi! I'm Bart, a software developer based in the Netherlands. I'm passionate about creating 
-        clean, maintainable software and exploring the great outdoors.
-      </p>
-
-      <h2>What I Do</h2>
-      <p>
-        By day, I work as a software developer focusing on C# and .NET applications. I enjoy solving 
-        complex problems and building tools that make developers' lives easier.
-      </p>
-      <p>
-        In my spare time, I contribute to open source projects, explore Android and Kotlin development, 
-        and tinker with native Linux applications using GTK.
-      </p>
-
-      <h2>Beyond Code</h2>
-      <p>
-        When I'm not coding, you'll find me either on a hiking trail with my backpack or in my 
-        vegetable garden. I believe in balancing screen time with time in nature.
-      </p>
-      <p>
-        Backpacking has taught me patience, planning, and the importance of traveling light - 
-        lessons that surprisingly apply well to software development too.
-      </p>
-
-      <h2>This Blog</h2>
-      <p>
-        I started this blog to share what I learn along the way. Whether it's a tricky CMake 
-        configuration, a beautiful hiking route, or tips for growing tomatoes in a Dutch climate - 
-        if I found it useful, maybe you will too.
-      </p>
+      <Content />
     </section>
 
+    {/* Certificates */}
+    {aboutPage.certificates.length > 0 && (
+      <section class="border-t border-border pt-8">
+        <h2 class="text-xl font-semibold text-foreground mb-2 text-center">Certifications</h2>
+        <p class="text-sm text-muted text-center mb-6">Certificates and credentials</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {aboutPage.certificates.map(cert => (
+            <CertificateCard
+              name={cert.certificate.data.name}
+              issuer={cert.certificate.data.issuer}
+              issuerLogo={cert.certificate.data.issuerLogo}
+              issueDate={cert.issueDate}
+              isExpired={cert.isExpired}
+              expiryDate={cert.expiryDate}
+              credentialId={cert.certificate.data.credentialId}
+              credentialUrl={cert.certificate.data.credentialUrl}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
     {/* Social Links */}
-    <section class="border-t border-border pt-8">
+    <section class="border-t border-border pt-8 mt-8">
       <h2 class="text-xl font-semibold text-foreground mb-6 text-center">Get in Touch</h2>
       <div class="flex items-center justify-center gap-6">
         <a
@@ -63,7 +68,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
           rel="noopener noreferrer"
           class="flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:border-accent hover:bg-accent/5 transition-all text-muted hover:text-foreground"
         >
-          <Github class="h-5 w-5" />
+          <GitHubIcon class="h-5 w-5" />
           GitHub
         </a>
         <a
@@ -72,7 +77,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
           rel="noopener noreferrer"
           class="flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:border-accent hover:bg-accent/5 transition-all text-muted hover:text-foreground"
         >
-          <Linkedin class="h-5 w-5" />
+          <LinkedInIcon class="h-5 w-5" />
           LinkedIn
         </a>
         <a

@@ -3,10 +3,17 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*", "e2e/*"]
     },
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "strictNullChecks": true
-  }
+  },
+  "include": [
+    ".astro/**/*",
+    "src/**/*",
+    "e2e/**/*",
+    "eslint.config.mjs",
+    "astro.config.mjs"
+  ]
 }

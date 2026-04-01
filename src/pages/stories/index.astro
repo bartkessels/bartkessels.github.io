@@ -1,24 +1,23 @@
 ---
-import { getStories } from '@/repositories/stories.repository';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StoryCard from '@/components/StoryCard.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
-import { getPageById } from '@/repositories/pages.repository';
+import { getStoriesViewModel } from '@/factories/view-model.factory';
 
-const storiesPage = await getPageById('stories');
-const stories = await getStories();
-const sortedStories = stories.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const viewModel = getStoriesViewModel();
+const overview = await viewModel.getOverview();
 ---
 
-<BaseLayout title={storiesPage!.data.title} description={storiesPage!.data.description}>
+<BaseLayout
+  title={overview.page.data.title}
+  description={overview.page.data.description}
+  activePageId={overview.page.id}>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    {/* Header */}
-    <SectionHeader page={storiesPage!} />
+    <SectionHeader page={overview.page} />
 
-    {/* Stories Grid */}
-    {sortedStories.length > 0 ? (
+    {overview.stories.length > 0 ? (
       <div class="grid gap-8 md:grid-cols-2">
-        {sortedStories.map((story) => (
+        {overview.stories.map(story => (
           <StoryCard
             title={story.data.title}
             description={story.data.description}
