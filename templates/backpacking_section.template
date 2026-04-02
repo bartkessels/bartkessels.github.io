@@ -1,0 +1,11 @@
+---
+slug: {{slug}}
+title: <ADD TITLE>
+description: <ADD DESCRIPTION>
+author: Bart Kessels
+date: {{date}}
+gpx: /gpx/{{trail}}/{{slug}}.gpx
+image: /images/backpacking/{{trail}}/{{slug}}.jpg
+caption: <ADD CAPTION>
+tags: [A, B, C]
+---

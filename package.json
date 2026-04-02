@@ -10,7 +10,18 @@
     "astro": "astro",
     "lint": "eslint 'src/**/*.ts'",
     "test": "vitest run",
-    "test:e2e": "pnpm playwright test"
+    "test:e2e": "pnpm playwright test",
+    "new:backpacking/post": "tsx scripts/new-item.ts backpacking-post",
+    "new:backpacking/trail": "tsx scripts/new-item.ts backpacking-trail",
+    "new:backpacking/section": "tsx scripts/new-item.ts backpacking-section",
+    "new:blog/post": "tsx scripts/new-item.ts blog-post",
+    "new:blog/subject": "tsx scripts/new-item.ts blog-subject",
+    "new:certificate": "tsx scripts/new-item.ts certificate",
+    "new:gardening/journal": "tsx scripts/new-item.ts gardening-journal",
+    "new:gardening/plant": "tsx scripts/new-item.ts gardening-plant",
+    "new:gardening/year": "tsx scripts/new-item.ts gardening-subject",
+    "new:software/project": "tsx scripts/new-item.ts software-project",
+    "new:story": "tsx scripts/new-item.ts story"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -18,6 +29,7 @@
     "@types/node": "^25.5.0",
     "eslint": "^10.1.0",
     "happy-dom": "^20.8.9",
+    "tsx": "^4.21.0",
     "typescript-eslint": "^8.58.0",
     "vitest": "^4.1.2"
   },

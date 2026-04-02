@@ -1,0 +1,9 @@
+---
+slug: {{slug}}
+name: <ADD NAME>
+featured: true
+description: <ADD DESCRIPTION>
+logo: /images/software/{{slug}}.png
+repository: https://github.com/bartkessels/{{slug}}
+tags: [A, B, C]
+---

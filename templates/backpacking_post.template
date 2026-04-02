@@ -1,0 +1,10 @@
+---
+slug: {{slug}}
+title: <ADD TITLE>
+description: <ADD DESCRIPTION>
+author: Bart Kessels
+date: {{date}}
+image: /images/backpacking/{{slug}}.png
+caption: <ADD CAPTION>
+tags: [A, B, C]
+---

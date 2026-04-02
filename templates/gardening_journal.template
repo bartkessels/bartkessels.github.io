@@ -1,0 +1,11 @@
+---
+slug: {{subject}}/{{slug}}
+title: <ADD TITLE>
+description: <ADD DESCRIPTION>
+date: {{date}}
+author: Bart Kessels
+image: /images/gardening/journals/{{subject}}/{{slug}}.png
+caption: <ADD CAPTION>
+subject: "{{subject}}"
+tags: [A, B, C]
+---

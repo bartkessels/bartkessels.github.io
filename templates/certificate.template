@@ -1,0 +1,5 @@
+name: {{name}}
+issuer: <ADD ISSUER>
+issuerLogo: /images/certificates/...
+issueDate: <DATE>
+credentialId: <ADD CREDENTIAL ID>

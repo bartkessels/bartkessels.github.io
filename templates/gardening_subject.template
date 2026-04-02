@@ -1,0 +1,5 @@
+---
+name: "{{year}}"
+color: bg-emerald-100 text-emerald-800
+href: gardening/{{year}}
+---

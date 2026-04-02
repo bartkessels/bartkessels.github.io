@@ -1,0 +1,13 @@
+---
+slug: {{slug}}
+title: <ADD TITLE>
+description: <ADD DESCRIPTION>
+date: {{date}}
+author: Bart Kessels
+subject: {{subject}}
+image: /images/blog/{{subject}}/{{slug}}.png
+caption: <CAPTION>
+tags: [A, B, C]
+---
+
+import CodeBlock from '@/components/CodeBlock.astro';

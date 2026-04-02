@@ -1,0 +1,15 @@
+---
+slug: {{slug}}
+title: <ADD TITLE>
+description: <ADD DESCRIPTION>
+date: {{date}}
+image: /images/backpacking/{{slug}}/.....
+caption: <ADD CAPTION>
+country: <ADD COUNTRY>
+location: <ADD LOCATION>
+distanceKm: 0
+totalSections: 0
+tags: [A, B, C]
+sections:
+  - section-without-trail-id
+---
