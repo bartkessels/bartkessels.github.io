@@ -62,7 +62,7 @@ const contentTypes: Record<string, ContentTypeConfig> = {
     },
     'certificate': {
         template: 'certificate.template',
-        args: ['slug'],
+        args: ['slug', 'name'],
         outputDir: () => `certificates`,
         filename: ({ timestamp, slug }) => `${timestamp}-${slug}.yml`
     },
