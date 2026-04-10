@@ -1,6 +1,6 @@
 ---
 name: Miscellaneous
-color: bg-purple-100 text-purple-800
+color: bg-gray-100 text-gray-800
 href: miscellaneous
 ---
 

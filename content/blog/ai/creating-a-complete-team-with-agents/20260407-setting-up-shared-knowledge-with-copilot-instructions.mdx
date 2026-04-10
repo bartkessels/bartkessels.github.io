@@ -1,0 +1,34 @@
+---
+slug: creating-a-complete-team-with-agents/setting-up-shared-knowledge-with-copilot-instructions
+title: Setting up shared knowledge with Copilot instructions
+description: All the agents in your team should properly work together and have access to the same knowledge, just like in a regular team. To accomplish this we can make use of the Copilot instructions.
+date: 2026-04-07
+author: Bart Kessels
+subject: ai
+image: /images/blog/ai/creating-a-complete-team-with-agents/setting-up-shared-knowledge-with-copilot-instructions.jpg
+caption: Image generated using Apple Image Playground
+tags: [GitHub Copilot, Agentic, Agents, Shared Knowledge, Copilot instructions]
+---
+
+Because we now have a team of agents that all work on the same project, we should give them some extra context about our project. Within Visual Studio Code you can use the `copilot-instructions.md` file. This file is automatically applied to chat requests within the current workspace [(Visual Studio Code, 2026)](https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_types-of-instruction-files). Visual Studio Code also supports other instruction files, such as `AGENTS.md` for agent-oriented workflows and `.instructions.md` files for more specific rules. In this post, we focus on the `copilot-instructions.md` file because it is the simplest project-wide starting point.
+
+The `copilot-instructions.md` file can be used for various project-specific standards such as coding style and naming conventions [(Visual Studio Code, 2026)](https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_use-a-githubcopilotinstructionsmd-file). In our project, we want to include coding standards, UX-related standards, and a link to the Obsidian plugin documentation.
+
+## Create the file
+
+Create the `copilot-instructions.md` file inside the `.github/` folder in the root of your workspace. I used Copilot to set up the initial contents of the instruction file. You can find the prompt for this below, and you should change all the project-specific details in your own prompts.
+
+
+```markdown
+For this project I have set up an agent team that will implement new features, fix bugs, and be responsible for refactoring this plugin. Because multiple agents will work in this repository, I need them to have shared knowledge about the project. For that reason, you must create a `.github/copilot-instructions.md` file.
+
+## Information about the project
+- The project is built using TypeScript and React
+- The project is an Obsidian plugin, using the Obsidian TypeScript API (https://docs.obsidian.md/Reference/TypeScript+API/Reference)
+- The project uses a layered structure with dependency injection to separate the various business concerns from the UI related logic
+
+Analyze the entire project and list all necessary information about this project in the `.github/copilot-instructions.md` file. Create the file using the best practices from the following resources
+- https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_use-a-githubcopilotinstructionsmd-file
+- https://docs.github.com/en/copilot/tutorials/use-custom-instructions
+- https://github.blog/ai-and-ml/github-copilot/5-tips-for-writing-better-custom-instructions-for-copilot/
+```

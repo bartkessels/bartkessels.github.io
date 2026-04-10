@@ -6,6 +6,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContentListItem from '@/components/ContentListItem.astro';
 import TagsList from '@/components/TagsList.astro';
 import { getStoriesViewModel } from '@/factories/view-model.factory';
+import ArticleLayout from '@/layouts/ArticleLayout.astro';
 
 export const getStaticPaths = (async () => {
   const viewModel = getStoriesViewModel();
@@ -25,31 +26,15 @@ const { story, posts, formattedDate } = Astro.props;
 const { Content } = await render(story);
 ---
 
-<BaseLayout 
-  title={story.data.title} 
+<ArticleLayout
+  title={story.data.title}
   description={story.data.description}
   image={story.data.image}
+  imageCaption={story.data.caption}
+  type="article"
   activePageId="stories"
-  tags={story.data.tags}
->
-  <article>
-    {/* Hero Image */}
-    <figure>
-      <div class="w-full aspect-[21/9] bg-muted overflow-hidden">
-        <img
-          src={story.data.image}
-          alt={story.data.title}
-          class="w-full h-full object-cover"
-        />
-      </div>
-      <figcaption class="text-center text-xs text-muted/70 italic py-2 px-4 border-t border-border/50">
-        {story.data.caption}
-      </figcaption>
-    </figure>
-
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <header class="mb-12">
+  tags={story.data.tags}>
+<header class="mb-12">
         <div class="flex flex-wrap items-center gap-2 mb-2">
           <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-accent/10 text-accent">
             <BookOpen class="h-3.5 w-3.5" />
@@ -103,5 +88,4 @@ const { Content } = await render(story);
         </div>
       </section>
     </div>
-  </article>
-</BaseLayout>
+</ArticleLayout>

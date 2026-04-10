@@ -1,0 +1,62 @@
+---
+slug: creating-a-complete-team-with-agents
+title: Create a complete team with agents
+description: In the current day and age, everyone has an entire team at their disposal. But how should you handle that?
+author: Bart Kessels
+date: 2026-04-07
+image: /images/blog/ai/creating-a-complete-team-with-agents/story.jpg
+caption: Image generated using Apple Image Playground
+subject: ai
+tags: [AI, Agents, Agentic, GitHub Copilot]
+featured: true
+posts:
+    - settings-up-dev-container-in-vs-code
+    - creating-a-complete-team-with-agents/setting-up-guardrails
+    - creating-a-complete-team-with-agents/creating-our-team
+    - creating-a-complete-team-with-agents/setting-up-shared-knowledge-with-copilot-instructions
+    - creating-a-complete-team-with-agents/putting-our-team-to-work
+---
+
+In this series, I want to explore what it looks like to have an entire team of agents help me on one of my open-source projects.
+
+The project I want to experiment with is [Daily Note Calendar](../software/daily-note-calendar.mdx). It's a plugin for [Obsidian](https://obsidian.md) with thousands of downloads, which makes it a good candidate for seeing how an agentic team can help me while maintaining stability and ease of use for current users.
+
+## Prerequisites
+
+This story focuses on setting up an agentic team in Visual Studio Code for Daily Note Calendar. Because the setup in this series relies on isolated development environments, you'll need the following tools and repositories:
+
+- [Docker](https://docker.com)
+- [Visual Studio Code](https://code.visualstudio.com)
+- Access to [GitHub Copilot](https://github.com/features/copilot)
+- A local clone of the [Daily Note Calendar](https://github.com/bartkessels/daily-note-calendar) repository
+
+## Requirements
+
+Because this project already exists, any changes must respect its existing requirements. In addition to those existing requirements, there are also a couple of issues opened by users that I want to address.
+
+Some of the existing requirements I definitely don't want to lose are:
+
+- Notes must be created based on
+    - Year
+    - Quarter
+    - Month
+    - Week
+    - Day
+- Each periodic note must be configurable
+    - Path must be configured
+    - File name must be configured
+    - Template used to create the note must be configured
+- There must be an option to only create notes when pressing a modifier key and clicking on a period
+- All notes should be deleted using the calendar UI
+- Notes created on the selected date should be visible below the calendar
+    - This must be a configurable option
+
+Of course, these aren't all the requirements, but each one will be captured in a `requirements.md` file in the project. To populate that file, we'll probably use Copilot to extract the existing requirements from the codebase.
+
+## Constraints
+
+A key consideration in these kinds of setups is the constraints we __MUST__ define. I strongly believe that every command an agent executes should be reviewed by you, the human. A major focus of this series will therefore be defining the constraints within which the agents must operate.
+
+Examples include running agents inside containers or restricting them to specific file types or folders.
+
+If those setup details are not relevant to you, feel free to skip those posts. That said, you're still responsible for everything you do, or allow an agent to do, on your computer.

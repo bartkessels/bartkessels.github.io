@@ -7,7 +7,10 @@ import type { StoriesManager } from "@/managers/stories.manager";
 import type { SubjectManager } from "@/managers/subject.manager";
 
 export class HomeViewModel {
-    private readonly maximumNumberOfItems = 3;
+    private readonly maximumNumberOfBlogPosts = 3;
+    private readonly maximumNumberOfFeaturedSoftwareProjects = 2;
+    private readonly maximumNumberOfTrails = 3;
+    private readonly maximumNumberOfFeaturedStories = 2;
 
     constructor(
         private readonly pageManager: PageManager,
@@ -22,10 +25,10 @@ export class HomeViewModel {
 
     public async getOverviewPage(): Promise<OverviewPage> {
         const page = await this.pageManager.getHomePage();
-        const latestPosts = await this.blogManager.getLatestsPosts(this.maximumNumberOfItems);
-        const featuredSoftwareProjects = await this.softwareManager.getFeaturedProjects(this.maximumNumberOfItems);
-        const latestTrails = await this.backpackingManager.getLatestTrails(this.maximumNumberOfItems);
-        const latestsStories = await this.storyManager.getFeaturedStories(this.maximumNumberOfItems);
+        const latestPosts = await this.blogManager.getLatestsPosts(this.maximumNumberOfBlogPosts);
+        const featuredSoftwareProjects = await this.softwareManager.getFeaturedProjects(this.maximumNumberOfFeaturedSoftwareProjects);
+        const latestTrails = await this.backpackingManager.getLatestTrails(this.maximumNumberOfTrails);
+        const latestsStories = await this.storyManager.getFeaturedStories(this.maximumNumberOfFeaturedStories);
         const postsWithSubject: PostWithSubject[] = [];
         
         for (const post of latestPosts) {

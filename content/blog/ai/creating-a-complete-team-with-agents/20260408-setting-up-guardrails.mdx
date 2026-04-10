@@ -1,0 +1,53 @@
+---
+slug: creating-a-complete-team-with-agents/setting-up-guardrails
+title: Setting up guardrails
+description: When using an agentic team, it is important to have guardrails in place to protect the quality of your codebase.
+date: 2026-04-08
+author: Bart Kessels
+subject: ai
+image: /images/blog/ai/creating-a-complete-team-with-agents/setting-up-guardrails.jpg
+caption: Image generated using Apple Image Playground
+tags: [Guardrails, Agents, Linter, Unit testing, Mutation testing]
+---
+
+When agents are building most of our software, we need automated gates to validate the code they produce.
+
+You should always review an agent's output before publishing software. That said, automation can catch many issues before manual review. In this post, I will look at the tools I use to create those guardrails.
+
+## Code quality
+
+One important aspect of a larger codebase is code quality. This applies both to individual components and to the overall consistency of the codebase.
+
+In my experience, this is just as important when developing software with a human team. You still have to define the expected quality bar for every team member and document it somewhere.
+
+### EditorConfig
+
+One option is to use an [EditorConfig](https://editorconfig.org/) file. This file is usually placed at the root of the repository, where editors can discover it and apply its rules. The format and behaviour are defined in the [EditorConfig specification](https://spec.editorconfig.org/).
+
+Inside this file, you define style rules for your codebase. For example, if you want to use tabs instead of spaces, you can add `indent_style = tab` to the `.editorconfig` file. This gives you a simple way to enforce consistent formatting across the project.
+
+### Linter
+
+Another useful tool is a linter. A linter is part of static code analysis and helps catch mistakes, anomalous code, probable bugs, and deviations from agreed coding standards [(Jetbrains, n.d.)](https://www.jetbrains.com/pages/static-code-analysis-guide/linters/).
+
+For JavaScript and TypeScript projects, [ESLint](https://eslint.org/) is a common choice. It statically analyzes code, integrates well with editors, and can run as part of a CI pipeline. In the case of the [Daily Note Calendar](../../../software/daily-note-calendar.mdx) plugin, I am going to use ESLint.
+
+## Business logic validation
+
+Once we have tools to help maintain code quality, we still need a way to verify that the business logic is correct. For that, we use unit tests, just like in a regular development process.
+
+However, in the same way as in a regular development process, the team also writes the unit tests. That means the tests themselves still need review. A weak test can increase coverage and still prove very little, for example if it only asserts something trivial.
+
+To validate that our tests are actually testing business logic, we can use [mutation testing](https://stryker-mutator.io/docs/). Mutation testing introduces small changes to the source code, then runs the tests against each mutated version. The expected outcome is that the tests fail for those mutations [(Stryker, n.d.)](https://stryker-mutator.io/docs/). If they do not, that usually means a case is missing, the assertions are too weak, or the test is not verifying the intended behaviour.
+
+## Automated pipeline
+
+In a typical environment, when a new feature is added to a codebase, the changes are shared through a pull request or merge request. That pull request shows the difference between the proposed change and the current production state.
+
+Most platforms that support pull requests also let you configure validation gates. For the Daily Note Calendar plugin the platform being used is GitHub. On GitHub you can require status check to pass before a pull request can be merged [(GitHub, n.d.)](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches#require-status-checks-before-merging).
+
+Within this pipeline, you should run your compile, test, lint, and mutation steps. That way, when reviewing the pull request, you already know that the guardrails you set up have passed, so you can spend more mental energy evaluating the logic of the change itself.
+
+## Manual review
+
+Before you publish a project, or deploy changes to production, always review the code yourself. LLMs make mistakes, and their training data may be too old when you introduce newer dependencies or tools. At the end of the day, you are still accountable for the code you publish. Do not just trust your LLMs; trust your own understanding of the code.

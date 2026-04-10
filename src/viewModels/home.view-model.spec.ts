@@ -192,7 +192,7 @@ describe('HomeViewModel', (): void => {
             expect(result.featuredSoftwareProjects).toEqual([]);
         });
 
-        it('should request maximum of 3 featured software projects', async (): Promise<void> => {
+        it('should request maximum of 2 featured software projects', async (): Promise<void> => {
             // Arrange
             const page = makePage('index', 'Home');
             mockGetHomePage.mockResolvedValue(page);
@@ -205,7 +205,7 @@ describe('HomeViewModel', (): void => {
             await viewModel.getOverviewPage();
 
             // Assert
-            expect(mockGetFeaturedProjects).toHaveBeenCalledWith(3);
+            expect(mockGetFeaturedProjects).toHaveBeenCalledWith(2);
         });
 
         it('should return featured software projects from SoftwareManager', async (): Promise<void> => {
@@ -290,7 +290,7 @@ describe('HomeViewModel', (): void => {
             expect(result.latestStories).toEqual([]);
         });
 
-        it('should request maximum of 3 featured stories', async (): Promise<void> => {
+        it('should request maximum of 2 featured stories', async (): Promise<void> => {
             // Arrange
             const page = makePage('index', 'Home');
             mockGetHomePage.mockResolvedValue(page);
@@ -303,7 +303,7 @@ describe('HomeViewModel', (): void => {
             await viewModel.getOverviewPage();
 
             // Assert
-            expect(mockGetFeaturedStories).toHaveBeenCalledWith(3);
+            expect(mockGetFeaturedStories).toHaveBeenCalledWith(2);
         });
 
         it('should return featured stories from StoriesManager', async (): Promise<void> => {

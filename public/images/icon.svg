@@ -26,9 +26,9 @@
      inkscape:pagecheckerboard="true"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     inkscape:zoom="0.68925909"
-     inkscape:cx="268.40415"
-     inkscape:cy="280.01081"
+     inkscape:zoom="0.89924227"
+     inkscape:cx="167.91915"
+     inkscape:cy="175.70348"
      inkscape:window-width="1512"
      inkscape:window-height="841"
      inkscape:window-x="0"
@@ -44,40 +44,27 @@
      id="layer1">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:110.92px;font-family:'Noto Serif Myanmar';-inkscape-font-specification:'Noto Serif Myanmar, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;direction:ltr;fill:#b7b7b7;stroke-width:0.311985;stroke-dasharray:none;stroke:#ffffff;stroke-opacity:1;fill-opacity:0.4026975"
-       x="-6.1980906"
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:110.92px;font-family:'Noto Serif Myanmar';-inkscape-font-specification:'Noto Serif Myanmar, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;direction:ltr;fill:#000000;fill-opacity:0.77456647;stroke:#ffffff;stroke-width:0.311985;stroke-dasharray:none;stroke-opacity:1"
+       x="-28.234371"
        y="100.4315"
        id="text1"
-       transform="scale(0.98455003,1.0156924)"><tspan
+       transform="scale(0.98455004,1.0156924)"><tspan
          sodipodi:role="line"
          id="tspan1"
-         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:110.92px;font-family:'Noto Serif Myanmar';-inkscape-font-specification:'Noto Serif Myanmar, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.311985;stroke-dasharray:none;stroke:#ffffff;stroke-opacity:1;fill:#b7b7b7;fill-opacity:0.4026975"
-         x="-6.1980906"
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:110.92px;font-family:'Noto Serif Myanmar';-inkscape-font-specification:'Noto Serif Myanmar, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:0.77456647;stroke:#ffffff;stroke-width:0.311985;stroke-dasharray:none;stroke-opacity:1"
+         x="-28.234371"
          y="100.4315">//</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:105.833px;font-family:'Noto Serif Myanmar';-inkscape-font-specification:'Noto Serif Myanmar, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;direction:ltr;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.217;stroke-dasharray:none;stroke-opacity:1"
-       x="-9.5035925"
-       y="108.04082"
-       id="text4"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:110.92px;font-family:'Noto Serif Myanmar';-inkscape-font-specification:'Noto Serif Myanmar, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;writing-mode:lr-tb;direction:ltr;fill:#585858;fill-opacity:0.70134872;stroke:#ffffff;stroke-width:0.311985;stroke-dasharray:none;stroke-opacity:1"
+       x="8.1499882"
+       y="100.92158"
+       id="text1-0"
+       transform="scale(0.98455004,1.0156924)"><tspan
          sodipodi:role="line"
-         id="tspan4"
-         style="font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;font-size:105.833px;font-family:'Noto Serif Myanmar';-inkscape-font-specification:'Noto Serif Myanmar, Thin';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.217"
-         x="-9.5035925"
-         y="108.04082">BK</tspan></text>
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.137038;stroke-dasharray:none;stroke-opacity:1"
-       id="rect4"
-       width="131.62967"
-       height="5.5820417"
-       x="1.9607753"
-       y="22.968714" />
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.137038;stroke-dasharray:none;stroke-opacity:1"
-       id="rect4-1"
-       width="131.62967"
-       height="5.5820417"
-       x="2.21665"
-       y="109.23947" />
+         id="tspan1-5"
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:110.92px;font-family:'Noto Serif Myanmar';-inkscape-font-specification:'Noto Serif Myanmar, Heavy';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#585858;fill-opacity:0.70134872;stroke:#ffffff;stroke-width:0.311985;stroke-dasharray:none;stroke-opacity:1"
+         x="8.1499882"
+         y="100.92158">//</tspan></text>
   </g>
 </svg>

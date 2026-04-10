@@ -1,0 +1,243 @@
+---
+slug: creating-a-complete-team-with-agents/creating-our-team
+title: Creating our agentic team
+description: Create your own team with different specialists using agentic AI.
+date: 2026-04-07
+author: Bart Kessels
+subject: ai
+image: /images/blog/ai/creating-a-complete-team-with-agents/creating-our-team.jpg
+caption: Image generated using Apple Image Playground
+tags: [AI, Agentic, Agents, Visual Studio Code, GitHub Copilot]
+---
+
+import CodeBlock from '@/components/CodeBlock.astro';
+
+Let's take a look at a regular development team and what responsibilities are typically fulfilled. You can also look at other professions or team setups if needed. In this series, we'll look at creating a development team to increase productivity when developing an open source plugin.
+
+If we use the accountabilities defined by Scrum, we get the following list [(Scrum.org, n.d.)](https://www.scrum.org/resources/accountability-responsibility-and-roles):
+
+- Product owner
+- Scrum master
+- Developers
+
+The product owner is accountable for maximizing the value of the product, the scrum master for the effectiveness of the team, and the developers for building the actual product [(Scrum.org, n.d.)](https://www.scrum.org/resources/accountability-responsibility-and-roles).
+
+In my experience working on a team that developed multiple mobile applications, two responsibilities are often missing from this list: UX design and testing. These responsibilities are usually taken on by developers, but for our team I'd like to create separate agents for them.
+
+Other technical responsibilities that are often grouped under the developers umbrella are the lead developer and the architect. Both look at the bigger picture and help guide the other developers. The architect should always look at the entire application and landscape when discussing new features or issues, whereas the lead developer should focus on the scope of the application while keeping upcoming features in mind.
+
+## Agents
+
+Based on the responsibilities we'd like to cover, we get the following agents in our project:
+
+- An architect responsible for maintaining the overall view of the application.
+- A lead developer responsible for maintaining the scope of the application, while keeping upcoming expansions in mind.
+- One or more developers responsible for building features based on the team's coding standards and current best practices.
+- A UX designer responsible for making sure the UI is user-friendly and aligned with current standards and best practices.
+- A tester responsible for testing the application and making sure new features don't regress the overall application.
+    - For our agent, this also includes creating and maintaining end-to-end tests.
+
+
+Among these agents, we still need one agent to keep the team together. In our case, we'll use the lead developer to facilitate communication between the architect and the developers. That way, the lead developer can translate the architect's vision into usable pieces for the development team. Each developer is free to ask the UX designer for feedback on the UI, and the UX designer should provide clear instructions on how the UI should look and behave.
+
+After a feature is complete, the tester must validate that it adheres to the requirements and that the overall application is still working as expected. If necessary, the tester should add or update end-to-end tests to automate that validation. If the tester finds an issue anywhere in the application, it must be reported back to the developer, and the developer must fix it.
+
+## Creating the agents
+
+To share custom agents in a Visual Studio Code workspace, place them in the `.github/agents` folder at the root of your workspace [(Visual Studio Code, 2026)](https://code.visualstudio.com/docs/copilot/getting-started#_create-a-custom-agent-for-code-reviews).
+
+In the following section, I only share the frontmatter of each agent markdown file. At the end of this post, links are added to the full agent files.
+
+### Architect
+
+Let's create our first agent, the architect, `.github/agents/architect.agent.md`.
+
+<CodeBlock filename="/.github/agents/architect.agent.md">
+```markdown
+---
+name: Architect
+description: Provide guidance to the development team on how to properly setup and manage the architecture for the Obsidian Plugin `Daily Note Calendar`
+tools: [read, todo, web]
+---
+
+# Obsidian plugin architect
+```
+</CodeBlock>
+
+In the frontmatter, we specify the name and description of our architect. In this case, I'm very explicit about the scope of the architect. For the tools, I only give it access to `read`, `todo`, and `web`, because the architect should only give guidance and feedback to the development team and should not update the code itself. In my setup, the `todo` tool allows the agent to keep a todo list of tasks while researching an answer to a specific question.
+
+### Lead developer
+
+Create our lead developer agent.
+
+<CodeBlock filename="/.github/agents/lead-developer.agent.md">
+```markdown
+---
+name: Lead developer
+description: Lead developer for a team building the Obsidian Plugin `Daily Note Calendar`.
+tools: [execute, read, agent, search, web, todo]
+---
+
+# Lead developer
+```
+</CodeBlock>
+
+Our lead developer gets access to the `agent` tool so it can call and instruct other agents as required. Because the lead developer is the agent that will orchestrate the other agents, it doesn't have access to the `edit` tool. That responsibility belongs to the developer agents.
+
+Because the lead developer should also validate the results of the developer agents, it has access to the `execute` tool so it can, for example, execute the `npm run lint` command to validate the quality of the code.
+
+### Developer
+
+<CodeBlock filename="/.github/agents/developer.agent.md">
+```markdown
+---
+name: Developer
+description: Developer in a team building the Obsidian Plugin `Daily Note Calendar`.
+tools: [vscode, execute, read, agent, edit, search, web, todo]
+---
+
+# Developer
+```
+</CodeBlock>
+
+Because a developer is the agent that is responsible for creating and updating files, this agent has the `edit` tool. Using this tool, the agent can modify all files in the current workspace.
+
+The developer agent also gets access to the `agent` tool, allowing it to communicate directly with the UX or test agent.
+
+### UX designer
+
+<CodeBlock filename="ux-designer.agent.md">
+```markdown
+---
+name: UX designer
+description: User Experience designer for an Obsidian plugin `Daily Note Calendar`
+tools: [read, search, web, todo]
+---
+
+# UX designer
+```
+</CodeBlock>
+
+Just like the architect, the UX designer is only capable of reading files, doing research, and keeping a todo list for its internal tasks. All actual modifications in the project must be done by a developer agent.
+
+### Tester
+
+<CodeBlock filename="tester.agent.md">
+```markdown
+---
+name: Tester
+description: (Regression) tester for the Obsidian plugin `Daily Note Calendar`
+tools: [execute, read, todo]
+---
+
+# Tester
+```
+</CodeBlock>
+
+The tester is the agent with the fewest capabilities. It's only allowed to read all the files within the workspace, execute commands, for example the `npm run test` command, and keep an internal todo list. Again, this agent should communicate with the developer agent, and the developer should initiate the follow-up and fix any issues the tester finds.
+
+## Final structure
+
+The complete structure of the current application looks like this:
+
+```txt
+- .github/
+  - agents/
+    - architect.agent.md
+    - developer.agent.md
+    - lead-developer.agent.md
+    - tester.agent.md
+    - ux-designer.agent.md
+```
+
+The entire agent files can be found in the [Daily Note Calendar](https://github.com/bartkessels/daily-note-calendar) GitHub repository.
+
+- [architect.agent.md](https://github.com/bartkessels/daily-note-calendar/blob/main/.github/agents/architect.agent.md)
+- [developer.agent.md](https://github.com/bartkessels/daily-note-calendar/blob/main/.github/agents/developer.agent.md)
+- [lead-developer.agent.md](https://github.com/bartkessels/daily-note-calendar/blob/main/.github/agents/lead-developer.agent.md)
+- [tester.agent.md](https://github.com/bartkessels/daily-note-calendar/blob/main/.github/agents/tester.agent.md)
+- [ux-designer.agent.md](https://github.com/bartkessels/daily-note-calendar/blob/main/.github/agents/ux-designer.agent.md)
+
+## Prompts used to create agents
+
+For complete transparency, I used Copilot with a GPT-5.4 model to set up the initial content of the agent files. I've updated the files to better align with my goals and experiences with the project.
+
+These are the original single-shot prompts I typed into Copilot Chat without any further instructions.
+
+### Architect agent
+
+```markdown
+I want to setup an agent that is tasked as an architect within a development team that is responsible for writing an Obsidian plugin (see the documentation: https://docs.obsidian.md/Plugins/Getting+started/Build+a+plugin) using typescript and react.
+As the architect the agent must be very opinionated about the tech stack, the architecture of the application and the implementation of that plugin within Obsidian.
+The plugin the team is responsible for is the Daily Note Calendar.
+The architect will be used as a knowledge center around all architectural decisions. 
+The architect can therefore only do research or answer based on the current workspace or it's own knowledge.
+All modifications that must be done, are done through the lead-developer who will instruct each developer to update or implement a request given by the architect.
+
+Implement the agent document found in `.github/agents/architect.agent.md` using the aforementioned information and use the best-practices for creating such a file, use the following resources to research the correct way to setup an agent markdown file.
+- https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/
+- https://agents.md
+```
+
+### Developer agent
+
+```markdown
+I want to setup an agent that is tasked as a developer in a development team that is responsible for writing an Obsidian plugin (see the documentation: https://docs.obsidian.md/Plugins/Getting+started/Build+a+plugin) using typescript and react.
+As a developer the agent must be very opinionated about the quality of the typescript it writes,
+the separation of concerns within the application and the segregation between the business logic of the plugin and all Obsidian specific API's.
+The plugin the team is responsible for is the Daily Note Calendar. The developer will be orchestrated by the lead-developer to implement specific features or refactor specific parts of the plugin. The agent will therefore be able to modify all files within the workspace. Because the plugin has a user-facing part, the developer is able to communicate with the UX-designer agent for feedback on the UI. All suggestions from the UX-designer should be considered to be fixed, but the agent will still keep the quality of the code as it's highest priority. When a feature is implemented or a refactoring has been done, the agent must communicate to the tester agent that the application must be tested. All findings from the tester, even if they're from another part of the application, must be resolved. Again, the agent must keep the quality as the highest priority when resolving the findings from the tester.
+
+Implement the agent document found in `.github/agents/developer.agent.md` using the aforementioned information and use the best-practices for creating such a file, use the following resources to research the correct way to setup an agent markdown file.
+- https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/
+- https://agents.md
+```
+
+### Lead developer agent
+
+```markdown
+I want to setup an agent that is tasked as a lead developer in a development team that is responsible for writing an Obsidian plugin (see the documentation: https://docs.obsidian.md/Plugins/Getting+started/Build+a+plugin) using typescript and react.
+As a lead developer, the agent must act as the orchestrator between the architect and the different developers within the team.
+The lead developer should ask the architect for it's opinion on every decision related to the architecture of the plugin and should task one or more developers with the implementation.
+The lead developer is responsible for keeping the quality of the entire application correct and should be opinionated about everything a developer does.
+As the lead developer is the gate keeper of the quality and growth capabilities of the application.
+If the architect or a developer wants to introduce a new dependency, always research for different options and list all the pro's and cons of each option.
+If a developer has finished working on a feature or refactoring task, the lead developer MUST review the code and the tests.
+All tests must test something new and there should not be double tests.
+These kind of reviewing tasks are the main task of the lead developer next to the orchestrating of the developer team.
+
+Implement the agent document found in `.github/agents/lead-developer.agent.md` using the aforementioned information and use the best-practices for creating such a file, use the following resources to research the correct way to setup an agent markdown file.
+- https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/
+- https://agents.md
+```
+
+### Tester agent
+
+```markdown
+I want to setup an agent that is tasked as a tester within a development team that is responsible for writing an Obsidian plugin (see the documentation: https://docs.obsidian.md/Plugins/Getting+started/Build+a+plugin) using typescript and react.
+As a tester, the agent must act as a final quality gate making sure the plugin works as before and the new feature behaves as expected.
+For any feature that's added the entire plugin must under go a regression test.
+All findings must be reported back to the developer that requested the test.
+After the developer has completed the fixes of the findings, redo all the tests and report back until all issues are resolved.
+
+Implement the agent document found in `.github/agents/tester.agent.md` using the aforementioned information and use the best-practices for creating such a file, use the following resources to research the correct way to setup an agent markdown file.
+- https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/
+- https://agents.md
+```
+
+### UX-designer agent
+
+```markdown
+I want to setup an agent that is tasked as the UX-designer within a development team that is responsible for writing an Obsidian plugin (see the documentation: https://docs.obsidian.md/Plugins/Getting+started/Build+a+plugin) using typescript and react.
+As a UX-designer, the agent is tasked with making sure the plugin looks good and adheres to the Obsidian design language.
+Besides this, the UX-designer must also validate that the plugin adheres to the strict WCAG standards where possible.
+Because the plugin is very UI heavy, the UX-designer must do a thorough job of reviewing every change and setting up a design when implementing a new feature.
+Each new feature should be passed to the UX-designer, and the UX-designer should incorporate the new feature into the existing design.
+If it's required to revamp the design for a new feature, that's not a problem.
+The user experience must always be catered to, and new features should not feel like an after thought.
+
+Implement the agent document found in `.github/agents/ux-designer.agent.md` using the aforementioned information and use the best-practices for creating such a file, use the following resources to research the correct way to setup an agent markdown file.
+- https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/
+- https://agents.md
+```
+
+Now that we've defined the agents in our team, let's setup all the shared knowledge, skills and prompts.
