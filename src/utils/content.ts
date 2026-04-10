@@ -8,8 +8,8 @@ export function getReadingTime(body?: string): number {
 }
 
 /** Returns false for any content entry whose filename starts with an underscore. */
-export function notUnderscored({ id }: { id: string }): boolean {
-    return !id.split('/').pop()!.startsWith('_');
+export function notUnderscored({ filePath }: { filePath?: string }): boolean {
+    return !filePath?.split('/').pop()!.startsWith('_');
 }
 
 /** Formats a Date to a human-readable string (e.g. "January 1, 2025"). */
