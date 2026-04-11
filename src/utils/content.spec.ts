@@ -40,28 +40,34 @@ describe('content utils', (): void => {
 
     describe('notUnderscored', (): void => {
         it('should return false when filename starts with underscore', (): void => {
-            const result = notUnderscored({ id: 'folder/_file.md' });
+            const result = notUnderscored({ filePath: 'folder/_file.md' });
 
             expect(result).toBe(false);
         });
 
         it('should return true when filename does not start with underscore', (): void => {
-            const result = notUnderscored({ id: 'folder/file.md' });
+            const result = notUnderscored({ filePath: 'folder/file.md' });
 
             expect(result).toBe(true);
         });
 
         it('should return true when underscore is in the middle of filename', (): void => {
-            const result = notUnderscored({ id: 'folder/my_file.md' });
+            const result = notUnderscored({ filePath: 'folder/my_file.md' });
 
             expect(result).toBe(true);
         });
 
-        it('should return false when id is just an underscored filename', (): void => {
-            const result = notUnderscored({ id: '_file.md' });
+        it('should return false when filePath is just an underscored filename', (): void => {
+            const result = notUnderscored({ filePath: '_file.md' });
 
             expect(result).toBe(false);
         });
+
+        it('should return true when the filePath is undefined', (): void => {
+            const result = notUnderscored({ filePath: undefined });
+
+            expect(result).toBe(true);
+        })
     });
 
     describe('formatDate', (): void => {
