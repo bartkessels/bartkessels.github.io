@@ -21,7 +21,8 @@
     "new:gardening/plant": "tsx scripts/new-item.ts gardening-plant",
     "new:gardening/year": "tsx scripts/new-item.ts gardening-subject",
     "new:software/project": "tsx scripts/new-item.ts software-project",
-    "new:story": "tsx scripts/new-item.ts story"
+    "new:story": "tsx scripts/new-item.ts story",
+    "new:story/post": "tsx scripts/new-item.ts story-post"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

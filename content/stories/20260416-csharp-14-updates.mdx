@@ -1,0 +1,53 @@
+---
+slug: csharp-14-updates
+title: C# 14 updates
+description: C# 14 has been out for quite some time now, but let's dive into some of the new language features.
+author: Bart Kessels
+date: 2026-04-16
+image: /images/blog/csharp/csharp-14/introduction.jpeg
+caption: Image generated using Apple Image Playground
+subject: csharp
+tags: [.NET, Microsoft, C#, C# 14]
+featured: true
+posts:
+    - csharp-14/extension-members
+---
+
+A while ago, november last year, Microsoft has released the latest version of C#, version 14 [(Microsoft, 2025)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-14).
+
+Since I've been using C# and .NET for my latest job project, this is the right moment to be looking into the latest and greatest features of the language.
+
+## Setup
+
+For redelivery purposes I'll be quickly going over the environment I'm using for this series. Along with C# 14, I'll also be using .NET 10.
+
+If you already have a working environment with C# 14, feel free to skip this section.
+
+### Install .NET 10
+
+Since I'm on MacOS, I'll be using [Homebrew](https://brew.sh) as the package manager to install all the required tools.
+
+```shell
+$ brew install dotnet@10
+```
+
+_*Note_ the `@10` is not required since that's the latest version of this formula on Homebrew. For repeatability's sake, I've included it.
+
+### Set up the solution
+
+All features will be added a projects to the `csharp-14-features` solution on [github.com/bartkessels/csharp-14-features](https://github.com/bartkessels/csharp-14-features).
+
+The solution is created using the .NET cli.
+
+```shell
+$ mkdir csharp-14-features
+$ cd csharp-14-features
+$ dotnet new sln
+```
+
+Each feature in C# 14 will be a new project inside the solution, and we'll be using the console template in case something needs to be printed. For this, use the following commands.
+
+```shell
+$ dotnet new console -n FeatureName
+$ dotnet sln add FeatureName 
+```

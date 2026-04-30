@@ -4,8 +4,8 @@ title: <ADD TITLE>
 description: <ADD DESCRIPTION>
 date: {{date}}
 author: Bart Kessels
-image: /images/gardening/journals/{{subject}}/{{slug}}.png
-caption: <ADD CAPTION>
+image: /images/gardening/journals/{{subject}}/{{slug}}.jpeg
+caption: Image generated using Apple Image Playground
 subject: "{{subject}}"
 tags: [A, B, C]
 ---

@@ -1,0 +1,44 @@
+---
+slug: csharp-14/extension-members
+title: C# 14 - Extension members
+description: We have extension methods for a while now in C#, but this updates brings extension members as well.
+date: 2026-04-16
+author: Bart Kessels
+subject: csharp
+image: /images/blog/csharp/csharp-14/extension-members.jpeg
+caption: Image generated using Apple Image Playground
+tags: [C#, .NET, Extension members]
+---
+
+import CodeBlock from '@/components/CodeBlock.astro';
+
+Everyone who has ever used Kotlin already know that you can add new properties to an existing class using the `val ClassName.NewProperty` syntax [(Jetbrains, 2025)](https://kotlinlang.org/docs/extensions.html#extension-properties).
+
+Luckily, this is now available in C# 14 as well [(Microsoft, 2025)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-14#extension-members).
+
+## Implementation
+
+Before we start with trying out the new extension member, let's first create a new project inside our `csharp-14` solution.
+
+```shell
+$ dotnet new console -n ExtensionMembers
+$ dotnet sln add ExtensionMembers
+```
+
+If we take a look at a blogpost from Microsoft about the extension members, one thing I immediately notice is the new `extension` keyword inside a static class [(Microsoft, 2025)](https://devblogs.microsoft.com/dotnet/csharp-exploring-extension-members/#creating-extension-members).
+
+Let's create a new extension class for a string. Because one of methods I miss from Kotlin is the `isEmpty()` method [(Kotlin, n.d.)](https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.text/is-empty.html), and I think that should be a good extension property. (yes, I'm aware of the fact that I can use `string.IsNullOrEmpty(myString))` but I don't think that reads as clearly as `myString.IsEmpty`).
+
+<CodeBlock filename="StringExtensions.cs">
+```csharp
+namespace ExtensionMembers;
+
+public static class StringExtensions
+{
+    extension(string? source)
+    {
+        public bool IsEmpty => string.IsNullOrEmpty(source);
+    }
+}
+```
+</CodeBlock>

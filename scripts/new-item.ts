@@ -95,6 +95,12 @@ const contentTypes: Record<string, ContentTypeConfig> = {
         args: ['subject', 'slug'],
         outputDir: () => 'stories',
         filename: ({ timestamp, slug }) => `${timestamp}-${slug}.mdx`
+    },
+    'story-post': {
+        template: 'story_post.template',
+        args: ['subject', 'story', 'slug'],
+        outputDir: ({ subject, story }) => `blog/${subject}/${story}`,
+        filename: ({ timestamp, slug }) => `${timestamp}-${slug}.mdx`
     }
 };
 

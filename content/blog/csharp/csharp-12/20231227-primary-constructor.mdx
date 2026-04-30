@@ -4,7 +4,7 @@ title: C# 12 updates - Primary Constructor
 description: For those of you coming for Javascript or Kotlin, you're going to love this new feature. Set your member variables through a primary constructor.
 author: Bart Kessels
 date: 2023-12-27
-image: /images/blog/c-sharp/c-sharp-12/primary-constructor.png
+image: /images/blog/csharp/csharp-12/primary-constructor.png
 caption: This image is generated using Dall-E
 subject: csharp
 tags: [.NET, Microsoft, C#, C# 12]
@@ -91,11 +91,11 @@ public class PersonRepository(DbContext context)
 As you can see we use the `context` from our primary constructor to call the `GetPeople` method from the `DbContext`.
 The first thing that I noticed is that I can't access the `context` variable from the `this` pointer inside the `GetName` method. Which is weird to me, because neither the class nor the method are static.
 
-If we take a look at the documentation of primary constructors, it clearly states that _Primary constructor parameters don't become properties, except in record types._ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#primary-constructors). Which explains why it not accessible through `this`.
+If we take a look at the documentation of primary constructors, it clearly states that _Primary constructor parameters don't become properties, except in record types._ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#primary-constructors). Which explains why it not accessible through the `this` pointer.
 But the thing that I find fascinating, is that it _IS_ available for `record`s however.
 
 If we look at the documentation for `record`s, Microsoft states that _When you declare a primary constructor on a record, the compiler generates public properties for the primary constructor parameters._ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record). Which is different from the
-primary constructor where the documentation says _t's important to view primary constructor parameters as parameters even though they are in scope throughout the class definition_ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#primary-constructors).
+primary constructor where the documentation says _it's important to view primary constructor parameters as parameters even though they are in scope throughout the class definition_ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#primary-constructors).
 
 ### Generated C# code
 

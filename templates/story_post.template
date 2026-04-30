@@ -1,11 +1,11 @@
 ---
-slug: {{slug}}
+slug: {{story}}/{{slug}}
 title: <ADD TITLE>
 description: <ADD DESCRIPTION>
 date: {{date}}
 author: Bart Kessels
 subject: {{subject}}
-image: /images/blog/{{subject}}/{{slug}}.jpeg
+image: /images/blog/{{subject}}/{{story}}/{{slug}}.jpeg
 caption: Image generated using Apple Image Playground
 tags: [A, B, C]
 ---

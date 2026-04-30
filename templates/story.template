@@ -5,7 +5,7 @@ description: <ADD DESCRIPTION>
 author: Bart Kessels
 date: {{date}}
 image: /images/blog/{{subject}}/{{slug}}/....
-caption: <ADD CAPTION>
+caption: Image generated using Apple Image Playground
 subject: {{subject}}
 tags: [A, B, C]
 featured: true
