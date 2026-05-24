@@ -10,16 +10,18 @@ interface Props {
   height?: string;
   /** Accessible label for the map. Defaults to "Interactive trail map". */
   label?: string;
+  /** Extra CSS classes applied to the map element. Defaults to "my-8". */
+  class?: string;
 }
 
-const { gpxUrl, height = '420px', label = 'Interactive trail map' } = Astro.props;
+const { gpxUrl, height = '420px', label = 'Interactive trail map', class: className = 'my-8' } = Astro.props;
 ---
 
 <trail-map
   gpx={gpxUrl}
   role="img"
   aria-label={label}
-  class="block w-full rounded-xl border border-border overflow-hidden my-8"
+  class={`block w-full rounded-xl border border-border overflow-hidden ${className}`}
   style={`height: ${height};`}
 >
   <p class="sr-only">

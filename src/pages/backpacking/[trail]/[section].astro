@@ -6,6 +6,8 @@ import { getSectionOrderLabel } from '@/utils/content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TrailMap from '@/components/TrailMap.astro';
 import TagsList from '@/components/TagsList.astro';
+import TripConditions from '@/components/TripConditions.astro';
+import ElevationProfile from '@/components/ElevationProfile.astro';
 import { getBackpackingViewModel } from '@/factories/view-model.factory';
 
 export const getStaticPaths = (async () => {
@@ -92,9 +94,30 @@ const totalLabel = getSectionOrderLabel(sectionNumber, trail.data.totalSections)
         </div>
       </header>
 
-      <div class="mb-8 w-full aspect-[21/9]">
-        <TrailMap gpxUrl={section.data.gpx} height="420px" label={`${section.data.title} route map`} />
-      </div>
+      {(section.data.weather ?? section.data.temperatureC ?? section.data.difficulty ?? section.data.distanceKm) !== undefined ? (
+        <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3 md:items-stretch">
+          <div class="md:col-span-1">
+            <TripConditions
+              weather={section.data.weather}
+              temperatureC={section.data.temperatureC}
+              difficulty={section.data.difficulty}
+              distanceKm={section.data.distanceKm}
+            />
+          </div>
+          <div class="md:col-span-2 min-h-64">
+            <TrailMap gpxUrl={section.data.gpx} height="100%" label={`${section.data.title} route map`} class="h-full" />
+          </div>
+        </div>
+      ) : (
+        <div class="mb-8 w-full aspect-[21/9]">
+          <TrailMap gpxUrl={section.data.gpx} height="420px" label={`${section.data.title} route map`} class="" />
+        </div>
+      )}
+
+      <ElevationProfile
+        gpxUrl={section.data.gpx}
+        label={`Elevation profile for ${section.data.title}`}
+      />
 
       <div class="prose">
         <Content />

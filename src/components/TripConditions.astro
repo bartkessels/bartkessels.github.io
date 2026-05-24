@@ -1,0 +1,108 @@
+---
+import { Cloud, Thermometer, TrendingUp, Ruler } from '@lucide/astro';
+import { kmToMiles } from '@/utils/content';
+
+interface Props {
+  weather?: string;
+  temperatureC?: number;
+  difficulty?: 'easy' | 'moderate' | 'hard' | 'very-hard';
+  distanceKm?: number;
+}
+
+const { weather, temperatureC, difficulty, distanceKm } = Astro.props;
+
+// Only render when at least one condition is provided.
+const hasConditions = weather !== undefined || temperatureC !== undefined
+    || difficulty !== undefined || distanceKm !== undefined;
+
+const temperatureF = temperatureC !== undefined
+    ? Math.round(temperatureC * 9 / 5 + 32)
+    : undefined;
+
+const distanceMi = distanceKm !== undefined ? kmToMiles(distanceKm) : undefined;
+
+const difficultyLabels: Record<NonNullable<Props['difficulty']>, string> = {
+    'easy': 'Easy',
+    'moderate': 'Moderate',
+    'hard': 'Hard',
+    'very-hard': 'Very Hard',
+};
+
+const difficultyColors: Record<NonNullable<Props['difficulty']>, string> = {
+    'easy':      'bg-emerald-500/10 text-emerald-600',
+    'moderate':  'bg-accent/10 text-accent',
+    'hard':      'bg-orange-500/10 text-orange-600',
+    'very-hard': 'bg-red-500/10 text-red-600',
+};
+---
+
+{hasConditions && (
+  <aside
+    aria-label="Trip conditions"
+    class="rounded-xl border border-border bg-card p-5 h-full"
+  >
+    <h2 class="text-sm font-semibold uppercase tracking-widest text-muted mb-4">
+      Trip Conditions
+    </h2>
+
+    <dl class="flex flex-col gap-4">
+
+      {weather !== undefined && (
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 flex-shrink-0 rounded-full bg-accent/10 p-1.5">
+            <Cloud class="h-4 w-4 text-accent" aria-hidden="true" />
+          </span>
+          <div>
+            <dt class="text-xs text-muted font-medium uppercase tracking-wide">Weather</dt>
+            <dd class="text-sm font-medium text-foreground mt-0.5">{weather}</dd>
+          </div>
+        </div>
+      )}
+
+      {temperatureC !== undefined && (
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 flex-shrink-0 rounded-full bg-accent/10 p-1.5">
+            <Thermometer class="h-4 w-4 text-accent" aria-hidden="true" />
+          </span>
+          <div>
+            <dt class="text-xs text-muted font-medium uppercase tracking-wide">Temperature</dt>
+            <dd class="text-sm font-medium text-foreground mt-0.5">
+              {temperatureC}&deg;C&thinsp;/&thinsp;{temperatureF}&deg;F
+            </dd>
+          </div>
+        </div>
+      )}
+
+      {distanceKm !== undefined && (
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 flex-shrink-0 rounded-full bg-accent/10 p-1.5">
+            <Ruler class="h-4 w-4 text-accent" aria-hidden="true" />
+          </span>
+          <div>
+            <dt class="text-xs text-muted font-medium uppercase tracking-wide">Distance</dt>
+            <dd class="text-sm font-medium text-foreground mt-0.5">
+              {distanceKm}&thinsp;km&thinsp;/&thinsp;{distanceMi}&thinsp;mi
+            </dd>
+          </div>
+        </div>
+      )}
+
+      {difficulty !== undefined && (
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 flex-shrink-0 rounded-full bg-accent/10 p-1.5">
+            <TrendingUp class="h-4 w-4 text-accent" aria-hidden="true" />
+          </span>
+          <div>
+            <dt class="text-xs text-muted font-medium uppercase tracking-wide">Difficulty</dt>
+            <dd class="mt-0.5">
+              <span class={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${difficultyColors[difficulty]}`}>
+                {difficultyLabels[difficulty]}
+              </span>
+            </dd>
+          </div>
+        </div>
+      )}
+
+    </dl>
+  </aside>
+)}

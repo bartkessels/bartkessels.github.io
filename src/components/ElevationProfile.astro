@@ -1,0 +1,107 @@
+---
+/**
+ * Thin Astro wrapper around the <elevation-profile> Web Component.
+ * Zero elevation-chart knowledge lives here — all rendering logic is in
+ * ElevationProfileElement.ts.
+ */
+interface Props {
+  gpxUrl: string;
+  /** Accessible label for the chart. */
+  label?: string;
+}
+
+const { gpxUrl, label = 'Elevation profile for this section' } = Astro.props;
+---
+
+<elevation-profile
+  gpx={gpxUrl}
+  role="img"
+  aria-label={label}
+  class="block w-full rounded-xl border border-border overflow-hidden bg-card"
+>
+  <p class="sr-only">
+    Elevation chart for this trail section. Enable JavaScript and a modern browser to view.
+  </p>
+</elevation-profile>
+
+<style>
+  elevation-profile :global(.elevation-profile) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+    --elevation-accent: rgb(var(--color-accent));
+  }
+
+  elevation-profile :global(.elevation-profile__chart-wrapper) {
+    position: relative;
+  }
+
+  elevation-profile :global(.elevation-profile__chart) {
+    display: block;
+    width: 100%;
+    height: 10rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  elevation-profile :global(.elevation-profile__grid-labels) {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  elevation-profile :global(.elevation-profile__grid-label) {
+    position: absolute;
+    left: 0.4rem;
+    transform: translateY(-50%);
+    font-size: 0.65rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: rgb(var(--color-muted, 107 114 128));
+    line-height: 1;
+    background: rgb(var(--color-card, 255 255 255) / 0.7);
+    padding: 0.1rem 0.25rem;
+    border-radius: 0.2rem;
+  }
+
+  elevation-profile :global(.elevation-profile__stats) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+    padding: 0.5rem 0 0;
+    border-top: 1px solid rgb(var(--color-border, 229 231 235));
+  }
+
+  @media (min-width: 640px) {
+    elevation-profile :global(.elevation-profile__stats) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  elevation-profile :global(.elevation-profile__stat) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  elevation-profile :global(.elevation-profile__stat-label) {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgb(var(--color-muted, 107 114 128));
+    font-weight: 500;
+  }
+
+  elevation-profile :global(.elevation-profile__stat-value) {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgb(var(--color-accent));
+    font-variant-numeric: tabular-nums;
+  }
+</style>
+
+<script>
+  import '@/components/ElevationProfileElement';
+</script>
