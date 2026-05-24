@@ -1,0 +1,25 @@
+---
+interface Props {
+  image: string;
+  imageSide: 'start' | 'end';
+  alt: string;
+  height?: number;
+}
+
+const { image, imageSide, alt, height = 200 } = Astro.props;
+const classes = imageSide === 'start' ? 'sm:float-start sm:mr-6' : 'sm:float-end sm:ml-6';
+---
+
+<div class="clearfix my-4 [&>*:first-of-type]:mt-0">
+  <img
+    src={image}
+    alt={alt}
+    style={`height: ${height}px; object-fit: cover;`}
+    class:list={[
+      'w-full rounded-lg mb-4',
+      'sm:w-56 sm:mb-2',
+      classes,
+    ]}
+  />
+  <slot />
+</div>

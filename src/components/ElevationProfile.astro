@@ -1,107 +1,90 @@
 ---
-/**
- * Thin Astro wrapper around the <elevation-profile> Web Component.
- * Zero elevation-chart knowledge lives here — all rendering logic is in
- * ElevationProfileElement.ts.
- */
+import { buildElevationPath, buildGridLines, toYFraction } from '@/utils/gpx';
+import { getGpxManager } from '@/factories/manager-factory';
+
 interface Props {
-  gpxUrl: string;
-  /** Accessible label for the chart. */
-  label?: string;
+    gpxUrl: string;
+    width?: number;
+    height?: number;
+    padding?: number;
 }
 
-const { gpxUrl, label = 'Elevation profile for this section' } = Astro.props;
+const { gpxUrl, width = 800, height = 160, padding = 0.1 } = Astro.props;
+
+const gpxManager = getGpxManager();
+const statistics = await gpxManager.getStatistics(gpxUrl);
+const distance = await gpxManager.getTotalDistance(gpxUrl);
+
+if (statistics === null) {
+    throw new Error('Failed to load elevation statistics from GPX file.');
+} else if (distance === null) {
+    throw new Error('Failed to load distance from GPX file.');
+}
+
+const elevationPath = buildElevationPath(statistics.rawElevations, width, height, padding);
+const gridLines = buildGridLines(statistics.lowestRecordedElevation, statistics.highestRecordedElevation, width, height, padding);
 ---
 
-<elevation-profile
-  gpx={gpxUrl}
-  role="img"
-  aria-label={label}
-  class="block w-full rounded-xl border border-border overflow-hidden bg-card"
->
-  <p class="sr-only">
-    Elevation chart for this trail section. Enable JavaScript and a modern browser to view.
+<div class="block w-full bg-card">
+  <p class="text-sm font-semibold uppercase tracking-widest text-muted px-4 pt-4 pb-0">
+    Elevation
   </p>
-</elevation-profile>
 
-<style>
-  elevation-profile :global(.elevation-profile) {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1rem;
-    --elevation-accent: rgb(var(--color-accent));
-  }
+    <div class="elevation-profile">
+        <div class="elevation-profile__chart-wrapper">
+            <svg
+                viewBox={`0 0 ${width} ${height}`}
+                preserveAspectRatio="none"
+                aria-hidden="true"
+                class="elevation-profile__chart"
+            >
+                <defs>
+                    <linearGradient id="elevation-fill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="var(--elevation-accent, #D97706)" stop-opacity="0.5" />
+                        <stop offset="100%" stop-color="var(--elevation-accent, #D97706)" stop-opacity="0.05" />
+                    </linearGradient>
+                </defs>
+                <Fragment set:html={gridLines.map(v => {
+                    const y = toYFraction(v, statistics.lowestRecordedElevation, statistics.highestRecordedElevation, padding) * height;
+                    return `<line x1="0" y1="${y.toFixed(2)}" x2="${width}" y2="${y.toFixed(2)}" stroke="currentColor" stroke-opacity="0.15" stroke-width="1" vector-effect="non-scaling-stroke" stroke-dasharray="4 4" />`;
+                }).join('\n')} />
+                <path d={elevationPath} fill="url(#elevation-fill)" />
+                <path d={elevationPath} fill="none" stroke="var(--elevation-accent, #D97706)" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+            </svg>
+            <div class="elevation-profile__grid-labels" aria-hidden="true">
+                <Fragment set:html={gridLines.map(v => {
+                    const pct = (toYFraction(v, statistics.lowestRecordedElevation, statistics.highestRecordedElevation, padding) * 100).toFixed(2);
+                    return `<span class="elevation-profile__grid-label" style="top:${pct}%">${v} m</span>`;
+                }).join('\n')} />
+            </div>
+        </div>
 
-  elevation-profile :global(.elevation-profile__chart-wrapper) {
-    position: relative;
-  }
-
-  elevation-profile :global(.elevation-profile__chart) {
-    display: block;
-    width: 100%;
-    height: 10rem;
-    border-radius: 0.5rem;
-    overflow: hidden;
-  }
-
-  elevation-profile :global(.elevation-profile__grid-labels) {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  elevation-profile :global(.elevation-profile__grid-label) {
-    position: absolute;
-    left: 0.4rem;
-    transform: translateY(-50%);
-    font-size: 0.65rem;
-    font-weight: 500;
-    font-variant-numeric: tabular-nums;
-    color: rgb(var(--color-muted, 107 114 128));
-    line-height: 1;
-    background: rgb(var(--color-card, 255 255 255) / 0.7);
-    padding: 0.1rem 0.25rem;
-    border-radius: 0.2rem;
-  }
-
-  elevation-profile :global(.elevation-profile__stats) {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem 1.5rem;
-    margin: 0;
-    padding: 0.5rem 0 0;
-    border-top: 1px solid rgb(var(--color-border, 229 231 235));
-  }
-
-  @media (min-width: 640px) {
-    elevation-profile :global(.elevation-profile__stats) {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  elevation-profile :global(.elevation-profile__stat) {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
-  }
-
-  elevation-profile :global(.elevation-profile__stat-label) {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: rgb(var(--color-muted, 107 114 128));
-    font-weight: 500;
-  }
-
-  elevation-profile :global(.elevation-profile__stat-value) {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: rgb(var(--color-accent));
-    font-variant-numeric: tabular-nums;
-  }
-</style>
-
-<script>
-  import '@/components/ElevationProfileElement';
-</script>
+        <dl class="elevation-profile__stats">
+            <div class="elevation-profile__stat">
+                <dt class="elevation-profile__stat-label">
+                    <span aria-hidden="true">▲</span> Max
+                </dt>
+                <dd class="elevation-profile__stat-value">{statistics.highestRecordedElevation} m</dd>
+            </div>
+            <div class="elevation-profile__stat">
+                <dt class="elevation-profile__stat-label">
+                    <span aria-hidden="true">▼</span> Min
+                </dt>
+                <dd class="elevation-profile__stat-value">{statistics.lowestRecordedElevation} m</dd>
+            </div>
+            <div class="elevation-profile__stat">
+                <dt class="elevation-profile__stat-label">
+                    <span aria-hidden="true">↑</span> Ascent
+                </dt>
+                <dd class="elevation-profile__stat-value">+{statistics.totalAscent} m</dd>
+            </div>
+            <div class="elevation-profile__stat">
+                <dt class="elevation-profile__stat-label">
+                    <span aria-hidden="true">↓</span> Descent
+                </dt>
+                <dd class="elevation-profile__stat-value">−{statistics.totalDescent} m</dd>
+            </div>
+        </dl>
+    </div>
+  
+</div>

@@ -42,21 +42,18 @@ const totalLabel = getSectionOrderLabel(sectionNumber, trail.data.totalSections)
   activePageId="backpacking"
   tags={section.data.tags}>
   <article>
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <figure class="mb-8">
-          <div class="w-full aspect-[21/9] bg-muted overflow-hidden rounded-lg">
-          <img
-            src={section.data.image}
-            alt={section.data.title}
-            class="w-full h-full object-cover"
-          />
-        </div>
-          <figcaption class="text-center text-xs text-muted italic py-2 px-4">
-            {section.data.caption}
-          </figcaption>
-        </figure>
 
-      <header class="mb-8">
+    <div class="w-full h-[350px] md:h-[520px] bg-muted">
+      <TrailMap
+        gpxUrl={section.data.gpx}
+        height="100%"
+        label={`${section.data.title} route map`}
+        variant="hero"
+      />
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 mb-8">
+      <header>
         {trail && (
           <div class="flex items-center gap-1.5 text-sm text-muted mb-2">
             <MapPin class="h-4 w-4 text-accent flex-shrink-0" aria-hidden="true" />
@@ -72,11 +69,8 @@ const totalLabel = getSectionOrderLabel(sectionNumber, trail.data.totalSections)
             </span>
           </div>
         )}
-        {(section.data.tags ?? []).length > 0 && (
-          <div class="mb-4">
-            <TagsList tags={section.data.tags ?? []} />
-          </div>
-        )}
+
+        <TagsList tags={section.data.tags ?? []} />
 
         <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
           {section.data.title}
@@ -86,39 +80,36 @@ const totalLabel = getSectionOrderLabel(sectionNumber, trail.data.totalSections)
           {section.data.description}
         </p>
 
-        <div class="flex flex-wrap items-center gap-6 text-sm text-muted border-b border-border pb-6">
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted border-b border-border pb-6">
           <time datetime={section.data.date.toISOString()} class="flex items-center gap-2">
             <Calendar class="h-4 w-4" aria-hidden="true" />
             {formattedDate}
           </time>
         </div>
       </header>
+    </div>
 
-      {(section.data.weather ?? section.data.temperatureC ?? section.data.difficulty ?? section.data.distanceKm) !== undefined ? (
-        <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3 md:items-stretch">
-          <div class="md:col-span-1">
-            <TripConditions
-              weather={section.data.weather}
-              temperatureC={section.data.temperatureC}
-              difficulty={section.data.difficulty}
-              distanceKm={section.data.distanceKm}
-            />
-          </div>
-          <div class="md:col-span-2 min-h-64">
-            <TrailMap gpxUrl={section.data.gpx} height="100%" label={`${section.data.title} route map`} class="h-full" />
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+      <div class="rounded-xl border border-border bg-card overflow-hidden">
+          <div class="flex flex-col md:flex-row md:divide-x md:divide-border">
+            <div class="md:w-1/3 p-5">
+              <TripConditions
+                weather={section.data.weather}
+                temperatureC={section.data.temperatureC}
+                difficulty={section.data.difficulty}
+                gpxUrl={section.data.gpx}
+              />
+            </div>
+            <div class="md:w-2/3">
+              <ElevationProfile
+                gpxUrl={section.data.gpx}
+              />
+            </div>
           </div>
         </div>
-      ) : (
-        <div class="mb-8 w-full aspect-[21/9]">
-          <TrailMap gpxUrl={section.data.gpx} height="420px" label={`${section.data.title} route map`} class="" />
-        </div>
-      )}
+    </div>
 
-      <ElevationProfile
-        gpxUrl={section.data.gpx}
-        label={`Elevation profile for ${section.data.title}`}
-      />
-
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
       <div class="prose">
         <Content />
       </div>
@@ -160,5 +151,6 @@ const totalLabel = getSectionOrderLabel(sectionNumber, trail.data.totalSections)
         </nav>
       )}
     </div>
+
   </article>
 </BaseLayout>

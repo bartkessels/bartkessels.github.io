@@ -1,85 +1,8 @@
-/**
- * Pure utility functions for extracting and computing elevation data from GPX text.
- * These functions are environment-agnostic (Node + browser) and do not depend on the DOM.
- */
-
-export interface ElevationStats {
-    /** Elevation at the start of the track (metres). */
-    start: number;
-    /** Elevation at the end of the track (metres). */
-    end: number;
-    /** Lowest recorded elevation (metres). */
-    min: number;
-    /** Highest recorded elevation (metres). */
-    max: number;
-    /** Total elevation gained throughout the track (metres). */
-    totalAscent: number;
-    /** Total elevation lost throughout the track (metres). */
-    totalDescent: number;
-}
-
-/**
- * Extracts all elevation values (in metres) from the raw text of a GPX file.
- * Matches `<ele>` elements regardless of whitespace around the numeric value.
- */
-export function extractElevations(gpxText: string): number[] {
-    const matches = [...gpxText.matchAll(/<ele>\s*([\d.]+)\s*<\/ele>/g)];
-    return matches.map(m => parseFloat(m[1]));
-}
-
-/**
- * Computes elevation statistics from an ordered array of elevation values.
- * Returns `null` when the array is empty.
- */
-export function computeElevationStats(elevations: number[]): ElevationStats | null {
-    if (elevations.length === 0) return null;
-
-    let totalAscent = 0;
-    let totalDescent = 0;
-
-    for (let i = 1; i < elevations.length; i++) {
-        const delta = elevations[i] - elevations[i - 1];
-        if (delta > 0) totalAscent += delta;
-        else totalDescent += Math.abs(delta);
-    }
-
-    return {
-        start: Math.round(elevations[0]),
-        end: Math.round(elevations[elevations.length - 1]),
-        min: Math.round(Math.min(...elevations)),
-        max: Math.round(Math.max(...elevations)),
-        totalAscent: Math.round(totalAscent),
-        totalDescent: Math.round(totalDescent),
-    };
-}
-
-/**
- * Down-samples an elevation array to at most `maxPoints` values while preserving
- * the shape of the profile. When the input is already within the limit the
- * original array is returned unchanged.
- */
-export function downsampleElevations(elevations: number[], maxPoints: number): number[] {
-    if (elevations.length <= maxPoints) return elevations;
-    const step = (elevations.length - 1) / (maxPoints - 1);
-    return Array.from({ length: maxPoints }, (_, i) => elevations[Math.round(i * step)]);
-}
-
-/**
- * Builds an SVG `<path>` `d` attribute for a filled area elevation chart.
- *
- * The path traces the elevation profile from left to right, then closes back
- * to the bottom of the viewport to create a filled silhouette.
- *
- * @param elevations  Raw (or down-sampled) elevation values.
- * @param width       Viewport width in SVG user units.
- * @param height      Viewport height in SVG user units.
- * @param padding     Fraction of height reserved as vertical padding (0–1, default 0.1).
- */
 export function buildElevationPath(
     elevations: number[],
     width: number,
     height: number,
-    padding = 0.1
+    padding: number
 ): string {
     if (elevations.length < 2) return '';
 
@@ -99,4 +22,64 @@ export function buildElevationPath(
         `L ${width},${height}`,
         'Z',
     ].join(' ');
+}
+
+export function buildGridLines(min: number, max: number, padding: number, width: number, height: number, targetCount = 4): number[] {
+    const range = max - min;
+
+    if (range === 0) return [];
+
+    const rawStep = range / targetCount;
+    const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
+    const candidates = [1, 2, 5, 10].map(n => n * magnitude);
+    const step = candidates.find(s => range / s <= targetCount + 1) ?? candidates[candidates.length - 1];
+
+    const first = Math.ceil(min / step) * step;
+    const lines: number[] = [];
+
+    for (let v = first; v < max; v += step) {
+        lines.push(Math.round(v));
+    }
+
+    return lines;
+}
+
+export function buildSvgMetadata(min: number, max: number, padding: number, width: number, height: number, targetCount = 4): { lines: string, labels: string} {
+    const range = max - min;
+
+    if (range === 0) return { lines: '', labels: '' };
+
+    const rawStep = range / targetCount;
+    const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
+    const candidates = [1, 2, 5, 10].map(n => n * magnitude);
+    const step = candidates.find(s => range / s <= targetCount + 1) ?? candidates[candidates.length - 1];
+
+    const first = Math.ceil(min / step) * step;
+    const lines: number[] = [];
+
+    for (let v = first; v < max; v += step) {
+        lines.push(Math.round(v));
+    }
+
+    const gridLines = lines.map(v => {
+        const y = toYFraction(v, min, max, padding) * height;
+        return `<line x1="0" y1="${y.toFixed(2)}" x2="${width}" y2="${y.toFixed(2)}" stroke="currentColor" stroke-opacity="0.15" stroke-width="1" vector-effect="non-scaling-stroke" stroke-dasharray="4 4" />`;
+    }).join(`\n${' '.repeat(20)}`);
+
+    const labels = lines.map(v => {
+        const pct = (toYFraction(v, min, max, padding) * 100).toFixed(2);
+        return `<span class="elevation-profile__grid-label" style="top:${pct}%">${v} m</span>`;
+    }).join(`\n${' '.repeat(20)}`);
+
+    return {
+        lines: gridLines,
+        labels: labels
+    };
+}
+
+export function toYFraction(elevation: number, min: number, max: number, padding: number): number {
+    const range = max - min || 1;
+    const p = padding;
+    const drawFraction = 1 - 2 * p;
+    return p + drawFraction - ((elevation - min) / range) * drawFraction;
 }
