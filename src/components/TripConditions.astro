@@ -1,6 +1,7 @@
 ---
 import { Cloud, Thermometer, TrendingUp, Ruler } from '@lucide/astro';
 import { getGpxManager } from '@/factories/manager-factory';
+import { celsiusToFahrenheit } from '@/utils/conversions';
 
 interface Props {
   weather: string;
@@ -9,13 +10,10 @@ interface Props {
   gpxUrl: string;
 }
 
+const gpxManager = getGpxManager();
 const { weather, temperatureC, difficulty, gpxUrl } = Astro.props;
 
-const temperatureF = temperatureC !== undefined
-    ? Math.round(temperatureC * 9 / 5 + 32)
-    : undefined;
-
-const gpxManager = getGpxManager();
+const temperatureF = celsiusToFahrenheit(temperatureC);
 const distance = await gpxManager.getTotalDistance(gpxUrl);
 
 const difficultyLabels: Record<NonNullable<Props['difficulty']>, string> = {

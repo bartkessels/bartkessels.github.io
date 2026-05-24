@@ -1,4 +1,5 @@
-import { formatDate, kmToMiles } from "@/utils/content";
+import { formatDate } from "@/utils/content";
+import { kmToMiles } from "@/utils/conversions";
 import type { BackpackingManager } from "@/managers/backpacking.manager";
 import type { CollectionEntry } from "astro:content";
 import type { PageManager } from "@/managers/page.manager";

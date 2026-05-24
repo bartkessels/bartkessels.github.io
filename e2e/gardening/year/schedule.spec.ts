@@ -2,12 +2,12 @@ import { expect, type Page, test } from "@playwright/test";
 
 test.describe("Gardening year schedule page", () => {
     test.beforeEach(async ({ page }: { page: Page }) => {
-        await page.goto("/gardening/2025/schedule");
+        await page.goto("/gardening/2026/schedule");
     });
 
     test("has the correct page title", async ({ page }: { page: Page }) => {
         // Arrange
-        const expectedTitle = "2025 Planting Schedule | Bart Kessels";
+        const expectedTitle = "2026 Planting Schedule | Bart Kessels";
 
         // Act & Assert
         await expect(page).toHaveTitle(expectedTitle);
@@ -23,7 +23,7 @@ test.describe("Gardening year schedule page", () => {
 
     test("displays the year badge", async ({ page }: { page: Page }) => {
         // Arrange
-        const badge = page.getByText("2025");
+        const badge = page.getByText("2026");
 
         // Act & Assert
         await expect(badge.first()).toBeVisible();

@@ -2,7 +2,7 @@ import type { Distance } from "@/models/distance.model";
 import type { ElevationStats } from "@/models/elevation-stats.model";
 import type { TrackPoint } from "@/models/track-point.model";
 import type { FileService } from "@/services/file.service";
-import { kmToMiles } from "@/utils/content";
+import { kmToMiles } from "@/utils/conversions";
 import { roundToDecimalPlaces } from "@/utils/math";
 
 export class GpxManager {

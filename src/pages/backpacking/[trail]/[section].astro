@@ -54,21 +54,19 @@ const totalLabel = getSectionOrderLabel(sectionNumber, trail.data.totalSections)
 
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 mb-8">
       <header>
-        {trail && (
-          <div class="flex items-center gap-1.5 text-sm text-muted mb-2">
-            <MapPin class="h-4 w-4 text-accent flex-shrink-0" aria-hidden="true" />
-            <a
-              href={`/backpacking/${trail.id}`}
-              class="hover:text-accent transition-colors"
-            >
-              {trail.data.title}
-            </a>
-            <span class="mx-1">·</span>
-            <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-accent/10 text-accent text-xs font-semibold">
-              {totalLabel}
-            </span>
-          </div>
-        )}
+        <div class="flex items-center gap-1.5 text-sm text-muted mb-2">
+          <MapPin class="h-4 w-4 text-accent flex-shrink-0" aria-hidden="true" />
+          <a
+            href={`/backpacking/${trail.id}`}
+            class="hover:text-accent transition-colors"
+          >
+            {trail.data.title}
+          </a>
+          <span class="mx-1">·</span>
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-accent/10 text-accent text-xs font-semibold">
+            {totalLabel}
+          </span>
+        </div>
 
         <TagsList tags={section.data.tags ?? []} />
 

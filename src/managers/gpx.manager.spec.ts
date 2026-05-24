@@ -40,32 +40,32 @@ describe('GpxManager', (): void => {
     });
 
     // -------------------------------------------------------------------------
-    // calculateTotalDistanceInKilometers
+    // getTotalDistance
     // -------------------------------------------------------------------------
 
-    describe('calculateTotalDistanceInKilometers', (): void => {
+    describe('getTotalDistance', (): void => {
         it('returns the correct distance between two known coordinates', async (): Promise<void> => {
             // London → Paris ≈ 341 km
             mockReadFile.mockResolvedValue(GPX_DISTANCE);
 
-            const result = await manager.calculateTotalDistanceInKilometers('/track.gpx');
+            const result = await manager.getTotalDistance('/track.gpx');
 
-            expect(result).toBeGreaterThan(300);
-            expect(result).toBeLessThan(400);
+            expect(result.inKilometers).toBeGreaterThan(300);
+            expect(result.inKilometers).toBeLessThan(400);
         });
 
         it('returns 0 when the GPX has no track points', async (): Promise<void> => {
             mockReadFile.mockResolvedValue(GPX_EMPTY);
 
-            const result = await manager.calculateTotalDistanceInKilometers('/track.gpx');
+            const result = await manager.getTotalDistance('/track.gpx');
 
-            expect(result).toBe(0);
+            expect(result.inKilometers).toBe(0);
         });
 
         it('passes the file path to the FileService', async (): Promise<void> => {
             mockReadFile.mockResolvedValue(GPX_DISTANCE);
 
-            await manager.calculateTotalDistanceInKilometers('/path/to/track.gpx');
+            await manager.getTotalDistance('/path/to/track.gpx');
 
             expect(mockReadFile).toHaveBeenCalledWith('/path/to/track.gpx');
         });
