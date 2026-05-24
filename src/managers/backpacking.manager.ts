@@ -45,10 +45,6 @@ export class BackpackingManager {
     public getNextSection(sections: CollectionEntry<'backpacking/sections'>[], section: CollectionEntry<'backpacking/sections'>): CollectionEntry<'backpacking/sections'> | null {
         const index = sections.indexOf(section);
 
-        if (index >= sections.length) {
-            return null;
-        }
-
         return sections.at(index + 1) ?? null;
     }
 

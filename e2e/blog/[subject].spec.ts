@@ -39,3 +39,49 @@ test.describe("Blog subject overview page", () => {
         });
     });
 });
+
+test.describe("Blog subject overview page — pagination", () => {
+    // advent-of-code has 18 posts which fills 2 pages at 9 posts/page
+    const subject = "advent-of-code";
+
+    test("pagination is visible when the subject has multiple pages", async ({ page }: { page: Page }) => {
+        // Arrange
+        await page.goto(`/${subject}`);
+        const pagination = page.locator("nav[aria-label='Pagination']");
+
+        // Act & Assert
+        await expect(pagination).toBeVisible();
+    });
+
+    test("next page link navigates to page 2 of the subject", async ({ page }: { page: Page }) => {
+        // Arrange
+        await page.goto(`/${subject}`);
+        const nextLink = page.locator("nav[aria-label='Pagination']").getByRole("link", { name: /next/i });
+
+        // Act
+        await nextLink.click();
+
+        // Assert
+        await expect(page).toHaveURL(new RegExp(`\\/${subject}\\/2`));
+    });
+
+    test("page 2 displays the correct URL", async ({ page }: { page: Page }) => {
+        // Act
+        await page.goto(`/${subject}/2`);
+
+        // Assert
+        await expect(page).toHaveURL(new RegExp(`\\/${subject}\\/2`));
+    });
+
+    test("previous page link on page 2 navigates back to page 1", async ({ page }: { page: Page }) => {
+        // Arrange
+        await page.goto(`/${subject}/2`);
+        const prevLink = page.locator("nav[aria-label='Pagination']").getByRole("link", { name: /previous/i });
+
+        // Act
+        await prevLink.click();
+
+        // Assert
+        await expect(page).toHaveURL(new RegExp(`\\/${subject}(?:\\/1)?$`));
+    });
+});

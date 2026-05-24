@@ -63,5 +63,18 @@ describe('CertificateManager', (): void => {
             expect(result[1]).toBe(mtaCertificate);
             expect(result[2]).toBe(retiredAzCertificate);
         });
+
+        it('should treat a certificate with a future expiry date as active', async (): Promise<void> => {
+            const tomorrow = new Date(Date.now() + 86_400_000);
+            const activeCertWithExpiry = makeCertificate('cert-future', new Date(), 'AZ-204', tomorrow);
+            const expiredCert = makeCertificate('cert-expired', new Date(), 'MTA', new Date(0));
+
+            mockGetCertificates.mockResolvedValue([expiredCert, activeCertWithExpiry]);
+
+            const result = await manager.getCertificates();
+
+            expect(result[0]).toBe(activeCertWithExpiry); // active (future expiry) first
+            expect(result[1]).toBe(expiredCert);           // expired last
+        });
     });
 });

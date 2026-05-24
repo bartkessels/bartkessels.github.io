@@ -82,4 +82,70 @@ test.describe("About page", () => {
         // Act & Assert
         await expect(link).toHaveAttribute("href", "https://linkedin.com/in/bartkessels");
     });
+
+    test.describe("Certifications section", () => {
+        test("displays the Certifications heading", async ({ page }: { page: Page }) => {
+            // Arrange
+            const heading = page.getByRole("heading", { name: "Certifications" });
+
+            // Act & Assert
+            await expect(heading).toBeVisible();
+        });
+
+        test("displays at least one certificate card", async ({ page }: { page: Page }) => {
+            // Arrange
+            const cards = page.locator("article");
+
+            // Act & Assert
+            await expect(cards.first()).toBeVisible();
+        });
+
+        test("each certificate card shows the certificate name", async ({ page }: { page: Page }) => {
+            // Arrange
+            const cards = page.locator("article");
+            const count = await cards.count();
+
+            // Act & Assert
+            for (let i = 0; i < count; i++) {
+                const card = cards.nth(i);
+                await expect(card.getByRole("heading")).toBeVisible();
+            }
+        });
+
+        test("each certificate card shows the issuer name", async ({ page }: { page: Page }) => {
+            // Arrange
+            const cards = page.locator("article");
+            const count = await cards.count();
+
+            // Act & Assert
+            for (let i = 0; i < count; i++) {
+                const card = cards.nth(i);
+                // Issuer is rendered as a <p> with uppercase styling
+                await expect(card.locator("p").first()).toBeVisible();
+            }
+        });
+
+        test("each certificate card shows the issue date", async ({ page }: { page: Page }) => {
+            // Arrange
+            const cards = page.locator("article");
+            const count = await cards.count();
+
+            // Act & Assert
+            for (let i = 0; i < count; i++) {
+                const card = cards.nth(i);
+                await expect(card.getByText(/issued/i)).toBeVisible();
+            }
+        });
+
+        test("expired certificates display an expiry indicator", async ({ page }: { page: Page }) => {
+            // Arrange
+            const expiredCards = page.locator("article").filter({ hasText: "Expired" });
+
+            // Act & Assert — only assert if any expired certs exist
+            const count = await expiredCards.count();
+            if (count > 0) {
+                await expect(expiredCards.first().getByText("Expired")).toBeVisible();
+            }
+        });
+    });
 });
