@@ -1,5 +1,6 @@
 ---
 import { Cloud, Thermometer, TrendingUp, Ruler } from '@lucide/astro';
+import { getGpxManager } from '@/factories/manager-factory';
 
 interface Props {
   weather: string;
@@ -13,6 +14,9 @@ const { weather, temperatureC, difficulty, gpxUrl } = Astro.props;
 const temperatureF = temperatureC !== undefined
     ? Math.round(temperatureC * 9 / 5 + 32)
     : undefined;
+
+const gpxManager = getGpxManager();
+const distance = await gpxManager.getTotalDistance(gpxUrl);
 
 const difficultyLabels: Record<NonNullable<Props['difficulty']>, string> = {
     'easy': 'Easy',
@@ -63,9 +67,7 @@ const difficultyColors: Record<NonNullable<Props['difficulty']>, string> = {
         </span>
         <div>
             <dt class="text-xs text-muted font-medium uppercase tracking-wide">Distance</dt>
-            <trip-conditions gpx={gpxUrl} aria-live="polite">
-                <dd class="text-sm font-medium text-foreground mt-0.5 text-muted">—</dd>
-            </trip-conditions>
+            <dd class="text-sm font-medium text-foreground mt-0.5">{distance.inKilometers}&thinsp;km&thinsp;/&thinsp;{distance.inMiles}&thinsp;mi</dd>
         </div>
     </div>
 
@@ -85,7 +87,3 @@ const difficultyColors: Record<NonNullable<Props['difficulty']>, string> = {
 
 </dl>
 </aside>
-
-<script>
-  import '@/components/TripConditionsElement';
-</script>
