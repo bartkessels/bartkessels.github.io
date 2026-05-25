@@ -12,6 +12,10 @@ export class GpxManager {
         private readonly fileService: FileService
     ) { }
 
+    public async getRawGpx(gpxFilePath: string): Promise<string> {
+        return await this.fileService.readFile(gpxFilePath);
+    }
+
     public async getTotalDistance(gpxFilePath: string): Promise<Distance> {
         const gpxText = await this.fileService.readFile(gpxFilePath);
         const points = this.extractTrackPoints(gpxText);
