@@ -108,4 +108,26 @@ describe('GpxManager', (): void => {
             expect(mockReadFile).toHaveBeenCalledWith('/path/to/track.gpx');
         });
     });
+
+    // -------------------------------------------------------------------------
+    // getRawGpx
+    // -------------------------------------------------------------------------
+
+    describe('getRawGpx', (): void => {
+        it('returns the raw GPX content from the FileService', async (): Promise<void> => {
+            mockReadFile.mockResolvedValue(GPX_DISTANCE);
+
+            const result = await manager.getRawGpx('/track.gpx');
+
+            expect(result).toBe(GPX_DISTANCE);
+        });
+
+        it('passes the file path to the FileService', async (): Promise<void> => {
+            mockReadFile.mockResolvedValue(GPX_DISTANCE);
+
+            await manager.getRawGpx('/path/to/track.gpx');
+
+            expect(mockReadFile).toHaveBeenCalledWith('/path/to/track.gpx');
+        });
+    });
 });

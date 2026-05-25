@@ -23,6 +23,9 @@ const coords = (geojson.features as GeoJSON.Feature[]).flatMap((f) => {
   return [];
 }) as [number, number][];
 
+const startCoord: [number, number] | null = coords.length > 0 ? coords[0] : null;
+const endCoord: [number, number] | null = coords.length > 0 ? coords[coords.length - 1] : null;
+
 const bounds: [[number, number], [number, number]] | null = coords.length > 0
   ? coords.reduce(
       (b, c) => [[Math.min(b[0][0], c[0]), Math.min(b[0][1], c[1])], [Math.max(b[1][0], c[0]), Math.max(b[1][1], c[1])]],
@@ -35,6 +38,8 @@ const bounds: [[number, number], [number, number]] | null = coords.length > 0
   data-trail-map
   data-geojson={JSON.stringify(geojson)}
   data-bounds={JSON.stringify(bounds)}
+  data-start={JSON.stringify(startCoord)}
+  data-end={JSON.stringify(endCoord)}
   role="img"
   aria-label={label}
   class="block w-full rounded-xl border border-border overflow-hidden my-8"
@@ -52,6 +57,8 @@ const bounds: [[number, number], [number, number]] | null = coords.length > 0
   document.querySelectorAll<HTMLElement>('[data-trail-map]').forEach((el) => {
     const geojson = JSON.parse(el.dataset.geojson!) as GeoJSON.FeatureCollection;
     const bounds = el.dataset.bounds ? JSON.parse(el.dataset.bounds) as [[number, number], [number, number]] | null : null;
+    const startCoord = el.dataset.start ? JSON.parse(el.dataset.start) as [number, number] | null : null;
+    const endCoord = el.dataset.end ? JSON.parse(el.dataset.end) as [number, number] | null : null;
 
     const map = new maplibregl.Map({
       container: el,
@@ -81,7 +88,25 @@ const bounds: [[number, number], [number, number]] | null = coords.length > 0
       });
 
       if (bounds) {
-        map.fitBounds(bounds, { padding: 40, animate: true });
+        map.fitBounds(bounds, { padding: 40, animate: false });
+      }
+
+      if (startCoord) {
+        const startEl = document.createElement('div');
+        startEl.style.cssText = 'width:14px;height:14px;border-radius:50%;background:#22c55e;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);';
+        new maplibregl.Marker({ element: startEl })
+          .setLngLat(startCoord)
+          .setPopup(new maplibregl.Popup({ offset: 12 }).setText('Start'))
+          .addTo(map);
+      }
+
+      if (endCoord) {
+        const endEl = document.createElement('div');
+        endEl.style.cssText = 'width:14px;height:14px;border-radius:50%;background:#ef4444;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);';
+        new maplibregl.Marker({ element: endEl })
+          .setLngLat(endCoord)
+          .setPopup(new maplibregl.Popup({ offset: 12 }).setText('End'))
+          .addTo(map);
       }
     });
   });
