@@ -3,6 +3,9 @@
 A modern blog website built with [Astro](https://astro.build/) featuring content about software development, gardening, and travel stories.
 
 
+
+    // "typescript": "^5.9.2"
+
 ## Content
 
 All content is stored in the `/content` folder. This folder is divided into a couple of categories. For each category there is a helper command available to create the desired markdown file.
