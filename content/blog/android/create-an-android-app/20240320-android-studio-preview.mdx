@@ -21,16 +21,18 @@ Luckily for this, we can use previews in Android Studio. This is different from 
 For the Android Studio Preview to work, we need to install a dependency `androidx.compose.ui:ui-tooling-preview` in our `app` module.
 
 <CodeBlock filename="app/build.gradle.kts">
-```kotlin
-dependencies {
-    // ...
-    
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    
-    // ...
-}
-```
+
+    ```kotlin
+    dependencies {
+        // ...
+        
+        implementation("androidx.compose.ui:ui-tooling-preview")
+        debugImplementation("androidx.compose.ui:ui-tooling")
+        
+        // ...
+    }
+    ```
+
 </CodeBlock>
 
 This gives us the `Preview` annotation, which in turn will enable us to preview our UI without having to connect to an emulator in Android Studio [(Google, 2024)](https://developer.android.com/jetpack/compose/tooling/previews). The `debugImplementation` will add the extra `ui-tooling` dependency only when your app is running in debug-mode, in other words, when the preview is being rendered.
@@ -44,25 +46,27 @@ Our `Main` composable lives inside the `main.kt` file, let's open this file and 
 We'll create a new private composable called `MainInternal` which will have two parameters, on for the onClick handler of the button and one for the `MainState`.
 
 <CodeBlock filename="src/main/kotlin/**/main.kt">
-```kotlin
-@Composable
-private fun MainInternal(
-    state: MainState,
-    onButtonClick: () -> Unit
-) {
-    val textToDisplay = when (state) {
-        MainState.Uninitialized -> R.string.uninitialized_text
-        MainState.Updated -> R.string.updated_text
-    }
 
-    Column {
-        Text(stringResource(textToDisplay))
-        Button(onClick = onButtonClick) {
-            Text(stringResource(R.string.update_text_button))
+    ```kotlin
+    @Composable
+    private fun MainInternal(
+        state: MainState,
+        onButtonClick: () -> Unit
+    ) {
+        val textToDisplay = when (state) {
+            MainState.Uninitialized -> R.string.uninitialized_text
+            MainState.Updated -> R.string.updated_text
+        }
+
+        Column {
+            Text(stringResource(textToDisplay))
+            Button(onClick = onButtonClick) {
+                Text(stringResource(R.string.update_text_button))
+            }
         }
     }
-}
-```
+    ```
+
 </CodeBlock>
 
 Now we'll have to update our `Main` composable to only call the `MainInternal` composable with the parameters that we'll get from our view model.
@@ -82,16 +86,18 @@ fun Main(
 Our app will look and function exactly the same as before, only now we have decoupled the view model from the actual view that we'd like to preview. Let's create a new private composable as our preview and let it call the `MainInternal` composable. Much like our `Main` composable the only difference will be that our preview composable will have the `Preview` annotation added.
 
 <CodeBlock filename="src/main/kotlin/**/main.kt">
-```kotlin
-@Preview
-@Composable
-private fun MainInternalPreview() {
-    MainInternal(
-        state = MainState.Uninitialized,
-        onButtonClick = { }
-    )
-}
-```
+
+    ```kotlin
+    @Preview
+    @Composable
+    private fun MainInternalPreview() {
+        MainInternal(
+            state = MainState.Uninitialized,
+            onButtonClick = { }
+        )
+    }
+    ```
+
 </CodeBlock>
 
 As you can see, we can give the `MainInternal` composable the exact values of the state that we want to display. So if we changed the logic of what it should do in case of an `Updated` state, we can just change the `MainState.Uninitialized` state parameter to `MainState.Updated` and our preview would render the `MainInternal` composable again with the different state.
@@ -99,46 +105,48 @@ As you can see, we can give the `MainInternal` composable the exact values of th
 Our entire `main.kt` file should look like this.
 
 <CodeBlock filename="src/main/kotlin/**/main.kt">
-```kotlin
-// ...
 
-@Composable
-fun Main(
-    viewModel: MainViewModel
-) {
-    MainInternal(
-        state = viewModel.displayText.collectAsState().value,
-        onButtonClick = viewModel::updateText
-    )
-}
+    ```kotlin
+    // ...
 
-@Composable
-private fun MainInternal(
-    state: MainState,
-    onButtonClick: () -> Unit
-) {
-    val textToDisplay = when (state) {
-        MainState.Uninitialized -> R.string.uninitialized_text
-        MainState.Updated -> R.string.updated_text
+    @Composable
+    fun Main(
+        viewModel: MainViewModel
+    ) {
+        MainInternal(
+            state = viewModel.displayText.collectAsState().value,
+            onButtonClick = viewModel::updateText
+        )
     }
 
-    Column {
-        Text(stringResource(textToDisplay))
-        Button(onClick = onButtonClick) {
-            Text(stringResource(R.string.update_text_button))
+    @Composable
+    private fun MainInternal(
+        state: MainState,
+        onButtonClick: () -> Unit
+    ) {
+        val textToDisplay = when (state) {
+            MainState.Uninitialized -> R.string.uninitialized_text
+            MainState.Updated -> R.string.updated_text
+        }
+
+        Column {
+            Text(stringResource(textToDisplay))
+            Button(onClick = onButtonClick) {
+                Text(stringResource(R.string.update_text_button))
+            }
         }
     }
-}
 
-@Preview
-@Composable
-private fun MainInternalPreview() {
-    MainInternal(
-        state = MainState.Uninitialized,
-        onButtonClick = { }
-    )
-}
-```
+    @Preview
+    @Composable
+    private fun MainInternalPreview() {
+        MainInternal(
+            state = MainState.Uninitialized,
+            onButtonClick = { }
+        )
+    }
+    ```
+
 </CodeBlock>
 
 ## Display the preview

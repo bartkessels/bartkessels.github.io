@@ -1,13 +1,13 @@
 ---
 slug: advent-of-code-2022
 title: Advent of Code 2022
-description: "In the next couple of weeks I'll be working on last years Advent of Code to get a better understanding of Kotlin."
+description: In the next couple of weeks I'll be working on last years Advent of Code to get a better understanding of Kotlin.
 author: Bart Kessels
 date: 2023-03-29
 image: /images/blog/advent-of-code/2022/introduction.png
 caption: This image is generated using Dall-E
 subject: advent-of-code
-tags: [advent of code, kotlin, introduction, solution]
+tags: [advent of code, Kotlin, introduction, solution]
 featured: false
 posts:
     - 2022/day-one/sanitizer
@@ -41,74 +41,76 @@ I'll be using Kotlin to create this year's Advent of Code because I want to lear
 
 ## Project structure
 
-Before we can get started with the actual Advent of Code, we need to setup our project stucture. For this I'll be using different submodules for each day, so we can truly
-seperate the different objectives.
+Before we can get started with the actual Advent of Code, we need to setup our project structure. For this I'll be using different submodules for each day, so we can truly
+separate the different objectives.
 
 <CodeBlock filename="File structure">
-```
-- aoc-2022
-  - day1
-    - src
-      - main
-        - kotlin
-          - aoc
-            - PartOne.kt
-            - PartTwo.kt
-            - Sanitizer.kt
-            - main.kt
-        - resources
-          - input.txt
-      - test
-        - kotlin
-          - aoc
-            - PartOneTest.kt
-            - PartTwoTest.kt
-            - SanitizerTest.kt
-        - resources
-          - input.txt
-    - build.gradle.kts
-  - day2
-    - src
-      - main
-        - kotlin
-          - aoc
-            - PartOne.kt
-            - PartTwo.kt
-            - Sanitizer.kt
-            - main.kt
-        - resources
-          - input.txt
-      - test
-        - kotlin
-          - aoc
-            - PartOneTest.kt
-            - PartTwoTest.kt
-            - SanitizerTest.kt
-        - resources
-          - input.txt
-    - build.gradle.kts
-  - dayN
-    - src
-      - main
-        - kotlin
-          - aoc
-            - PartOne.kt
-            - PartTwo.kt
-            - Sanitizer.kt
-            - main.kt
-        - resources
-          - input.txt
-      - test
-        - kotlin
-          - aoc
-            - PartOneTest.kt
-            - PartTwoTest.kt
-            - SanitizerTest.kt
-        - resources
-          - input.txt
-    - build.gradle.kts
-  - settings.gradle.kts
-```
+
+  ```text
+  - aoc-2022
+    - day1
+      - src
+        - main
+          - kotlin
+            - aoc
+              - PartOne.kt
+              - PartTwo.kt
+              - Sanitizer.kt
+              - main.kt
+          - resources
+            - input.txt
+        - test
+          - kotlin
+            - aoc
+              - PartOneTest.kt
+              - PartTwoTest.kt
+              - SanitizerTest.kt
+          - resources
+            - input.txt
+      - build.gradle.kts
+    - day2
+      - src
+        - main
+          - kotlin
+            - aoc
+              - PartOne.kt
+              - PartTwo.kt
+              - Sanitizer.kt
+              - main.kt
+          - resources
+            - input.txt
+        - test
+          - kotlin
+            - aoc
+              - PartOneTest.kt
+              - PartTwoTest.kt
+              - SanitizerTest.kt
+          - resources
+            - input.txt
+      - build.gradle.kts
+    - dayN
+      - src
+        - main
+          - kotlin
+            - aoc
+              - PartOne.kt
+              - PartTwo.kt
+              - Sanitizer.kt
+              - main.kt
+          - resources
+            - input.txt
+        - test
+          - kotlin
+            - aoc
+              - PartOneTest.kt
+              - PartTwoTest.kt
+              - SanitizerTest.kt
+          - resources
+            - input.txt
+      - build.gradle.kts
+    - settings.gradle.kts
+  ```
+
 </CodeBlock>
 
 The puzzle input well be stored in the `input.txt` file under the resources folder. For the tests, the `input.txt` will contain the sample input.
@@ -118,13 +120,13 @@ code when switching between the sample data and the actual data.
 ### Decisions
 
 In our file structure you can see that we've already made some decisions for our implementation. One being that we create a module for each day, and another one
-being that we seperate the data sanitation and the two parts of each day.
+being that we separate the data sanitation and the two parts of each day.
 
 The reason we create a module for each day, is that experience has thought me that no day depends on the previous day. So it doesn't make sense to put all the different
 types of objectives in the same project or module.
 
-And for the seperation between the data sanitation and the parts of each day, this is done so each part can focus on it's specific logic without worrying about the data structure.
-You could say that both parts of the day can be put in one class or one file, but I think it's cleaner to completely seperate them and have duplicate code than to have very
+And for the separation between the data sanitation and the parts of each day, this is done so each part can focus on it's specific logic without worrying about the data structure.
+You could say that both parts of the day can be put in one class or one file, but I think it's cleaner to completely separate them and have duplicate code than to have very
 generic shared code.
 
 The `main.kt` file contains a Main class and a main method as the entry-point for the module. This is used to execute the code with the actual input data. In most cases

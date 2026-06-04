@@ -11,7 +11,7 @@ subject: kotlin
 
 import CodeBlock from '@/components/CodeBlock.astro';
 
-So the last couple of weeks I've been working out the advent of code of 2022 in Kotlin. The reason herefore can be found in the [Advent of Code 2022 introduction](../../stories/20230329-advent-of-code-2022.mdx).
+So the last couple of weeks I've been working out the advent of code of 2022 in Kotlin. The reason therefore can be found in the [Advent of Code 2022 introduction](../../stories/20230329-advent-of-code-2022.mdx).
 
 When working on day three, I came across a weird error message when trying to return an empty character from one of my methods. The `return ''` statement gave me this error message `Empty Character Literal`.
 
@@ -26,10 +26,12 @@ So I started digging into the documentation for the `Char` datatype on the Kotli
 If we print this value, we get nothing as the output. Just as we expected. But looking into the documentation for the basic types of Java, the minimum value for a char literal is 0 [(Oracle, n.d.)](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html). So when we're converting the char to an integer, we get the expected `0` as an integer.
 
 <CodeBlock>
-```kotlin
-fun main() {
-    println(Char.MIN_VALUE) // Prints nothing
-    println(Char.MIN_VALUE.toInt()) // Prints 0
-}
-```
+
+    ```kotlin
+    fun main() {
+        println(Char.MIN_VALUE) // Prints nothing
+        println(Char.MIN_VALUE.toInt()) // Prints 0
+    }
+    ```
+
 </CodeBlock>

@@ -14,9 +14,9 @@ import CodeBlock from '@/components/CodeBlock.astro';
 
 If we take a look at the release notes, Microsoft states that the `ref readonly` modifier more clarity allows where the `ref` or `in` modifiers where used before [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-12#ref-readonly-parameters).
 
-When taking a look at the documentation for the `ref readonly` modifier, it states that the modifier can be used to force the call site to pass in a reference and the callee cannot change the reference [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters#ref-readonly-modifier).
+When taking a look at the documentation for the `ref readonly` modifier, it states that the modifier can be used to force the call site to pass in a reference and the called method cannot change the reference [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters#ref-readonly-modifier).
 
-My expectations for this is, that when combined with the [primary constructor](./20231227-primary-constructor.mdx) it can be used to declare readonly fields in a class that are injected through the constructor. But let's find out if that's the case.
+My expectations for this is, that when combined with the [primary constructor](./20231227-primary-constructor.mdx) it can be used to declare `readonly` fields in a class that are injected through the constructor. But let's find out if that's the case.
 
 ## Implementation
 
@@ -30,43 +30,49 @@ $ dotnet sln add RefReadonlyModifier
 Let's re-use our `PeopleRepository` and `DbContext` from our previous post about the [primary constructor](./20231227-primary-constructor.mdx).
 
 <CodeBlock filename="DbContext.cs">
-```csharp
-namespace RefReadonlyModifier;
 
-public class DbContext
-{
-    public IEnumerable<string> GetPeople() =>
-        new List<string>
-        {
-            "John Doe",
-            "Jane Doe"
-        };
-}
-```
+    ```csharp
+    namespace RefReadonlyModifier;
+
+    public class DbContext
+    {
+        public IEnumerable<string> GetPeople() =>
+            new List<string>
+            {
+                "John Doe",
+                "Jane Doe"
+            };
+    }
+    ```
+
 </CodeBlock>
 
 <CodeBlock filename="PersonRepository.cs">
-```csharp
-namespace RefReadonlyModifier;
 
-public class PersonRepository(DbContext context)
-{
-    public string GetName(int index) =>
-        context.GetPeople().ElementAt(index);
-}
-```
+    ```csharp
+    namespace RefReadonlyModifier;
+
+    public class PersonRepository(DbContext context)
+    {
+        public string GetName(int index) =>
+            context.GetPeople().ElementAt(index);
+    }
+    ```
+
 </CodeBlock>
 
 This is the exact same code as before, so let's add the `ref readonly` modifier to the `DbContext` datatype in our `PersonRepository` constructor.
 
 <CodeBlock filename="DbContext.cs">
-```csharp
-public class PersonRepository(ref readonly DbContext context)
-{
-    public string GetName(int index) =>
-        context.GetPeople().ElementAt(index);
-}
-```
+
+    ```csharp
+    public class PersonRepository(ref readonly DbContext context)
+    {
+        public string GetName(int index) =>
+            context.GetPeople().ElementAt(index);
+    }
+    ```
+
 </CodeBlock>
 
 This gives us the following error-message when we try to access the `context` parameter from the `GetName` method.
@@ -78,13 +84,15 @@ cannot use 'ref readonly' primary constructor parameter 'context' inside an inst
 When looking back at the documentation it's pretty obvious because it clearly states _'...must be present in the method declaration. ...'_. So we can only use it for methods. Let's update our `PersonRepository` to pass the `DbContext` as a readonly reference to the `GetName` method.
 
 <CodeBlock filename="PersonRepository.cs">
-```csharp
-public class PersonRepository()
-{
-    public string GetName(ref readonly DbContext context, int index) =>
-        context.GetPeople().ElementAt(index);
-}
-```
+
+    ```csharp
+    public class PersonRepository()
+    {
+        public string GetName(ref readonly DbContext context, int index) =>
+            context.GetPeople().ElementAt(index);
+    }
+    ```
+
 </CodeBlock>
 
 This will make the `context` variable read only as expected. If we take our `PersonRepository` and put it into a tool like [sharplab.io](https://sharplab.io) we get the generated C# code which will desugar the `ref readonly` modifier.

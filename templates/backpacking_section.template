@@ -10,3 +10,5 @@ temperatureC: 26
 difficulty: hard
 tags: [A, B, C]
 ---
+
+import ImageFloat from '@/components/ImageFloat.astro';

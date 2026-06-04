@@ -34,58 +34,66 @@ So let's create a repository class which has a (fake) dependency on a DbContext 
 Our old C# 11 (and below) code would look like this
 
 <CodeBlock filename="PeopleRepository.cs">
-```csharp
-class PeopleRepository
-{
-    private readonly DbContext _context;
-    
-    public PeopleRepository(DbContext _context) =>
-        _context = context;
-}
-```
+
+    ```csharp
+    class PeopleRepository
+    {
+        private readonly DbContext _context;
+        
+        public PeopleRepository(DbContext _context) =>
+            _context = context;
+    }
+    ```
+
 </CodeBlock>
 
 As you can see, we have three lines of code just for declaring and initializing a single property. If we convert this to C# 12, this will look like a `record` constructor.
 
 <CodeBlock filename="PersonRepository.cs">
-```csharp
-public class PersonRepository(DbContext context)
-{ 
-    // TODO: Implement some logic
-}
-```
+
+    ```csharp
+    public class PersonRepository(DbContext context)
+    { 
+        // TODO: Implement some logic
+    }
+    ```
+
 </CodeBlock>
 
 Let's create our fake `DbContext` class and give it a method to read all names from the _'database'_.
 
 <CodeBlock filename="DbContext.cs">
-```csharp
-namespace PrimaryConstructor;
 
-public class DbContext
-{
-    public IEnumerable<string> GetPeople() =>
-        new List<string>
-        {
-            "John Doe",
-            "Jane Doe"
-        };
-}
-```
+    ```csharp
+    namespace PrimaryConstructor;
+
+    public class DbContext
+    {
+        public IEnumerable<string> GetPeople() =>
+            new List<string>
+            {
+                "John Doe",
+                "Jane Doe"
+            };
+    }
+    ```
+
 </CodeBlock>
 
 Next we'll be implementing a method in our `PersonRepository` to get a persons name based on an index (yes, not a best practice but usable for our purpose).
 
 <CodeBlock filename="PersonRepository.cs">
-```csharp
-namespace PrimaryConstructor;
 
-public class PersonRepository(DbContext context)
-{
-    public string GetName(int index) =>
-        context.GetPeople().ElementAt(index);
-}
-```
+    ```csharp
+    namespace PrimaryConstructor;
+
+    public class PersonRepository(DbContext context)
+    {
+        public string GetName(int index) =>
+            context.GetPeople().ElementAt(index);
+    }
+    ```
+
 </CodeBlock>
 
 As you can see we use the `context` from our primary constructor to call the `GetPeople` method from the `DbContext`.
@@ -95,46 +103,50 @@ If we take a look at the documentation of primary constructors, it clearly state
 But the thing that I find fascinating, is that it _IS_ available for `record`s however.
 
 If we look at the documentation for `record`s, Microsoft states that _When you declare a primary constructor on a record, the compiler generates public properties for the primary constructor parameters._ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record). Which is different from the
-primary constructor where the documentation says _t's important to view primary constructor parameters as parameters even though they are in scope throughout the class definition_ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#primary-constructors).
+primary constructor where the documentation says _It's important to view primary constructor parameters as parameters even though they are in scope throughout the class definition_ [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/primary-constructors#primary-constructors).
 
 ### Generated C# code
 
 If we take our example and put it inside a tool like [sharplab.io](https://sharplab.io) we can see the code that is being generated for the primary constructor.
 
 <CodeBlock>
-```csharp
-[System.Runtime.CompilerServices.NullableContext(1)]
-[System.Runtime.CompilerServices.Nullable(0)]
-public class PersonRepository
-{
-    [CompilerGenerated]
-    [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-    private DbContext <context>P;
 
-    public PersonRepository(DbContext context)
+    ```csharp
+    [System.Runtime.CompilerServices.NullableContext(1)]
+    [System.Runtime.CompilerServices.Nullable(0)]
+    public class PersonRepository
     {
-        <context>P = context;
-        base..ctor();
-    }
+        [CompilerGenerated]
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private DbContext <context>P;
 
-    public string GetName(int index)
-    {
-        return Enumerable.ElementAt(<context>P.GetPeople(), index);
+        public PersonRepository(DbContext context)
+        {
+            <context>P = context;
+            base..ctor();
+        }
+
+        public string GetName(int index)
+        {
+            return Enumerable.ElementAt(<context>P.GetPeople(), index);
+        }
     }
-}
-```
+    ```
+
 </CodeBlock>
 
 We see that the primary constructor parameter is added as a member variable to our class, but it's accessed through the `P` variable based on a generic type of the name of our parameter. So what happens when we try to use the `P` member ourselves.
 
 <CodeBlock filename="PersonRepository.cs">
-```csharp
-public class PersonRepository(DbContext context)
-{
-    public string GetName(int index) =>
-        <context>P.GetPeople().ElementAt(index);
-}
-```
+
+    ```csharp
+    public class PersonRepository(DbContext context)
+    {
+        public string GetName(int index) =>
+            <context>P.GetPeople().ElementAt(index);
+    }
+    ```
+
 </CodeBlock>
 
 As I expected, we cannot access it directly because it gives our the error message that it cannot resolve the `context` symbol.

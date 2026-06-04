@@ -21,7 +21,10 @@
     "new:gardening/plant": "tsx scripts/new-item.ts gardening-plant",
     "new:gardening/year": "tsx scripts/new-item.ts gardening-subject",
     "new:software/project": "tsx scripts/new-item.ts software-project",
-    "new:story": "tsx scripts/new-item.ts story"
+    "new:story": "tsx scripts/new-item.ts story",
+    "check:content": "docker run --rm -v $(pwd):/workspace -w /workspace jdkato/vale content",
+    "check:markdown": "markdownlint-cli2 \"content/**/*.{md,mdx}\"",
+    "format:content": "prettier --write \"content/**/*.{md,mdx}\""
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -30,6 +33,9 @@
     "@vitest/coverage-v8": "4.1.2",
     "eslint": "^10.1.0",
     "happy-dom": "^20.8.9",
+    "markdownlint-cli2": "^0.22.1",
+    "prettier": "^3.8.3",
+    "prettier-plugin-astro": "^0.14.1",
     "tsx": "^4.21.0",
     "typescript-eslint": "^8.58.0",
     "vitest": "^4.1.2"

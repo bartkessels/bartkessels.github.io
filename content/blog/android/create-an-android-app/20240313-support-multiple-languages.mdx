@@ -25,14 +25,16 @@ When creating a new application through the Android Studio wizard, you automatic
 Right now we have our strings inside our code, let's remove them from the code and place them in our default language `values/string.xml`.
 
 <CodeBlock filename="app/src/main/**/res/values/strings.xml">
-```xml
-<resources>
-    <string name="app_name">My Application</string>
-    <string name="uninitialized_text">Hello world!</string>
-    <string name="updated_text">Hello again!</string>
-    <string name="update_text_button">Click me</string>
-</resources>
-```
+
+    ```xml
+    <resources>
+        <string name="app_name">My Application</string>
+        <string name="uninitialized_text">Hello world!</string>
+        <string name="updated_text">Hello again!</string>
+        <string name="update_text_button">Click me</string>
+    </resources>
+    ```
+
 </CodeBlock>
 
 The important part of these strings is the `name` property. This needs to be the same between all languages because that is what we'll be referencing inside the UI later.
@@ -44,14 +46,16 @@ The `app_name` string is used for the text that's displayed under your app icon 
 Now that we know what strings we need to translate, let's create a new folder for the Dutch language `res/values-b+nl` and create a new `strings.xml` file with the following contents.
 
 <CodeBlock filename="app/src/main/**/res/values/strings.xml">
-```xml
-<resources>
-    <string name="app_name">Mijn Applicatie</string>
-    <string name="uninitialized_text">Hallo wereld!</string>
-    <string name="updated_text">Nogmaals hallo!</string>
-    <string name="update_text_button">Klik mij</string>
-</resources>
-```
+
+    ```xml
+    <resources>
+        <string name="app_name">Mijn Applicatie</string>
+        <string name="uninitialized_text">Hallo wereld!</string>
+        <string name="updated_text">Nogmaals hallo!</string>
+        <string name="update_text_button">Klik mij</string>
+    </resources>
+    ```
+
 </CodeBlock>
 
 Right now we'll leave the strings in the code as they are, because there are a few other changes we'll be making before we're going to update the UI.
@@ -65,14 +69,16 @@ What we can do, however, is use states. Our application has two states an `Unini
 Let's create a sealed interface called `MainState` and add the two `Uninitialized` and `Updated` states as implementations. The reason we use a sealed interface as a base for both is that when the implementations of a sealed class are known at compile-time. This allows us to use these states as if they were enum values [(Kotlin Foundation, 2023)](https://kotlinlang.org/docs/sealed-classes.html).
 
 <CodeBlock filename="app/src/main/**/MainState.kt">
-```kotlin
-// ...
-sealed interface MainState {
-    data object Uninitialized: MainState
-    data object Updated: MainState
-}
-// ...
-```
+
+    ```kotlin
+    // ...
+    sealed interface MainState {
+        data object Uninitialized: MainState
+        data object Updated: MainState
+    }
+    // ...
+    ```
+
 </CodeBlock>
 
 Because neither state requires properties we can use them as `data object`'s. This allows us to use basic operations like `equals` and `toString` on the objects because of the `data` modifier [(Kotlin Foundation)](https://kotlinlang.org/docs/data-classes.html). And the `object` type simply tells the compiler that our state is a singleton [(Kotlin Foundation, 2023)](https://kotlinlang.org/docs/object-declarations.html#object-declarations-overview).
@@ -82,13 +88,15 @@ Because neither state requires properties we can use them as `data object`'s. Th
 Now that we've declared our states, let's update the `displayText` `MutableStateFlow` to use the `MainState` instead of a string like we do now.
 
 <CodeBlock filename="app/src/main/**/MainViewModel.kt">
-```kotlin
-// ...
 
-private val _displayText = MutableStateFlow<MainState>(MainState.Uninitialized)
+    ```kotlin
+    // ...
 
-// ...
-```
+    private val _displayText = MutableStateFlow<MainState>(MainState.Uninitialized)
+
+    // ...
+    ```
+
 </CodeBlock>
 
 There is a slight difference as opposed to the string we've used before. Now we need to tell the `MutableStateFlow` what type to use. If we only initialize it with `MainState.Uninitialized` and don't set a type, it thinks the type is the `Uninitialized` implementation of `MainState`. This will give us errors when we try to update the `displayText` property with another implementation of the `MainState`.
@@ -97,11 +105,13 @@ Now update the `updateText` method to remove the _Hello again!_ string and set i
 
 
 <CodeBlock filename="app/src/main/**/MainViewModel.kt">
-```kotlin
-fun updateText() {
-    _displayText.update { MainState.Updated }
-}
-```
+
+    ```kotlin
+    fun updateText() {
+        _displayText.update { MainState.Updated }
+    }
+    ```
+
 </CodeBlock>
 
 ## Update the UI
@@ -112,55 +122,63 @@ So, let's first fix that issue by adding a switch statement to determine what st
 
 
 <CodeBlock filename="app/src/main/**/main.kt">
-```kotlin
-val textToDisplay = when (viewModel.displayText.collectAsState().value) {
-    MainState.Uninitialized -> R.string.uninitialized_text
-    MainState.Updated -> R.string.updated_text
-}
-```
+
+    ```kotlin
+    val textToDisplay = when (viewModel.displayText.collectAsState().value) {
+        MainState.Uninitialized -> R.string.uninitialized_text
+        MainState.Updated -> R.string.updated_text
+    }
+    ```
+
 </CodeBlock>
 
 This will set the resource id of the expected string resource on the `textToDisplay` variable. To actually get the string from the resource id, we use the `stringResource` method inside our `Text` composable.
 
 <CodeBlock filename="app/src/main/**/main.kt">
-```kotlin
-Text(stringResource(textToDisplay))
-```
+
+    ```kotlin
+    Text(stringResource(textToDisplay))
+    ```
+
 </CodeBlock>
 
 And inside our button, we only have one string to display, so we can call the `stringResource` function with the `update_button_text` string resource id.
 
 <CodeBlock filename="app/src/main/**/main.kt">
-```kotlin
-Button(onClick = viewModel::updateText) {
-    Text(stringResource(R.string.update_text_button))
-}
-```
+
+    ```kotlin
+    Button(onClick = viewModel::updateText) {
+        Text(stringResource(R.string.update_text_button))
+    }
+    ```
+
 </CodeBlock>
 
 Changing our entire `Main` composable to look like this.
 
 <CodeBlock filename="app/src/main/**/main.kt">
-```kotlin
-// ...
 
-@Composable
-fun Main(
-    viewModel: MainViewModel
-) {
-    val textToDisplay = when (viewModel.displayText.collectAsState().value) {
-        MainState.Uninitialized -> R.string.uninitialized_text
-        MainState.Updated -> R.string.updated_text
-    }
+    ```kotlin
+    // ...
 
-    Column {
-        Text(stringResource(textToDisplay))
-        Button(onClick = viewModel::updateText) {
-            Text(stringResource(R.string.update_text_button))
+    @Composable
+    fun Main(
+        viewModel: MainViewModel
+    ) {
+        val textToDisplay = when (viewModel.displayText.collectAsState().value) {
+            MainState.Uninitialized -> R.string.uninitialized_text
+            MainState.Updated -> R.string.updated_text
+        }
+
+        Column {
+            Text(stringResource(textToDisplay))
+            Button(onClick = viewModel::updateText) {
+                Text(stringResource(R.string.update_text_button))
+            }
         }
     }
-}
-```
+    ```
+
 </CodeBlock>
 
 ## Run the app

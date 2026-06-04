@@ -144,6 +144,10 @@
     @apply rounded-lg my-8;
   }
 
+  .prose figure img {
+    @apply my-0;
+  }
+
   .prose hr {
     @apply my-12 border-border;
   }

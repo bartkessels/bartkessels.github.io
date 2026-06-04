@@ -10,8 +10,8 @@ const { image, imageSide, caption, height = 200 } = Astro.props;
 const classes = imageSide === 'start' ? 'sm:float-start sm:mr-6' : 'sm:float-end sm:ml-6';
 ---
 
-<div class="clearfix my-4 [&>*:first-of-type]:mt-0">
-  <figure class:list={['w-full mb-4', 'sm:w-56 sm:mb-2', classes]}>
+<div class="clearfix my-4 [&>*:first-of-type]:mt-1">
+  <figure class:list={['w-full mb-4 mb4', 'sm:w-56 sm:mb-2', classes]}>
     <img
       src={image}
       alt={caption}

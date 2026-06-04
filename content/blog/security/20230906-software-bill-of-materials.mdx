@@ -17,13 +17,13 @@ That December, a lot of developers needed to search through their own systems an
 
 ## SBOM
 
-In order to know what your dependency tree looks like, you can generate a SBOM for your system. A SBOM, of software bill-of-materials, is a file that describes all your dependencies and transitive dependencies. This allows you to easily see all the dependencies that are (indirectly) used by your system, accompanied by their versions [(CISA, nd.)](https://www.cisa.gov/sbom), [(NCSC, nd.)](https://english.ncsc.nl/research/research-results/using-the-software-bill-of-materials-for-enhancing-cybersecurity). This last part is important to easily scan if you're, for example, using a vulnerable version of _Log4J_.
+In order to know what your dependency tree looks like, you can generate a SBOM for your system. A SBOM, of software bill-of-materials, is a file that describes all your dependencies and transitive dependencies. This allows you to easily see all the dependencies that are (indirectly) used by your system, accompanied by their versions [(CISA, n.d.)](https://www.cisa.gov/sbom), [(NCSC, n.d.)](https://english.ncsc.nl/research/research-results/using-the-software-bill-of-materials-for-enhancing-cybersecurity). This last part is important to easily scan if you're, for example, using a vulnerable version of _Log4J_.
 
 ## CycloneDX
 
 Now that we know how we can extract all our dependencies from our system, we need to get a specification so multiple tools can work together for either the generating of the SBOM or the reading of the SBOM.
 
-Luckily, the Open World Wide Application Security Project or OWASP [(OWASP, nd.)](https://owasp.org/about/) has us covered. They've created a standard called CycloneDX which is a specification used to describe the structure of the SBOM file [(OWASP, nd.)](https://cyclonedx.org/capabilities/sbom/).
+Luckily, the Open World Wide Application Security Project or OWASP [(OWASP, n.d.)](https://owasp.org/about/) has us covered. They've created a standard called CycloneDX which is a specification used to describe the structure of the SBOM file [(OWASP, n.d.)](https://cyclonedx.org/capabilities/sbom/).
 
 ## Getting insights
 
