@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm build *)",
+      "Bash(node -e \"import\\('@astrojs/markdown-remark'\\).then\\(m => console.log\\(Object.keys\\(m\\)\\)\\)\")",
+      "Bash(node --input-type=module -e \"import\\('@astrojs/markdown-remark'\\).then\\(m => console.log\\(Object.keys\\(m\\)\\)\\).catch\\(e => console.log\\(e.message\\)\\)\")",
+      "Bash(pnpm add *)",
+      "Bash(pnpm exec *)",
+      "Bash(sudo pnpm exec playwright install-deps chromium)"
+    ]
+  }
+}

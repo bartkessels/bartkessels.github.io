@@ -2,7 +2,7 @@ import { expect, type Page, test } from "@playwright/test";
 
 test.describe("Gardening journal entry page", () => {
     test.beforeEach(async ({ page }: { page: Page }) => {
-        await page.goto("/gardening/journal/2025/planting-indoors");
+        await page.goto("/gardening/journal/2026/planting-indoors");
     });
 
     test("has the correct page title", async ({ page }: { page: Page }) => {
