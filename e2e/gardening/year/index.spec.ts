@@ -2,12 +2,12 @@ import { expect, type Page, test } from "@playwright/test";
 
 test.describe("Gardening year overview page", () => {
     test.beforeEach(async ({ page }: { page: Page }) => {
-        await page.goto("/gardening/2025");
+        await page.goto("/gardening/2026");
     });
 
     test("has the correct page title", async ({ page }: { page: Page }) => {
         // Arrange
-        const expectedTitle = "2025 — Gardening | Bart Kessels";
+        const expectedTitle = "2026 — Gardening | Bart Kessels";
 
         // Act & Assert
         await expect(page).toHaveTitle(expectedTitle);
@@ -18,7 +18,7 @@ test.describe("Gardening year overview page", () => {
         const heading = page.getByRole("heading", { level: 1 });
 
         // Act & Assert
-        await expect(heading).toContainText("2025");
+        await expect(heading).toContainText("2026");
     });
 
     test("displays the Journal section heading", async ({ page }: { page: Page }) => {

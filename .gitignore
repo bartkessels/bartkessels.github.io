@@ -8,3 +8,5 @@ node_modules/
 .astro/
 dist/
 test-results/
+.pnpm-store/
+.claude
