@@ -1,0 +1,48 @@
+---
+slug: running-playwright-in-dev-container
+title: Running Playwright in a devcontainer
+description: I've been trying to get Playwright to work in my devcontainer running on a Macbook M4 pro
+date: 2026-06-17
+author: Bart Kessels
+subject: miscellaneous
+image: /images/blog/miscellaneous/running-playwright-in-dev-container.jpeg
+caption: Image generated using Apple Image Playground
+tags: [Playwright, Angular, Typescript, VS Code, Dev Container]
+---
+
+import CodeBlock from '@/components/CodeBlock.astro';
+import Callout from '@/components/Callout.astro';
+
+<Callout>
+    Playwright wasn't working on my Macbook M4 pro inside a dev container. The solution was to migrate from `npm` to `pnpm` as the package manager and use `pnpm exec playwright install chromium --with-deps` instead of `npx playwright install chromium --with-deps`.
+</Callout>
+
+The last couple of weeks I've been developing a Wordpress plugin using Angular and PHP. Because I don't want to install all the required dependencies on my machine, I set up a dev container. (shameless plug, see the [previous post](./20260407-settings-up-a-dev-container-in-vs-code.mdx) on how to set up a dev container with VS Code).
+
+## The issue
+
+Well, the issue is already clear from the title. I couldn't get Playwright to work in the dev container. I Googled, I asked ChatGPT, I asked Claude to help me, but none of tools could helped me find the solution.
+
+When I was installing Playwright using the official documentation, I looked at the CI documentation. It states that you can simply run `npx playwright install chromium --with-deps` [(Microsoft, 2026)](https://playwright.dev/docs/ci-intro#setting-up-github-actions).
+
+So I started adding that to the `postCreateCommand` in the `devcontainer.json`
+
+<CodeBlock filename=".devcontainer/devcontainer.json">
+```json
+{
+    // ... redacted
+
+    "postCreateCommand": "npx playwright install chromium --with-deps"
+
+    // ... redacted
+}
+```
+</CodeBlock>
+
+And when starting up the container, it would just hang on the install step. It was downloaded at 100% but wouldn't go any further.
+
+## The solution
+
+The weird thing was, I had Playwright tests for this website as well. And I'm developing it inside a dev container with the same base image and Node feature. The only difference was the package manager I used. In the Wordpress plugin I used `npm` and in the website I used `pnpm`, and the install step for Playwright also used `pnpm exec` opposed to `npx playwright`.
+
+I've upgrade the frontend of the plugin to use `pnpm` instead of `npm` and changed the install command to `pnpm exec playwright install chromium --with-deps`. And now everything works as expected.

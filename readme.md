@@ -17,7 +17,7 @@ Each file name is created with the current date timestamp and then the slug, for
 ### Blog
 
 - `pnpm new:blog/subject <slug> <name>`: This will be stored in `content/subjects/blog`.
-- `pnpm new:blog <subject> <slug>`: This will be stored in `content/blog/<subject>`.
+- `pnpm new:blog/post <subject> <slug>`: This will be stored in `content/blog/<subject>`.
 
 ### Certificate
 
