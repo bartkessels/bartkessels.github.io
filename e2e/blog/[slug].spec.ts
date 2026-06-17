@@ -1,5 +1,6 @@
 import { expect, type Page, test } from "@playwright/test";
 
+
 test.describe("Blog post detail page", () => {
     test.beforeEach(async ({ page }: { page: Page }) => {
         await page.goto("/android/plural-string-resource");
@@ -64,5 +65,35 @@ test.describe("Blog post detail page", () => {
 
         // Act & Assert
         await expect(content).toBeVisible();
+    });
+});
+
+test.describe("Blog post with Callout component", () => {
+    test.beforeEach(async ({ page }: { page: Page }) => {
+        await page.goto("/miscellaneous/running-playwright-in-dev-container");
+    });
+
+    test("displays the Callout component", async ({ page }: { page: Page }) => {
+        // Arrange
+        const tldr = page.getByRole("note");
+
+        // Act & Assert
+        await expect(tldr).toBeVisible();
+    });
+
+    test("displays the Callout heading label", async ({ page }: { page: Page }) => {
+        // Arrange
+        const tldr = page.getByRole("note");
+
+        // Act & Assert
+        await expect(tldr).toContainText("TL;DR");
+    });
+
+    test("displays the Callout summary content", async ({ page }: { page: Page }) => {
+        // Arrange
+        const tldr = page.getByRole("note");
+
+        // Act & Assert
+        await expect(tldr).toContainText("pnpm exec playwright install chromium --with-deps");
     });
 });
