@@ -9,3 +9,5 @@ caption: <ADD CAPTION>
 subject: "{{subject}}"
 tags: [A, B, C]
 ---
+
+import Callout from '@/components/Callout.astro';
