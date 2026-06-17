@@ -12,3 +12,5 @@ featured: true
 posts:
     - <SUBJECT/SLUG>
 ---
+
+import Callout from '@/components/Callout.astro';
