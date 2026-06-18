@@ -2,6 +2,7 @@ import { dirname, resolve } from 'path';
 import { buildFileMap } from './src/plugins/remark-resolve-file-links.mjs';
 import { defineConfig } from 'astro/config';
 import { fileURLToPath } from 'url';
+import { unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeMermaid from 'rehype-mermaid';
@@ -23,8 +24,10 @@ export default defineConfig({
             type: 'shiki',
             excludeLangs: ['mermaid']
         },
-        remarkPlugins: [[remarkResolveFileLinks, contentFileMap]],
-        rehypePlugins: [rehypeMermaid, [rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }]],
+        processor: unified({
+            remarkPlugins: [[remarkResolveFileLinks, contentFileMap]],
+            rehypePlugins: [rehypeMermaid, [rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }]],
+        }),
         shikiConfig: {
             theme: 'github-light',
             wrap: false

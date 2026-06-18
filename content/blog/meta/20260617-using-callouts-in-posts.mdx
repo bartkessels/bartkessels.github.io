@@ -1,0 +1,32 @@
+---
+slug: using-callouts-in-posts
+title: Using callouts in posts
+description: In the latest posts, you'll see a change in the content to help you find the information you're looking for.
+date: 2026-06-17
+author: Bart Kessels
+subject: meta
+image: /images/blog/meta/using-callouts-in-posts.jpeg
+caption: Image generated using Apple Image Playground
+tags: [A, B, C]
+---
+
+import Callout from '@/components/Callout.astro';
+import CodeBlock from '@/components/CodeBlock.astro';
+
+<Callout>
+    This is what it's all about!
+</Callout>
+
+In the last weeks I've been reading a book by [Merel Roze](https://www.merelroze.com) on how to properly write posts on the internet called "[De regels van Roze](https://www.merelroze.com/de-regels-van-roze/)", roughly translated: The rules by Roze.
+
+One of the key takeaways I had, from the first couple of chapters to be honest, was to present the reader (you) with the information they're looking for. Thus, if the title of this post was _How to solve 1 + 1_, the solution would be first thing you read on this page. 
+
+This might seem simple and logical, but from writing more technical documentation, I've been tought to properly build up to the information so the reader has enough context to fully understand the eventual solution/architecture. And that is exactly the same way I write my blog posts, starting with the problem, writing about my journey to solve the issue and eventually the actual solution. Thus, if you're in a hurry for a solution you will be closing my site and go for the next one that actually tells you what you need without all the extra information.
+
+## My solution
+
+Because I don't want to loose you so I decided to alter this website to combat the issue of people requiring a solution quickly.
+
+I want you to get the information you need, and give some background information because I like writing about that. So, my solution for this was to create the _Callout_, it's the large square you see at the top of a post with only the relevant information of the post. I kind of view is as the abstract in a research paper, or the management summary of a large corporate letter.
+
+I'm hoping that this will be benefit the people looking for an answer, and the people who can still read the entire post to know what it took to reach an answer or solution.

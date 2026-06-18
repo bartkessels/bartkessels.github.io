@@ -8,3 +8,5 @@ image: /images/backpacking/{{slug}}.png
 caption: <ADD CAPTION>
 tags: [A, B, C]
 ---
+
+import Callout from '@/components/Callout.astro';
