@@ -21,15 +21,14 @@ test.describe("Backpacking trail section page", () => {
         await expect(heading).toContainText("Sittard to Roermond");
     });
 
-    test("displays the hero image with a caption", async ({ page }: { page: Page }) => {
+    test("displays the map with the trail", async ({ page }: { page: Page }) => {
         // Arrange
-        const figure = page.locator("figure");
-        const heroImage = figure.locator("img");
-        const caption = figure.locator("figcaption");
+        const trailMap = page.locator("[data-trail-map]");
 
         // Act & Assert
-        await expect(heroImage).toBeVisible();
-        await expect(caption).toBeVisible();
+        await expect(trailMap).toBeVisible();
+        await expect(trailMap).toHaveAttribute("role", "img");
+        await expect(trailMap).toHaveAttribute("data-geojson", /.+/);
     });
 
     test("displays a link back to the parent trail", async ({ page }: { page: Page }) => {

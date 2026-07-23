@@ -1,0 +1,90 @@
+---
+import { buildElevationPath, buildGridLines, toYFraction } from '@/utils/gpx';
+import { getGpxManager } from '@/factories/manager-factory';
+
+interface Props {
+    gpxUrl: string;
+    width?: number;
+    height?: number;
+    padding?: number;
+}
+
+const { gpxUrl, width = 800, height = 160, padding = 0.1 } = Astro.props;
+
+const gpxManager = getGpxManager();
+const statistics = await gpxManager.getStatistics(gpxUrl);
+const distance = await gpxManager.getTotalDistance(gpxUrl);
+
+if (statistics === null) {
+    throw new Error('Failed to load elevation statistics from GPX file.');
+} else if (distance === null) {
+    throw new Error('Failed to load distance from GPX file.');
+}
+
+const elevationPath = buildElevationPath(statistics.rawElevations, width, height, padding);
+const gridLines = buildGridLines(statistics.lowestRecordedElevation, statistics.highestRecordedElevation, padding);
+---
+
+<div class="block w-full bg-card">
+  <p class="text-sm font-semibold uppercase tracking-widest text-muted px-4 pt-4 pb-0">
+    Elevation
+  </p>
+
+    <div class="elevation-profile">
+        <div class="elevation-profile__chart-wrapper">
+            <svg
+                viewBox={`0 0 ${width} ${height}`}
+                preserveAspectRatio="none"
+                aria-hidden="true"
+                class="elevation-profile__chart"
+            >
+                <defs>
+                    <linearGradient id="elevation-fill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="var(--elevation-accent, #D97706)" stop-opacity="0.5" />
+                        <stop offset="100%" stop-color="var(--elevation-accent, #D97706)" stop-opacity="0.05" />
+                    </linearGradient>
+                </defs>
+                <Fragment set:html={gridLines.map(v => {
+                    const y = toYFraction(v, statistics.lowestRecordedElevation, statistics.highestRecordedElevation, padding) * height;
+                    return `<line x1="0" y1="${y.toFixed(2)}" x2="${width}" y2="${y.toFixed(2)}" stroke="currentColor" stroke-opacity="0.15" stroke-width="1" vector-effect="non-scaling-stroke" stroke-dasharray="4 4" />`;
+                }).join('\n')} />
+                <path d={elevationPath} fill="url(#elevation-fill)" />
+                <path d={elevationPath} fill="none" stroke="var(--elevation-accent, #D97706)" stroke-width="2.5" vector-effect="non-scaling-stroke" />
+            </svg>
+            <div class="elevation-profile__grid-labels" aria-hidden="true">
+                <Fragment set:html={gridLines.map(v => {
+                    const pct = (toYFraction(v, statistics.lowestRecordedElevation, statistics.highestRecordedElevation, padding) * 100).toFixed(2);
+                    return `<span class="elevation-profile__grid-label" style="top:${pct}%">${v} m</span>`;
+                }).join('\n')} />
+            </div>
+        </div>
+
+        <dl class="elevation-profile__stats">
+            <div class="elevation-profile__stat">
+                <dt class="elevation-profile__stat-label">
+                    <span aria-hidden="true">▲</span> Max
+                </dt>
+                <dd class="elevation-profile__stat-value">{statistics.highestRecordedElevation} m</dd>
+            </div>
+            <div class="elevation-profile__stat">
+                <dt class="elevation-profile__stat-label">
+                    <span aria-hidden="true">▼</span> Min
+                </dt>
+                <dd class="elevation-profile__stat-value">{statistics.lowestRecordedElevation} m</dd>
+            </div>
+            <div class="elevation-profile__stat">
+                <dt class="elevation-profile__stat-label">
+                    <span aria-hidden="true">↑</span> Ascent
+                </dt>
+                <dd class="elevation-profile__stat-value">+{statistics.totalAscent} m</dd>
+            </div>
+            <div class="elevation-profile__stat">
+                <dt class="elevation-profile__stat-label">
+                    <span aria-hidden="true">↓</span> Descent
+                </dt>
+                <dd class="elevation-profile__stat-value">−{statistics.totalDescent} m</dd>
+            </div>
+        </dl>
+    </div>
+  
+</div>

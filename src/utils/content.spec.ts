@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatDate, formatShortDate, getReadingTime, getSectionLabel, getSectionOrderLabel, kmToMiles, notUnderscored } from './content';
+import { formatDate, formatShortDate, getReadingTime, getSectionLabel, getSectionOrderLabel, notUnderscored } from './content';
 
 describe('content utils', (): void => {
     describe('getReadingTime', (): void => {
@@ -87,32 +87,6 @@ describe('content utils', (): void => {
             const result = formatShortDate(date);
 
             expect(result).toBe('Jan 15, 2025');
-        });
-    });
-
-    describe('kmToMiles', (): void => {
-        it('should convert kilometers to miles rounded to one decimal', (): void => {
-            const result = kmToMiles(10);
-
-            expect(result).toBe(6.2);
-        });
-
-        it('should handle zero kilometers', (): void => {
-            const result = kmToMiles(0);
-
-            expect(result).toBe(0);
-        });
-
-        it('should round properly', (): void => {
-            const result = kmToMiles(5);
-
-            expect(result).toBe(3.1);
-        });
-
-        it('should handle fractional kilometers', (): void => {
-            const result = kmToMiles(2.5);
-
-            expect(result).toBe(1.6);
         });
     });
 

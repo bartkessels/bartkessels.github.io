@@ -69,7 +69,7 @@ jobs:
         run: pnpm playwright install --with-deps chromium
 
       - name: Run unit tests
-        run: pnpm test --run
+        run: pnpm test
 
   build:
     name: Build
@@ -132,7 +132,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: pnpm playwright install --with-deps chromium
+        run: pnpm playwright install chromium firefox webkit --with-deps
 
       - name: Run e2e tests
         run: pnpm test:e2e

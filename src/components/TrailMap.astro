@@ -1,33 +1,114 @@
 ---
-/**
- * Thin Astro wrapper around the <trail-map> Web Component.
- * Zero Leaflet knowledge lives here — all map logic is in TrailMapElement.ts.
- * To swap the underlying map library, only TrailMapElement.ts needs to change.
- */
+import { getGpxManager } from '@/factories/manager-factory';
+import 'maplibre-gl/dist/maplibre-gl.css';
+import { gpx } from '@tmcw/togeojson';
+import { DOMParser } from '@xmldom/xmldom';
+
 interface Props {
   gpxUrl: string;
-  /** Height of the map container (any valid CSS value). Default: 420px */
   height?: string;
-  /** Accessible label for the map. Defaults to "Interactive trail map". */
   label?: string;
 }
 
+const gpxManager = getGpxManager();
 const { gpxUrl, height = '420px', label = 'Interactive trail map' } = Astro.props;
+
+const rawGpx = await gpxManager.getRawGpx(gpxUrl);
+const gpxDoc = new DOMParser().parseFromString(rawGpx, 'text/xml');
+const geojson = gpx(gpxDoc);
+
+const coords = (geojson.features as GeoJSON.Feature[]).flatMap((f) => {
+  if (f.geometry.type === 'LineString') return f.geometry.coordinates;
+  if (f.geometry.type === 'MultiLineString') return f.geometry.coordinates.flat();
+  return [];
+}) as [number, number][];
+
+const startCoord: [number, number] | null = coords.length > 0 ? coords[0] : null;
+const endCoord: [number, number] | null = coords.length > 0 ? coords[coords.length - 1] : null;
+
+const bounds: [[number, number], [number, number]] | null = coords.length > 0
+  ? coords.reduce(
+      (b, c) => [[Math.min(b[0][0], c[0]), Math.min(b[0][1], c[1])], [Math.max(b[1][0], c[0]), Math.max(b[1][1], c[1])]],
+      [[coords[0][0], coords[0][1]], [coords[0][0], coords[0][1]]] as [[number, number], [number, number]]
+    )
+  : null;
 ---
 
-<trail-map
-  gpx={gpxUrl}
+<div
+  data-trail-map
+  data-geojson={JSON.stringify(geojson)}
+  data-bounds={JSON.stringify(bounds)}
+  data-start={JSON.stringify(startCoord)}
+  data-end={JSON.stringify(endCoord)}
   role="img"
   aria-label={label}
-  class="block w-full rounded-xl border border-border overflow-hidden my-8"
+  class="block w-full overflow-hidden"
   style={`height: ${height};`}
 >
   <p class="sr-only">
     Interactive map showing the trail route. Enable JavaScript and a modern browser to view.
   </p>
-</trail-map>
+</div>
 
 <script>
-  import '@/components/TrailMapElement';
+  import maplibregl from 'maplibre-gl';
+
+  // Astro deduplicates this script, so one execution initialises all trail maps.
+  document.querySelectorAll<HTMLElement>('[data-trail-map]').forEach((el) => {
+    const geojson = JSON.parse(el.dataset.geojson!) as GeoJSON.FeatureCollection;
+    const bounds = el.dataset.bounds ? JSON.parse(el.dataset.bounds) as [[number, number], [number, number]] | null : null;
+    const startCoord = el.dataset.start ? JSON.parse(el.dataset.start) as [number, number] | null : null;
+    const endCoord = el.dataset.end ? JSON.parse(el.dataset.end) as [number, number] | null : null;
+
+    const map = new maplibregl.Map({
+      container: el,
+      // OpenFreeMap "liberty" style — vector tiles, no API key, no tracking.
+      style: '/openfreemap/tiles/liberty.json',
+      scrollZoom: true,
+      attributionControl: { compact: true },
+    });
+
+    map.once('load', () => {
+      map.addSource('trail', { type: 'geojson', data: geojson });
+
+      map.addLayer({
+        id: 'trail-casing',
+        type: 'line',
+        source: 'trail',
+        layout: { 'line-join': 'round', 'line-cap': 'round' },
+        paint: { 'line-color': '#fff', 'line-width': 7, 'line-opacity': 0.6 },
+      });
+
+      map.addLayer({
+        id: 'trail-line',
+        type: 'line',
+        source: 'trail',
+        layout: { 'line-join': 'round', 'line-cap': 'round' },
+        paint: { 'line-color': '#e05d12', 'line-width': 4, 'line-opacity': 0.95 },
+      });
+
+      if (bounds) {
+        map.fitBounds(bounds, { padding: 40, animate: false });
+      }
+
+      if (startCoord) {
+        const startEl = document.createElement('div');
+        startEl.style.cssText = 'width:14px;height:14px;border-radius:50%;background:#22c55e;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);';
+        new maplibregl.Marker({ element: startEl })
+          .setLngLat(startCoord)
+          .setPopup(new maplibregl.Popup({ offset: 12 }).setText('Start'))
+          .addTo(map);
+      }
+
+      if (endCoord) {
+        const endEl = document.createElement('div');
+        endEl.style.cssText = 'width:14px;height:14px;border-radius:50%;background:#ef4444;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);';
+        new maplibregl.Marker({ element: endEl })
+          .setLngLat(endCoord)
+          .setPopup(new maplibregl.Popup({ offset: 12 }).setText('End'))
+          .addTo(map);
+      }
+    });
+  });
 </script>
 
