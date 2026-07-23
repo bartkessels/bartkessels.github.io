@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
 import { celsiusToFahrenheit, kmToMiles } from './conversions';
+import { describe, expect, it } from 'vitest';
 
 describe('conversions utils', (): void => {
     describe('kmToMiles', (): void => {

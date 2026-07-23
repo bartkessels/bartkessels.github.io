@@ -1,9 +1,9 @@
 import type { Distance } from "@/models/distance.model";
 import type { ElevationStats } from "@/models/elevation-stats.model";
-import type { TrackPoint } from "@/models/track-point.model";
 import type { FileService } from "@/services/file.service";
 import { kmToMiles } from "@/utils/conversions";
 import { roundToDecimalPlaces } from "@/utils/math";
+import type { TrackPoint } from "@/models/track-point.model";
 
 export class GpxManager {
     private static readonly EARTH_RADIUS_KM = 6371;
@@ -64,13 +64,13 @@ export class GpxManager {
 
     private extractElevations(gpxText: string): number[] {
         const matches = [...gpxText.matchAll(/<ele>\s*([\d.]+)\s*<\/ele>/g)];
-        return matches.map(m => parseFloat(m[1]));
+        return matches.map((m: RegExpMatchArray) => parseFloat(m[1]));
     }
 
     private extractTrackPoints(gpxText: string): TrackPoint[] {
         const trackPointPattern = /<trkpt\s+lat="([\d.+-]+)"\s+lon="([\d.+-]+)"/g;
         const matches = [...gpxText.matchAll(trackPointPattern)];
-        return matches.map(m => ({ lat: parseFloat(m[1]), lon: parseFloat(m[2]) }));
+        return matches.map((m: RegExpMatchArray) => ({ lat: parseFloat(m[1]), lon: parseFloat(m[2]) }));
     }
 
     private haversineDistanceKm(prev: TrackPoint, curr: TrackPoint): number {

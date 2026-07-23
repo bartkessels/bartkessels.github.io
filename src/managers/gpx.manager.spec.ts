@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { GpxManager } from '@/managers/gpx.manager';
 import type { FileService } from '@/services/file.service';
+import { GpxManager } from '@/managers/gpx.manager';
 
 // ---------------------------------------------------------------------------
 // Fixtures

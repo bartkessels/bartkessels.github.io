@@ -15,7 +15,7 @@ export function buildElevationPath(
     const toY = (e: number): number => top + drawHeight - ((e - min) / range) * drawHeight;
     const toX = (i: number): number => (i / (elevations.length - 1)) * width;
 
-    const lineParts = elevations.map((e, i) => `${toX(i).toFixed(2)},${toY(e).toFixed(2)}`);
+    const lineParts = elevations.map((e: number, i: number) => `${toX(i).toFixed(2)},${toY(e).toFixed(2)}`);
     return [
         `M 0,${height}`,
         `L ${lineParts.join(' L ')}`,
@@ -24,15 +24,15 @@ export function buildElevationPath(
     ].join(' ');
 }
 
-export function buildGridLines(min: number, max: number, targetCount = 4): number[] {
+export function buildGridLines(min: number, max: number, targetCount: number = 4): number[] {
     const range = max - min;
 
     if (range === 0) return [];
 
     const rawStep = range / targetCount;
     const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
-    const candidates = [1, 2, 5, 10].map(n => n * magnitude);
-    const step = candidates.find(s => range / s <= targetCount + 1) ?? candidates[candidates.length - 1];
+    const candidates = [1, 2, 5, 10].map((n: number) => n * magnitude);
+    const step = candidates.find((s: number) => range / s <= targetCount + 1) ?? candidates[candidates.length - 1];
 
     const first = Math.ceil(min / step) * step;
     const lines: number[] = [];
@@ -44,15 +44,15 @@ export function buildGridLines(min: number, max: number, targetCount = 4): numbe
     return lines;
 }
 
-export function buildSvgMetadata(min: number, max: number, padding: number, width: number, height: number, targetCount = 4): { lines: string, labels: string} {
+export function buildSvgMetadata(min: number, max: number, padding: number, width: number, height: number, targetCount: number = 4): { lines: string, labels: string} {
     const range = max - min;
 
     if (range === 0) return { lines: '', labels: '' };
 
     const rawStep = range / targetCount;
     const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
-    const candidates = [1, 2, 5, 10].map(n => n * magnitude);
-    const step = candidates.find(s => range / s <= targetCount + 1) ?? candidates[candidates.length - 1];
+    const candidates = [1, 2, 5, 10].map((n: number) => n * magnitude);
+    const step = candidates.find((s: number) => range / s <= targetCount + 1) ?? candidates[candidates.length - 1];
 
     const first = Math.ceil(min / step) * step;
     const lines: number[] = [];
@@ -61,12 +61,12 @@ export function buildSvgMetadata(min: number, max: number, padding: number, widt
         lines.push(Math.round(v));
     }
 
-    const gridLines = lines.map(v => {
+    const gridLines = lines.map((v: number) => {
         const y = toYFraction(v, min, max, padding) * height;
         return `<line x1="0" y1="${y.toFixed(2)}" x2="${width}" y2="${y.toFixed(2)}" stroke="currentColor" stroke-opacity="0.15" stroke-width="1" vector-effect="non-scaling-stroke" stroke-dasharray="4 4" />`;
     }).join(`\n${' '.repeat(20)}`);
 
-    const labels = lines.map(v => {
+    const labels = lines.map((v: number) => {
         const pct = (toYFraction(v, min, max, padding) * 100).toFixed(2);
         return `<span class="elevation-profile__grid-label" style="top:${pct}%">${v} m</span>`;
     }).join(`\n${' '.repeat(20)}`);

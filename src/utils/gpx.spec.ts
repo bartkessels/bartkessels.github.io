@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
 import { buildElevationPath, buildGridLines, buildSvgMetadata, toYFraction } from '@/utils/gpx';
+import { describe, expect, it } from 'vitest';
 
 describe('gpx utils', (): void => {
     describe('buildElevationPath', (): void => {
@@ -43,7 +43,7 @@ describe('gpx utils', (): void => {
             const result = buildGridLines(0, 100, 0.1);
 
             expect(result.length).toBeGreaterThan(0);
-            result.forEach(v => {
+            result.forEach((v: number): void => {
                 expect(v).toBeGreaterThanOrEqual(0);
                 expect(v).toBeLessThan(100);
             });
