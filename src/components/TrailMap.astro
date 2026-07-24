@@ -52,11 +52,10 @@ const bounds: [[number, number], [number, number]] | null = coords.length > 0
 
 <script>
   import * as maplibregl from 'maplibre-gl';
-  import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
+  // maplibre-gl's documented Vite setup: `?worker&url` bundles the worker's
+  // own `maplibre-gl-shared.mjs` import into it and gives us the built URL.
+  import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 
-  // maplibre-gl v6 resolves its worker relative to import.meta.url of the chunk
-  // it ends up bundled into, which isn't where the worker file is emitted.
-  // Point it at the URL Vite actually gives the worker asset.
   maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
   // Astro deduplicates this script, so one execution initialises all trail maps.
