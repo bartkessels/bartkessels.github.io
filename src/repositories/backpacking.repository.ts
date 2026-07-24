@@ -16,6 +16,6 @@ export class BackpackingRepository {
 
         return ids
             .map((id: string) => sectionsById.get(id))
-            .filter((s: CollectionEntry<'backpacking/sections'> | undefined): s is CollectionEntry<'backpacking/sections'> => s !== undefined);
+            .filter((s: CollectionEntry<'backpacking/sections'> | undefined) => s !== undefined);
     }
 }
