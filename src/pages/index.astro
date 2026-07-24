@@ -154,7 +154,7 @@ const { Content } = await render(overviewPage.page);
           All trails <ArrowRight class="h-4 w-4" />
         </a>
       </div>
-      <div class="max-w-sm">
+      <div class="grid gap-6 md:grid-cols-3 lg:grid-cols-3">
         {overviewPage.latestTrails.map(trail => {
           const sectionLabel = getSectionLabel(trail.data.sections.length, trail.data.totalSections) ?? undefined;
           return (

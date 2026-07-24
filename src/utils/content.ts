@@ -22,11 +22,6 @@ export function formatShortDate(date: Date): string {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
-/** Converts kilometers to miles, rounded to one decimal place. */
-export function kmToMiles(km: number): number {
-    return Math.round(km * 0.621371 * 10) / 10;
-}
-
 /**
  * Returns a human-readable section count label for a trail.
  * Returns null when there are no published sections and no total is known.

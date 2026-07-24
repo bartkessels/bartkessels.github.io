@@ -1,13 +1,14 @@
-import { defineConfig } from 'vitest/config';
 import { fileURLToPath } from 'url';
+import { getViteConfig } from 'astro/config';
 import { resolve } from 'path';
+import 'vitest/config';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
-export default defineConfig({
+export default getViteConfig({
     test: {
         environment: 'node',
-        include: ['src/**/*.spec.ts'],
+        include: ['src/**/*.spec.ts', 'tests/unit/**/*.spec.ts'],
     },
     resolve: {
         alias: {

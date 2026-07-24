@@ -13,3 +13,5 @@ tags: [A, B, C]
 sections:
   - section-without-trail-id
 ---
+
+import ImageFloat from '@/components/ImageFloat.astro';

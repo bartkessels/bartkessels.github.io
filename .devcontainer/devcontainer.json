@@ -26,7 +26,11 @@
 			}
 		},
 		"vscode": {
-			"extensions": [ "unifiedjs.vscode-mdx" ]
+			"extensions": [
+				"unifiedjs.vscode-mdx",
+				"astro-build.astro-vscode",
+				"MermaidChart.vscode-mermaid-chart"
+			]
 		}
 	}
 }

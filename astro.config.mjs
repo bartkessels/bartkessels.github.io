@@ -36,10 +36,12 @@ export default defineConfig({
     vite: {
         plugins: [tailwindcss()],
         optimizeDeps: {
-            // Covers the dev server: prevents esbuild from lowering native class
-            // fields to __publicField() calls which then have no runtime definition.
-            esbuildOptions: {
-                target: 'es2022',
+            // Covers the dev server: prevents the dep optimizer from lowering native
+            // class fields to __publicField() calls which then have no runtime definition.
+            rolldownOptions: {
+                transform: {
+                    target: 'es2022',
+                },
             },
         },
         build: {
