@@ -1,6 +1,7 @@
 import { fileURLToPath } from 'url';
 import { getViteConfig } from 'astro/config';
 import { resolve } from 'path';
+import 'vitest/config';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
