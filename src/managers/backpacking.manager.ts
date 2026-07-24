@@ -24,12 +24,9 @@ export class BackpackingManager {
     }
 
     public async getSections(trail: CollectionEntry<'backpacking/trails'>): Promise<CollectionEntry<'backpacking/sections'>[]> {
-        const sections = await this.backpackingRepository.getSections();
+        const sections = await this.backpackingRepository.getSections(trail.data.sections);
 
-        return sections
-            .filter((s: CollectionEntry<'backpacking/sections'>) => !s.data.draft)
-            .filter((s: CollectionEntry<'backpacking/sections'>) => trail.data.sections.includes(s.id))
-            .sort((a: CollectionEntry<'backpacking/sections'>, b: CollectionEntry<'backpacking/sections'>) => a.data.date.valueOf() - b.data.date.valueOf());
+        return sections.filter((s: CollectionEntry<'backpacking/sections'>) => !s.data.draft);
     }
 
     public getPreviousSection(sections: CollectionEntry<'backpacking/sections'>[], section: CollectionEntry<'backpacking/sections'>): CollectionEntry<'backpacking/sections'> | null {

@@ -114,34 +114,32 @@ describe('BackpackingManager', (): void => {
             expect(result).toEqual([publishedSection]);
         });
 
-        it('should only include sections referenced by the trail', async (): Promise<void> => {
-            // Arrange
-            const trail = makeTrail('trail', new Date(), ['included-section']);
-            const includedSection = makeSection('included-section', new Date());
-            const unrelatedSection = makeSection('unrelated-section', new Date());
-            
-            mockGetSections.mockResolvedValue([includedSection, unrelatedSection]);
-
-            // Act
-            const result = await manager.getSections(trail);
-
-            // Assert
-            expect(result).toEqual([includedSection]);
-        });
-
-        it('should sort sections by date ascending', async (): Promise<void> => {
+        it('should request sections from the repository using the ids from the trail', async (): Promise<void> => {
             // Arrange
             const trail = makeTrail('trail', new Date(), ['section-a', 'section-b']);
-            const older = makeSection('section-a', new Date('2024-01-01'));
-            const newer = makeSection('section-b', new Date('2024-06-01'));
-            
-            mockGetSections.mockResolvedValue([newer, older]);
+
+            mockGetSections.mockResolvedValue([]);
+
+            // Act
+            await manager.getSections(trail);
+
+            // Assert
+            expect(mockGetSections).toHaveBeenCalledWith(['section-a', 'section-b']);
+        });
+
+        it('should preserve the order returned by the repository', async (): Promise<void> => {
+            // Arrange
+            const trail = makeTrail('trail', new Date(), ['section-b', 'section-a']);
+            const sectionA = makeSection('section-a', new Date('2024-01-01'));
+            const sectionB = makeSection('section-b', new Date('2024-06-01'));
+
+            mockGetSections.mockResolvedValue([sectionB, sectionA]);
 
             // Act
             const result = await manager.getSections(trail);
 
             // Assert
-            expect(result).toEqual([older, newer]);
+            expect(result).toEqual([sectionB, sectionA]);
         });
     });
 

@@ -57,5 +57,26 @@ test.describe("Backpacking trail detail page", () => {
             // Act & Assert
             await expect(firstSectionLink).toHaveAttribute("href", /^\/backpacking\/pieterpad\/.+/);
         });
+
+        test("lists sections in the order they appear in the trail frontmatter", async ({ page }: { page: Page }) => {
+            // Arrange
+            const expectedOrder = [
+                "sittard-to-roermond",
+                "swalmen-to-venlo",
+                "venlo-to-swolgen",
+                "swolgen-to-vierlingsbeek",
+                "vierlingsbeek-to-gennep",
+                "gennep-to-groesbeek",
+            ];
+            const sectionsSection = page.locator("section").filter({ has: page.getByRole("heading", { name: "Sections" }) });
+
+            // Act
+            const hrefs = await sectionsSection.getByRole("link").evaluateAll(
+                (links: Element[]) => links.map((link: Element) => link.getAttribute("href"))
+            );
+
+            // Assert
+            expect(hrefs).toEqual(expectedOrder.map((id: string) => `/backpacking/pieterpad/${id}`));
+        });
     });
 });
