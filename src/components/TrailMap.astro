@@ -51,7 +51,13 @@ const bounds: [[number, number], [number, number]] | null = coords.length > 0
 </div>
 
 <script>
-  import maplibregl from 'maplibre-gl';
+  import * as maplibregl from 'maplibre-gl';
+  import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
+
+  // maplibre-gl v6 resolves its worker relative to import.meta.url of the chunk
+  // it ends up bundled into, which isn't where the worker file is emitted.
+  // Point it at the URL Vite actually gives the worker asset.
+  maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
   // Astro deduplicates this script, so one execution initialises all trail maps.
   document.querySelectorAll<HTMLElement>('[data-trail-map]').forEach((el) => {
