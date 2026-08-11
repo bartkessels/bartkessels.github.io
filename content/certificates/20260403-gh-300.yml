@@ -2,4 +2,5 @@ name: GH-300 - GitHub Copilot
 issuer: GitHub
 issuerLogo: /images/certificates/github.svg
 issueDate: 2026-04-03
+expiryDate: 2028-04-04
 credentialId: DE243F-L5B7AD
