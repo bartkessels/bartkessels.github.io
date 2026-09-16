@@ -10,10 +10,12 @@ subject: google-home
 ---
 
 import CodeBlock from '@/components/CodeBlock.astro';
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
 
-## Introduction
-
-In the [previous post](./20230920-and-condition.mdx) we've seen that we can use `and` conditions in automations. We also saw that there is an `or` condition operator. We'll in this post we're going to update our previous example and add an `or` condition.
+<Intro>
+    <Char>I</Char>n the [previous post](./20230920-and-condition.mdx) we've seen that we can use `and` conditions in automations. We also saw that there is an `or` condition operator. We'll in this post we're going to update our previous example and add an `or` condition.
+</Intro>
 
 If you remember the first case, we wanted to turn on the hallway lights when motion is detected using a motion sensor. However, the lights should only turn on when it's dark outside and when I'm at home. This gave us the following diagram.
 

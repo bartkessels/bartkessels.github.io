@@ -11,12 +11,17 @@ tags: [.NET, Microsoft, C#, C# 12]
 ---
 
 import CodeBlock from '@/components/CodeBlock.astro';
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
+
+<Intro>
+    <Char>M</Char>y expectations for this is, that when combined with the [primary constructor](./20231227-primary-constructor.mdx) it can be used to declare readonly fields in a class that are injected through the constructor. But let's find out if that's the case.
+</Intro>
 
 If we take a look at the release notes, Microsoft states that the `ref readonly` modifier more clarity allows where the `ref` or `in` modifiers where used before [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-12#ref-readonly-parameters).
 
 When taking a look at the documentation for the `ref readonly` modifier, it states that the modifier can be used to force the call site to pass in a reference and the callee cannot change the reference [(Microsoft, 2023)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters#ref-readonly-modifier).
 
-My expectations for this is, that when combined with the [primary constructor](./20231227-primary-constructor.mdx) it can be used to declare readonly fields in a class that are injected through the constructor. But let's find out if that's the case.
 
 ## Implementation
 

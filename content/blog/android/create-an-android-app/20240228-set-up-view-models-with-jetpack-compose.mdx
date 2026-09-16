@@ -11,8 +11,12 @@ tags: [Android, Jetpack Compose, UI, App Development, View Models, Business logi
 ---
 
 import CodeBlock from '@/components/CodeBlock.astro';
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
 
-In our [previous post](./20240221-set-up-jetpack-compose.mdx) we've built a basic Android application that can display _Hello World_. In some cases this might just be the app you're looking for, but generally speaking you'd want an app that executes some kind of logic.
+<Intro>
+    <Char>I</Char>n our [previous post](./20240221-set-up-jetpack-compose.mdx) we've built a basic Android application that can display _Hello World_. In some cases this might just be the app you're looking for, but generally speaking you'd want an app that executes some kind of logic.
+</Intro>
 
 If we look at the `MainActivity.kt` file we see that we directly call UI elements, this is not the way we actually want to build our entire application. If we choose to keep the UI and the logic in the same file, we can't run a unit test to test our logic, we'd need an Android UI test for that. This is possible, but I'd strongly advise against it. To solve this problem, we can use [ViewModels](https://developer.android.com/topic/libraries/architecture/viewmodel).
 

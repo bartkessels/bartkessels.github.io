@@ -11,12 +11,14 @@ tags: [Qt, CMake, MacOS, bundle, It Depends, automated]
 ---
 
 import CodeBlock from '@/components/CodeBlock.astro';
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
 
-## Introduction
+<Intro>
+    <Char>A</Char>s with all software projects, the question arises "how to properly build and release it?". For API's and mobile applications this is easily answered because there's an API to either release to the cloud, the Apple App Store and the Google Play Store. But for generic desktop applications this is a bit harder.
+</Intro>
 
 The past couple of weeks I've been working on a new project, a Qt Widgets desktop application called It Depends.
-
-As with all software projects, the question arises "how to properly build and release it?". For API's and mobile applications this is easily answered because there's an API to either release to the cloud, the Apple App Store and the Google Play Store. But for generic desktop applications this is a bit harder.
 
 But tracing back this question, the first that needs to happen is it should be built automatically in a pipeline. After that we can start worrying about publishing it to some sort of store.
 Because the project I'm working on is built using C++ with CMake I'd like to use CMake for the entire lifecycle management of the application, from compiling to publishing.

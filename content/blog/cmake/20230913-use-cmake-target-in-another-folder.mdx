@@ -11,10 +11,12 @@ tags: [CMake, include, add_subdirectory, target, different folder, scope]
 ---
 
 import CodeBlock from '@/components/CodeBlock.astro';
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
 
-## Introduction
-
-With the release of [_It Depends_](../../software/it-depends.mdx), I've been searching for a way to execute a command after a target has been built. The reason for this is that I'd like to have a flag which will trigger the `macdeployqt` application on the generated app bundle.
+<Intro>
+    <Char>W</Char>ith the release of [_It Depends_](../../software/it-depends.mdx), I've been searching for a way to execute a command after a target has been built. The reason for this is that I'd like to have a flag which will trigger the `macdeployqt` application on the generated app bundle.
+</Intro>
 
 However, to make things more complicated, I want to do this in CMake on the default _It Depends_  target but I'd like to do this in a different `CMakeFile.txt` in a different folder from where the _It Depends_ target is created. So roughly the structure looks like this
 
