@@ -1,0 +1,66 @@
+---
+---
+
+<div class="intro-block mb-6 flex items-stretch gap-3.5" data-intro>
+  <div class="intro-marker relative mt-1.5 w-2.5 shrink-0" data-intro-marker>
+    <span class="absolute left-0 top-0 h-2 w-2 rounded-full border-[1.5px] border-accent bg-background" aria-hidden="true"></span>
+    <span class="intro-rule absolute left-[3px] top-[9px] bottom-[10px] w-[1.5px] origin-top bg-accent/30" data-intro-rule aria-hidden="true"></span>
+    <span class="intro-end absolute bottom-0 left-[2px] h-1 w-1 rounded-full bg-accent" data-intro-end aria-hidden="true"></span>
+  </div>
+  <p class="mb-0! text-base leading-relaxed text-foreground/90" data-intro-text>
+    <slot />
+  </p>
+</div>
+
+<style>
+  /*
+   * The rule and end dot default to their fully-drawn state — this is what
+   * every browser gets, reduced-motion users get, and what renders before
+   * any enhancement kicks in. Nothing here depends on JS measuring layout.
+   */
+  .intro-block {
+    view-timeline-name: --intro-progress;
+    view-timeline-axis: block;
+    /* Insetting both edges to 50% collapses the reference scrollport to a
+       single line at the viewport's vertical center, so the timeline's
+       0%-100% range maps to "this block's top edge is at that center line"
+       through "this block's bottom edge is at that center line". */
+    view-timeline-inset: 50% 50%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .intro-rule {
+        transform: scaleY(0);
+        animation: intro-rule-grow linear both;
+        animation-timeline: --intro-progress;
+        animation-range: cover;
+      }
+
+      .intro-end {
+        opacity: 0;
+        animation: intro-end-reveal linear both;
+        animation-timeline: --intro-progress;
+        animation-range: cover;
+      }
+    }
+  }
+
+  @keyframes intro-rule-grow {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes intro-end-reveal {
+    0%, 90% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+</style>

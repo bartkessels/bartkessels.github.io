@@ -6,6 +6,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import TagsList from '@/components/TagsList.astro';
 import PlantSchedule from '@/components/PlantSchedule.astro';
 import { getGardeningViewModel } from '@/factories/view-model.factory';
+import HeroImage from '@/components/HeroImage.astro';
 
 export const getStaticPaths = (async () => {
   const viewModel = getGardeningViewModel();
@@ -33,18 +34,10 @@ const hasSchedule = sowIndoors || moveOutdoors || harvest;
 >
   <article>
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <figure class="mb-8">
-        <div class="w-full aspect-[21/9] bg-muted overflow-hidden rounded-lg">
-          <img
-            src={image}
-            alt={name}
-            class="w-full h-full object-cover"
-          />
-        </div>
-        <figcaption class="text-center text-xs text-muted/70 italic py-2 px-4 border-t border-border/50">
-          {caption}
-        </figcaption>
-      </figure>
+      <HeroImage
+        imageUrl={image}
+        alternativeText={name}
+        caption={caption} />
 
       {/* Header */}
       <header class="mb-8">

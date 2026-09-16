@@ -10,6 +10,13 @@ caption: Image generated using Apple Image Playground
 tags: [GitHub Copilot, Agentic, Agents, Shared Knowledge, Copilot instructions]
 ---
 
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
+
+<Intro>
+    <Char>N</Char>ow that we have various agents, we should give them the shared knowledge that's always present within a real team. Unlike a real team, we can't rely on the unwritten rules.
+</Intro>
+
 Because we now have a team of agents that all work on the same project, we should give them some extra context about our project. Within Visual Studio Code you can use the `copilot-instructions.md` file. This file is automatically applied to chat requests within the current workspace [(Visual Studio Code, 2026)](https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_types-of-instruction-files). Visual Studio Code also supports other instruction files, such as `AGENTS.md` for agent-oriented workflows and `.instructions.md` files for more specific rules. In this post, we focus on the `copilot-instructions.md` file because it is the simplest project-wide starting point.
 
 The `copilot-instructions.md` file can be used for various project-specific standards such as coding style and naming conventions [(Visual Studio Code, 2026)](https://code.visualstudio.com/docs/copilot/customization/custom-instructions#_use-a-githubcopilotinstructionsmd-file). In our project, we want to include coding standards, UX-related standards, and a link to the Obsidian plugin documentation.

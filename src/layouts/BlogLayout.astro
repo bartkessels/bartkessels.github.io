@@ -1,10 +1,10 @@
 ---
-import { Calendar, User, Clock } from '@lucide/astro';
 import ArticleLayout from './ArticleLayout.astro';
 import SubjectBadge from '@/components/SubjectBadge.astro';
 import TagsList from '@/components/TagsList.astro';
 import RelatedPosts from '@/components/RelatedPosts.astro';
 import StoryNavigation from '@/components/StoryNavigation.astro';
+import ContentMeta from '@/components/ContentMeta.astro';
 import type { CollectionEntry } from 'astro:content';
 import type { SimplifiedSubject } from '@/models/subject.model';
 
@@ -84,26 +84,12 @@ const blogPostingSchema = {
       {post.data.title}
     </h1>
 
-    <p class="text-lg text-muted mb-6">
-      {post.data.description}
-    </p>
-
-    <div class="flex flex-wrap items-center gap-6 text-sm text-muted border-b border-border pb-6">
-      <span class="flex items-center gap-2">
-        <User class="h-4 w-4" aria-hidden="true" />
-        {post.data.author}
-      </span>
-      <time datetime={post.data.date.toISOString()} class="flex items-center gap-2">
-        <Calendar class="h-4 w-4" aria-hidden="true" />
-        {formattedDate}
-      </time>
-      {readingTime && (
-        <span class="flex items-center gap-2">
-          <Clock class="h-4 w-4" aria-hidden="true" />
-          {readingTime} min read
-        </span>
-      )}
-    </div>
+    <ContentMeta
+      author={post.data.author}
+      date={post.data.date}
+      formattedDate={formattedDate}
+      readingTime={readingTime}
+    />
 
     {/* Story link */}
     {story && (

@@ -10,7 +10,12 @@ caption: Image generated using Apple Image Playground
 tags: [Guardrails, Agents, Linter, Unit testing, Mutation testing]
 ---
 
-When agents are building most of our software, we need automated gates to validate the code they produce.
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
+
+<Intro>
+    <Char>W</Char>hen agents are building most of our software, we need to find a way to properly validate the code they write. But can we trust the validated code if agents also write the unit tests to validate the code?
+</Intro>
 
 You should always review an agent's output before publishing software. That said, automation can catch many issues before manual review. In this post, I will look at the tools I use to create those guardrails.
 

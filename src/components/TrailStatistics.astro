@@ -1,0 +1,41 @@
+---
+import { getSectionLabel } from '@/utils/content';
+import { Ruler, List } from '@lucide/astro';
+
+interface Props {
+    totalDistanceInKm: number;
+    totalDistanceInMiles: number;
+    walkedSections: number;
+    totalSections: number;
+}
+
+const {
+    totalDistanceInKm,
+    totalDistanceInMiles,
+    walkedSections,
+    totalSections
+} = Astro.props;
+
+const sectionLabel = getSectionLabel(walkedSections, totalSections);
+const hasSections = walkedSections > 0 || totalSections > 0;
+---
+
+<dl class={`grid gap-4 p-5 bg-card rounded-xl border border-border mb-6 ${hasSections ? 'grid-cols-3' : 'grid-cols-2'}`}>
+    <div class="flex flex-col items-center justify-center gap-1 py-2 border-r border-border">
+        <Ruler class="h-5 w-5 text-accent mb-1" aria-hidden="true" />
+        <dd class="text-3xl font-bold text-foreground">{totalDistanceInKm}</dd>
+        <dt class="text-sm font-medium text-accent">km</dt>
+    </div>
+    <div class={`flex flex-col items-center justify-center gap-1 py-2 ${hasSections ? 'border-r border-border' : ''}`}>
+        <Ruler class="h-5 w-5 text-muted mb-1" aria-hidden="true" />
+        <dd class="text-3xl font-bold text-foreground">{totalDistanceInMiles}</dd>
+        <dt class="text-sm font-medium text-muted">mi</dt>
+    </div>
+    {(walkedSections > 0 || totalSections > 0) && (
+        <div class="flex flex-col items-center justify-center gap-1 py-2">
+            <List class="h-5 w-5 text-accent mb-1" aria-hidden="true" />
+            <dd class="text-3xl font-bold text-foreground">{walkedSections}</dd>
+            <dt class="text-sm font-medium text-accent text-center leading-tight">{sectionLabel}</dt>
+        </div>
+    )}
+</dl>

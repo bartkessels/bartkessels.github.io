@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ContentListItem from './ContentListItem.astro';
+import { getPluralString } from '@/utils/content';
+
+interface Props {
+    trail: CollectionEntry<'backpacking/trails'>,
+    sections: CollectionEntry<'backpacking/sections'>[]
+}
+
+const { trail, sections } = Astro.props;
+const sectionLabel = getPluralString(sections.length, 'section', 'sections');
+---
+
+{sections.length > 0 && (
+    <section class="mt-12 pt-8 border-t border-border">
+        <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-semibold text-foreground">Sections</h2>
+        <span class="text-sm text-muted">{sectionLabel}</span>
+        </div>
+        <div class="space-y-3">
+        {sections.map((section, i) => (
+            <ContentListItem
+            href={`/backpacking/${trail.id}/${section.id}`}
+            index={i + 1}
+            title={section.data.title}
+            description={section.data.description}
+            />
+        ))}
+        </div>
+    </section>
+)}
