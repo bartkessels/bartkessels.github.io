@@ -10,6 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint 'src/**/*.ts' 'tests/unit/**/*.ts'",
+    "check:content": "docker exec vale vale content",
     "test": "vitest run",
     "test:e2e": "pnpm playwright test",
     "new:backpacking/post": "tsx scripts/new-item.ts backpacking-post",

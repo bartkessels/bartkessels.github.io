@@ -10,3 +10,11 @@ services:
     command: sleep infinity
     ports:
       - "4321:4321"
+
+  vale:
+    image: jdkato/vale:latest
+    container_name: vale
+    volumes:
+      - ..:/workspace
+    working_dir: /workspace
+    entrypoint: ["sleep", "infinity"]
