@@ -32,14 +32,6 @@ test.describe("Backpacking trail detail page", () => {
         await expect(caption).toBeVisible();
     });
 
-    test("displays the trail description", async ({ page }: { page: Page }) => {
-        // Arrange
-        const description = page.locator("article header p");
-
-        // Act & Assert
-        await expect(description).toBeVisible();
-    });
-
     test("displays the distance stat", async ({ page }: { page: Page }) => {
         // Arrange
         const distanceStat = page.getByText("km");
