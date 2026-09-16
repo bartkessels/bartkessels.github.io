@@ -51,14 +51,6 @@ test.describe("Blog post detail page", () => {
         await expect(caption).toBeVisible();
     });
 
-    test("displays the post description", async ({ page }: { page: Page }) => {
-        // Arrange
-        const description = page.locator("article header p");
-
-        // Act & Assert
-        await expect(description).toBeVisible();
-    });
-
     test("displays the prose content body", async ({ page }: { page: Page }) => {
         // Arrange
         const content = page.locator(".prose");

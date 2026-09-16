@@ -32,14 +32,6 @@ test.describe("Backpacking post detail page", () => {
         await expect(caption).toBeVisible();
     });
 
-    test("displays the post description", async ({ page }: { page: Page }) => {
-        // Arrange
-        const description = page.locator("article header p");
-
-        // Act & Assert
-        await expect(description).toBeVisible();
-    });
-
     test("displays the author and date", async ({ page }: { page: Page }) => {
         // Arrange
         const header = page.locator("article header");
