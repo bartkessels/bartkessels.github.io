@@ -10,9 +10,12 @@ tags: [Installation, setting up, Windows, MacOS, Linux]
 subject: miscellaneous
 ---
 
-## Introduction
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
 
-In the last couple of weeks I've had a bit of a rough patch with my work laptop. Which lead me to installing it over and over again.
+<Intro>
+    <Char>I</Char>n the last couple of weeks I've had a bit of a rough patch with my work laptop. Which lead me to installing it over and over again. As a developer I obviously had to come up with some sort of automated fix for this.
+</Intro>
 
 The last time I had to get my laptop fixed by reinstalling Windows, I had this idea of creating an application which would do all the setup for me. But since it's a Windows laptop
 that would lead to me having to write a Powershell script. Well, me being me, I didn't really like that idea and I wanted to experiment in Rust a little bit anyway. So I decided

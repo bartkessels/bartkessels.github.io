@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { renderComponent } from './support/render';
 import ContentMeta from '@/components/ContentMeta.astro';
+import { renderComponent } from './support/render';
 
 describe('ContentMeta', (): void => {
     it('renders the date in a time element with the ISO datetime attribute', async (): Promise<void> => {

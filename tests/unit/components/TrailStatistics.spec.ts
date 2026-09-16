@@ -51,7 +51,7 @@ describe('TrailStatistics', (): void => {
 
         expect(document.querySelectorAll('dl > div').length).toBe(3);
         expect(values[2]?.textContent).toBe('3');
-        expect(labels[2]?.textContent).toBe('of 5 sections');
+        expect(labels[2]?.textContent).toBe('3 of 5 sections');
     });
 
     it('renders the sections stat when there are total sections but none walked yet', async (): Promise<void> => {
@@ -79,7 +79,7 @@ describe('TrailStatistics', (): void => {
 
         const labels = document.querySelectorAll('dt');
 
-        expect(labels[2]?.textContent).toBe('of 1 section');
+        expect(labels[2]?.textContent).toBe('1 of 1 section');
     });
 
     it('uses a three column grid when sections are present', async (): Promise<void> => {

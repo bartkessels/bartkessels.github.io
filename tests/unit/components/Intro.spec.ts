@@ -41,4 +41,26 @@ describe('Intro', (): void => {
 
         expect(html).not.toContain('<script');
     });
+
+    it('wraps slot content in a container instead of a paragraph, so multiple paragraphs nest validly', async (): Promise<void> => {
+        const { document } = await renderComponent(Intro, {
+            slots: { default: '<p>First paragraph.</p><p>Second paragraph.</p>' }
+        });
+
+        const container = document.querySelector('[data-intro-text]');
+
+        expect(container?.tagName).not.toBe('P');
+        expect(container?.querySelectorAll('p').length).toBe(2);
+    });
+
+    it('gives every paragraph but the last a bottom margin, so multiple paragraphs stack with spacing', async (): Promise<void> => {
+        const { document } = await renderComponent(Intro, {
+            slots: { default: '<p>First paragraph.</p><p>Second paragraph.</p>' }
+        });
+
+        const container = document.querySelector('[data-intro-text]');
+
+        expect(container?.className).toContain('[&_p]:mb-3');
+        expect(container?.className).toContain('[&_p:last-child]:mb-0!');
+    });
 });
