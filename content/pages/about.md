@@ -3,7 +3,7 @@ title: About
 description: Everything you need to know about me.
 ---
 
-Something I think is required to be known, all posts on this website are completely written by me and checked by a LLM to make sure my sentences are correct and legible. Every task that I can't do and doesn't require any creativeness is done using Github Copilot.
+Something I think is required to be known, all posts on this website are completely written by me and checked by a LLM to make sure my sentences are correct and legible. Every task that I can't do and doesn't require any creativeness is done using GitHub Copilot.
 
 To be completely transparent, these are the tasks I delegate to various AI-tools:
 

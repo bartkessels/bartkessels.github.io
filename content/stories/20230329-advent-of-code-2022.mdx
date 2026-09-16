@@ -46,7 +46,7 @@ I'll be using Kotlin to create this year's Advent of Code because I want to lear
 ## Project structure
 
 Before we can get started with the actual Advent of Code, we need to setup our project stucture. For this I'll be using different submodules for each day, so we can truly
-seperate the different objectives.
+separate the different objectives.
 
 <CodeBlock filename="File structure">
 ```
@@ -122,13 +122,13 @@ code when switching between the sample data and the actual data.
 ### Decisions
 
 In our file structure you can see that we've already made some decisions for our implementation. One being that we create a module for each day, and another one
-being that we seperate the data sanitation and the two parts of each day.
+being that we separate the data sanitation and the two parts of each day.
 
 The reason we create a module for each day, is that experience has thought me that no day depends on the previous day. So it doesn't make sense to put all the different
 types of objectives in the same project or module.
 
 And for the seperation between the data sanitation and the parts of each day, this is done so each part can focus on it's specific logic without worrying about the data structure.
-You could say that both parts of the day can be put in one class or one file, but I think it's cleaner to completely seperate them and have duplicate code than to have very
+You could say that both parts of the day can be put in one class or one file, but I think it's cleaner to completely separate them and have duplicate code than to have very
 generic shared code.
 
 The `main.kt` file contains a Main class and a main method as the entry-point for the module. This is used to execute the code with the actual input data. In most cases
