@@ -130,6 +130,7 @@ Once all the matches have been played, and the points calculated we can add all 
 Now we know what we want our code to do, let's start implementing it in our PartOne class.
 
 <CodeBlock filename="aoc-2022/day2/src/main/kotlin/aoc/PartOne.kt">
+
 ```kotlin
 class PartOne(
     private val sanitizer: Sanitizer
@@ -166,6 +167,7 @@ class PartOne(
     }
 }
 ```
+
 </CodeBlock>
 
 What our code does, is, it turns our matches list into a list of round outcomes. At _step 1_ the strategy points are calculated based on the information we've gotten from
@@ -194,6 +196,7 @@ total score of the sample input will be __15__.
 So we can write a test case that validates our test input to the outcome of __15__. Right now we can update the `PartOneTest` class with the following contents.
 
 <CodeBlock filename="aoc-2022/day2/src/test/kotlin/aoc/PartOne.kt">
+
 ```kotlin
 class PartOneTest {
     @Test
@@ -212,4 +215,5 @@ class PartOneTest {
     }
 }
 ```
+
 </CodeBlock>

@@ -159,6 +159,7 @@ And if we sum up each priority of our item types, we get the expected output of 
 Now we know what we want our code to do, let's start implementing it in our PartOne class.
 
 <CodeBlock filename="aoc-2022/day3/src/main/kotlin/aoc/PartOne.kt">
+
 ```kotlin
 class PartOne(
     private val sanitizer: Sanitizer
@@ -208,6 +209,7 @@ class PartOne(
     }
 }
 ```
+
 </CodeBlock>
 
 In our code we use the `sumOf` method from Kotlin which allows us to return the sum of all values produced by the selector function. This is applied to each element in the collection [(Jetbrains, n.d.)](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/sum-of.html). So this means that for each element the result of our `getPriority` method is summed up.
@@ -219,6 +221,7 @@ In the `getPriority` method we get the priority based on the index plus one from
 Now that we've established that the expected test output is __157__ we can start setting up our test case.
 
 <CodeBlock filename="aoc-2022/day3/src/test/kotlin/aoc/PartOne.kt">
+
 ```kotlin
 class PartOneTest {
     @Test
@@ -237,4 +240,5 @@ class PartOneTest {
     }
 }
 ```
+
 </CodeBlock>

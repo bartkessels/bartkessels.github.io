@@ -45,10 +45,11 @@ I'll be using Kotlin to create this year's Advent of Code because I want to lear
 
 ## Project structure
 
-Before we can get started with the actual Advent of Code, we need to setup our project stucture. For this I'll be using different submodules for each day, so we can truly
+Before we can get started with the actual Advent of Code, we need to setup our project structure. For this I'll be using different submodules for each day, so we can truly
 separate the different objectives.
 
 <CodeBlock filename="File structure">
+
 ```
 - aoc-2022
   - day1
@@ -113,6 +114,7 @@ separate the different objectives.
     - build.gradle.kts
   - settings.gradle.kts
 ```
+
 </CodeBlock>
 
 The puzzle input well be stored in the `input.txt` file under the resources folder. For the tests, the `input.txt` will contain the sample input.
@@ -135,6 +137,7 @@ The `main.kt` file contains a Main class and a main method as the entry-point fo
 the main method will look something like the following code. So for this reason, this code isn't shared in the upcoming blogposts.
 
 <CodeBlock filename="main.kt">
+
 ```kotlin
 fun main() {
     val resource = {}::class.java.getResource("/input.txt")
@@ -149,4 +152,5 @@ fun main() {
     println("Part two: ${partTwo.getResult()}")
 }
 ```
+
 </CodeBlock>

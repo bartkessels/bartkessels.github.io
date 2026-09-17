@@ -22,6 +22,7 @@ When reading through the assignment we can identify in what kind of model we'd l
 So we've got the following raw input.
 
 <CodeBlock filename="Raw input">
+
 ```
 vJrwpWtwJgWrhcsFMMfFFhFp
 jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
@@ -30,6 +31,7 @@ wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
 ttgJtRGJQctTZtZT
 CrZsJsPPZsGzwwsLwLmpwMDw
 ```
+
 </CodeBlock>
 
 This input represents six rucksacks, where each rucksack consists of two compartments. The first compartment contains the
@@ -82,6 +84,7 @@ Now we now how we want our data structure to look like, we can start creating th
 Because we've laid out the way we want to functionally setup our code. We can just implement it in Kotlin using the `split` and `map` methods on our input file.
 
 <CodeBlock filename="aoc-2022/day3/src/main/kotlin/aoc/Sanitizer.kt">
+
 ```kotlin
 class Sanitizer(
     private val resource: URL?
@@ -99,6 +102,7 @@ class Sanitizer(
           }
 }
 ```
+
 </CodeBlock>
 
 
@@ -114,6 +118,7 @@ Which will finally give us the data model we designed in the previous chapter.
 To validate that our logic works as expected, we create a test case based on the sample data from the assignment. This way we can validate that our sanitizer gives us the correct data structure which we can use in the assignments.
 
 <CodeBlock filename="aoc-2022/day3/src/test/kotlin/aoc/SanitizerTest.kt">
+
 ```kotlin
 class SanitizerTest {
     @Test
@@ -138,4 +143,5 @@ class SanitizerTest {
     }
 }
 ```
+
 </CodeBlock>

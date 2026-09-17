@@ -33,12 +33,14 @@ To make this concrete, I'll use [Daily note calendar](../../../software/daily-no
 Create a new file called `devcontainer.json` inside the `.devcontainer` folder at the root of your project. In the case of Daily note calendar, I based the configuration on a Node.js image because the plugin is written in TypeScript and requires Node.js.
 
 <CodeBlock filename="/.devcontainer/devcontainer.json">
+
 ```json
 {
 	"name": "Obsidian Plugin",
 	"image": "mcr.microsoft.com/devcontainers/typescript-node:4-24-trixie"
 }
 ```
+
 </CodeBlock>
 
 After creating the `.devcontainer/devcontainer.json` file, run the `Dev Containers: Open Folder in Container...` command to open the workspace in the container you just configured.

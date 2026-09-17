@@ -30,6 +30,7 @@ Now we now that we want to get a string from the input-data, we create a `getDat
 #### getStacks method
 
 <CodeBlock filename="aoc-2022/day6/src/main/kotlin/aoc/Sanitizer.kt">
+
 ```kotlin
 class Sanitizer(
     private val resource: URL?
@@ -40,6 +41,7 @@ class Sanitizer(
             ?.trim()
 }
 ```
+
 </CodeBlock>
 
 ### Test case
@@ -47,6 +49,7 @@ class Sanitizer(
 To validate that our sanitizer works as expected, we can validate that the output is a string of the test-data we've got from the assignment.
 
 <CodeBlock filename="aoc-2022/day6/src/test/kotlin/aoc/SanitizerTest.kt">
+
 ```kotlin
 class SanitizerTest {
     @Test
@@ -64,4 +67,5 @@ class SanitizerTest {
     }
 }
 ```
+
 </CodeBlock>

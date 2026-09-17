@@ -1,7 +1,7 @@
 ---
 slug: naming-your-automations
 title: Naming your automations
-description: Keep your automations yaml clean by adding names to each automation.
+description: Keep your automations YAML clean by adding names to each automation.
 author: Bart Kessels
 date: 2023-10-25
 image: /images/blog/google-home/naming-automations.png
@@ -22,7 +22,8 @@ import Char from '@/components/Char.astro';
 If we look at a single animation, we can add the `name` attribute to the automation object like this.
 
 <CodeBlock>
-```yaml
+
+yaml
 automations:
   - name: Turn on all the lights in the morning
     starters:
@@ -31,12 +32,14 @@ automations:
     condition:
     actions:
 ```
+
 </CodeBlock>
 
 This makes it very easy to have bigger automations and being able to comprehend what's happening without having to read through the starters and conditions. If, for example, we take our automation from the [previous post](./20231018-multiple-automations.mdx) we can update it so it looks like this.
 
 <CodeBlock>
-```yaml
+
+yaml
 metadata:
   name: Motion in hallway
   description: Turn on the hallway lights when motion is detected while I'm home and it's dark outside
@@ -92,4 +95,5 @@ automations:
         on: true
         devices: Hallway light - Hallway
 ```
+
 </CodeBlock>

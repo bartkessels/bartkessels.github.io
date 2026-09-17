@@ -41,6 +41,7 @@ If we look at the difference between part one and part two, we see that the only
 So where our previous instruction would look like this
 
 <CodeBlock>
+
 ```kotlin
 private fun moveItem(noItemsToMove: Int, stackToRetrieveItem: Stack<Char>, stackToStoreItem: Stack<Char>) {
     for (i in 1..noItemsToMove) {
@@ -49,6 +50,7 @@ private fun moveItem(noItemsToMove: Int, stackToRetrieveItem: Stack<Char>, stack
     }
 }
 ```
+
 </CodeBlock>
 
 Where we take the items from the `stackToRetrieve` and put it into the `stackToStoreItem` immediatly. Now we need to use an intermediate value to store the items we take from the `stackToRetrieve`.
@@ -70,6 +72,7 @@ private fun moveItem(noItemsToMove: Int, stackToRetrieveItem: Stack<Char>, stack
 But, you might say, this will result in exactly the same behavior as before. Well that's right! So there is one crucial step we need to take before pushing the value into the `stackToStoreItem` and that is the `reversed` method on the `items`.
 
 <CodeBlock>
+
 ```kotlin
 private fun moveItem(noItemsToMove: Int, stackToRetrieveItem: Stack<Char>, stackToStoreItem: Stack<Char>) {
     var items = ""
@@ -83,6 +86,7 @@ private fun moveItem(noItemsToMove: Int, stackToRetrieveItem: Stack<Char>, stack
     }
 }
 ```
+
 </CodeBlock>
 
 ## Implementation
@@ -92,6 +96,7 @@ private fun moveItem(noItemsToMove: Int, stackToRetrieveItem: Stack<Char>, stack
 Now we know what to change as opposed to part one, we can start implementing the `getResult` in the same way as [part one](./20230614-part-one.mdx). And use the `moveItem` as we've discussed in the design above.
 
 <CodeBlock filename="aoc-2022/day5/src/main/kotlin/aoc/PartTwo.kt">
+
 ```kotlin
 class PartTwo(
     val sanitizer: Sanitizer
@@ -135,6 +140,7 @@ class PartTwo(
     }
 }
 ```
+
 </CodeBlock>
 
 ### Test case
@@ -142,6 +148,7 @@ class PartTwo(
 We have written our business logic, and for our test input we now that the expected output for the test data is `MCD`. So we can start to write our test case.
 
 <CodeBlock filename="aoc-2022/day5/src/test/kotlin/aoc/PartTwo.kt">
+
 ```kotlin
 class PartTwoTest {
     @Test
@@ -160,4 +167,5 @@ class PartTwoTest {
     }
 }
 ```
+
 </CodeBlock>

@@ -29,11 +29,11 @@ For my application I have the following folder structure
 
 ```
 - src/
-  - main.cpp
-  - CMakeLists.txt
+  | - main.cpp
+  | - CMakeLists.txt
 - packaging/
-  - Windows/
-    - CMakeLists.txt
+  | - Windows/
+  |   | - CMakeLists.txt
 - CMakeLists.txt
 ```
 
@@ -43,23 +43,28 @@ In the packaging folder I have all the logic for each platform to publish for th
 For this tutorial we're going to use the setup from the [use CMake target in other folder](./20230913-use-cmake-target-in-another-folder.mdx) post from earlier.
 
 <CodeBlock filename="CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 add_subdirectory(./src)
 ```
+
 </CodeBlock>
 
 <CodeBlock filename="src/main.cpp">
+
 ```cpp
 int main(int argc, char** args)
 {
   return 0;
 }
 ```
+
 </CodeBlock>
 
 <CodeBlock filename="src/CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
@@ -70,9 +75,11 @@ add_executable(
 
 include(../packaging/CMakeLists.txt)
 ```
+
 </CodeBlock>
 
 <CodeBlock filename="packaging/CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
@@ -82,6 +89,7 @@ if(WINDOWS)
     include(${CMAKE_SOURCE_DIR}/packaging/windows/CMakeLists.txt)
 endif()
 ```
+
 </CodeBlock>
 
 Why this works, I suggest you read the [use CMake target in another folder](./20230913-use-cmake-target-in-another-folder.mdx) post from before.
@@ -89,6 +97,7 @@ Why this works, I suggest you read the [use CMake target in another folder](./20
 Now we're going to implement the `CMakeLists.txt` file for the `packaging/windows` target with the following contents
 
 <CodeBlock filename="packaging/windows/CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
@@ -103,6 +112,7 @@ add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
         COMMAND ${WINDEPLOYQT_BIN} ${EXECUTABLE_NAME} -always-overwrite
 )
 ```
+
 </CodeBlock>
 
 What this file does, it tries to locate QMake executable using the `get_target_property(qmake_executable Qt5::qmake IMPORTED_LOCATION)` function. This still uses Qt5, so for Qt6 you might need to update it to `Qt` or `Qt6`.

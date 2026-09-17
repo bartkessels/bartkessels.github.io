@@ -33,6 +33,7 @@ When I was installing Playwright using the official documentation, I looked at t
 So I started adding that to the `postCreateCommand` in the `devcontainer.json`
 
 <CodeBlock filename=".devcontainer/devcontainer.json">
+
 ```json
 {
     // ... redacted
@@ -42,6 +43,7 @@ So I started adding that to the `postCreateCommand` in the `devcontainer.json`
     // ... redacted
 }
 ```
+
 </CodeBlock>
 
 And when starting up the container, it would just hang on the install step. It was downloaded at 100% but wouldn't go any further.

@@ -53,6 +53,7 @@ Now we have each range for each elve separated we can start to think about how w
 We can do this by checking if one pair is completely inside another pair, in pseudo-code this would look something like this.
 
 <CodeBlock>
+
 ```kotlin
 fun isRangeInsideAnother(rangeA: Pair<Int, Int>, rangeB: Pair<Int, Int>): Boolean {
   val isStartInsideRangeA = rangeB.first >= rangeA.first && rangeB.first <= rangeA.second
@@ -61,6 +62,7 @@ fun isRangeInsideAnother(rangeA: Pair<Int, Int>, rangeB: Pair<Int, Int>): Boolea
   return isStartInsideRangeA && isEndInsideRangeA
 }
 ```
+
 </CodeBlock>
 
 For this to work both ways, we need to call the above method twice in the order of `isRangeInsideAnotherRange(rangeA, rangeB)` and `isRangeInsideAnotherRange(rangeB, rangeA)`. And if we then `or` the result, we get the expected behaviour.
@@ -72,6 +74,7 @@ For this to work both ways, we need to call the above method twice in the order 
 Now we have an idea of our design, let's start implementing it in our PartOne class.
 
 <CodeBlock filename="aoc-2022/day4/src/main/kotlin/aoc/PartOne.kt">
+
 ```kotlin
 class PartOne(
     private val sanitizer: Sanitizer
@@ -102,6 +105,7 @@ class PartOne(
     }
 }
 ```
+
 </CodeBlock>
 
 At _Step 1_ we filter the input elements based on the overlapping ranges. We do this by validating that rangeB is inside rangeA or if rangeA is inside rangeB.
@@ -111,6 +115,7 @@ At _Step 1_ we filter the input elements based on the overlapping ranges. We do 
 We have written our business logic, and for our test input we now that the expected number of overlapping ranges is __2__. So we can start setting up our test case.
 
 <CodeBlock filename="aoc-2022/day4/src/test/kotlin/aoc/PartOne.kt">
+
 ```kotlin
 class PartOneTest {
     @Test
@@ -129,4 +134,5 @@ class PartOneTest {
     }
 }
 ```
+
 </CodeBlock>

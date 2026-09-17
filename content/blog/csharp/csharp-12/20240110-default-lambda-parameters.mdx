@@ -30,6 +30,7 @@ $ dotnet sln add DefaultLambdaParameter
 Let's create a list of names and iterate over it. This way we can use a lambda to print out each name.
 
 <CodeBlock filename="Main.cs">
+
 ```csharp
 var names = new List<String> { "John Doe", "Jane Doe" };
 foreach (var name in names)
@@ -37,6 +38,7 @@ foreach (var name in names)
     Console.WriteLine(name);
 }
 ```
+
 </CodeBlock>
 
 This is a pretty straight forward application, it just prints the names from the names list to the console.
@@ -44,6 +46,7 @@ This is a pretty straight forward application, it just prints the names from the
 Now the lambda-expression is inside the `ForEach` call on the `names` list. So if we extract it into a named lambda we need to add a parameter with the name we want to print.
 
 <CodeBlock filename="Main.cs">
+
 ```csharp
 var printName = (string name) => { Console.WriteLine(name); };
 
@@ -53,11 +56,13 @@ foreach (var name in names)
     printName(name);
 }
 ```
+
 </CodeBlock>
 
 In this case, our lambda doesn't have a default parameter value so let's set the default value to `"Name unknown"`.
 
 <CodeBlock filename="Main.cs">
+
 ```csharp
 var printName = (string name = "Name unknown") => { Console.WriteLine(name); };
 
@@ -67,13 +72,15 @@ foreach (var name in names)
     printName(name);
 }
 ```
+
 </CodeBlock>
 
-This doesn't change anything in our output, because we give a name everytime we run the lambda-expression.
+This doesn't change anything in our output, because we give a name every time we run the lambda-expression.
 
-The only difference in behaviour would be if we run the lambda-expression without an argument. But that does not justify our use case. So let's try it out with a null value and see if that calls the default parameter value. For this to work we need to change our datatypes (the `string`s to nullable `string`s).
+The only difference in behaviour would be if we run the lambda-expression without an argument. But that does not justify our use case. So let's try it out with a null value and see if that calls the default parameter value. For this to work we need to change our data types (the `string`s to nullable `string`s).
 
 <CodeBlock filename="Main.cs">
+
 ```csharp
 var printName = (string? name = "Name unknown") => { Console.WriteLine(name); };
 
@@ -83,6 +90,7 @@ foreach (var name in names)
     printName(name);
 }
 ```
+
 </CodeBlock>
 
 We explicitly add a `null` reference in our list of names so we don't have to change anything in our _'logic'_. This outputs the following names:
@@ -97,7 +105,7 @@ As you see, we get an empty line because our `null` value does not resolve into 
 
 ## How does it work
 
-The default parameter value is only used when the lambda-expression is executed without an argument. When using a nullable datatype, the default parameter is overwritten by the null-pointer which in a way gives us more control over our application flow because we might expect a nullable type.
+The default parameter value is only used when the lambda-expression is executed without an argument. When using a nullable data type, the default parameter is overwritten by the null-pointer which in a way gives us more control over our application flow because we might expect a nullable type.
 
 ## Use case
 

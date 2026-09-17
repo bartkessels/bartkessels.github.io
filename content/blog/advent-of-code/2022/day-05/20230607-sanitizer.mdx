@@ -22,6 +22,7 @@ When reading the assignment we see that we need to setup stacks with specific in
 We've got the following raw input.
 
 <CodeBlock filename="Raw input">
+
 ```
     [D]    
 [N] [C]    
@@ -33,6 +34,7 @@ move 3 from 1 to 3
 move 2 from 2 to 1
 move 1 from 1 to 2
 ```
+
 </CodeBlock>
 
 The first half of the input are the stacks, which are labeled 1 to 3. Below the stacks we get the instructions. Now if we look a bit closer we can see that a white line separates the stacks from the instructions. We can use that line to split the data into the two components we've identitified.
@@ -40,21 +42,25 @@ The first half of the input are the stacks, which are labeled 1 to 3. Below the 
 This will give us the following raw data
 
 <CodeBlock filename="Stacks">
+
 ```
     [D]    
 [N] [C]    
 [Z] [M] [P]
  1   2   3 
 ```
+
 </CodeBlock>
 
 <CodeBlock filename="Instructions">
+
 ```
 move 1 from 2 to 1
 move 3 from 1 to 3
 move 2 from 2 to 1
 move 1 from 1 to 2
 ```
+
 </CodeBlock>
 
 ### Stacks
@@ -191,6 +197,7 @@ Now we now how we want our data structure to look like, we can start creating th
 #### getStacks method
 
 <CodeBlock filename="aoc-2022/day5/src/main/kotlin/aoc/Sanitizer.kt">
+
 ```kotlin
 fun getStacks(): List<Stack<Char>> {
     val stacks = mutableListOf<Stack<Char>>()
@@ -228,6 +235,7 @@ fun getStacks(): List<Stack<Char>> {
     return stacks
 }
 ```
+
 </CodeBlock>
 
 The first thing we do, is splitting the string on an empty line which is represented by two newline characters (`\n\n`) at _Step 1_. Because we know that the items above the empty line are the stacks we take the first result of the split method at _Step 2_.
@@ -255,6 +263,7 @@ This will give us the following data structure for the stacks.
 #### getInstructions method
 
 <CodeBlock filename="aoc-2022/day5/src/main/kotlin/aoc/Sanitizer.kt">
+
 ```kotlin
 fun getInstructions(): List<Triple<Int, Int, Int>>? =
     resource
@@ -277,6 +286,7 @@ fun getInstructions(): List<Triple<Int, Int, Int>>? =
             )
         }
 ```
+
 </CodeBlock>
 
 The first thing we do, is splitting the string on an empty line which is represented by two newline characters (`\n\n`) at _Step 1_. Because we know that the items below the empty line are the instructions we take the last result of the split method at _Step 2_.
@@ -303,6 +313,7 @@ This will result in the following data structure.
 To validate that our logic works as expected, we create a test case based on the sample data from the assignment. This way we can validate that our sanitizer gives us the correct data structure which we can use in the assignments.
 
 <CodeBlock filename="aoc-2022/day5/src/test/kotlin/aoc/SanitizerTest.kt">
+
 ```kotlin
 class SanitizerTest {
     @Test
@@ -354,6 +365,7 @@ class SanitizerTest {
     }
 }
 ```
+
 </CodeBlock>
 
 Unlike the previous days, this test class has two test methods. One for the `getStacks()` method and one for the `getInstructions()` method. We know how our expected stacks need to look, so we create each stack and push the expected contents one by one at _Step 1_ and _Step 2_.

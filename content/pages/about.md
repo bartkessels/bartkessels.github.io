@@ -12,4 +12,4 @@ To be completely transparent, these are the tasks I delegate to various AI-tools
 - Maintaining the code of this website
     - __AI-tool__: Claude Code using `Claude Sonnet 4.6`
 
-The initial setup of this website was done using Vercel's V0 model and further implementation was done using Github Copilot with `Claude Sonnet 4.6` and a lot of manual changes. The manual changes were mostly done because of a specific structure I wanted into my codebase, mainly the MVVM pattern and some other tweaks in the code. For more repetitive tasks, such as updating all the imports to use single quotes instead of double quotes, I put the LLM to work.
+The initial setup of this website was done using Vercel's V0 model and further implementation was done using GitHub Copilot with `Claude Sonnet 4.6` and a lot of manual changes. The manual changes were mostly done because of a specific structure I wanted into my codebase, mainly the MVVM pattern and some other tweaks in the code. For more repetitive tasks, such as updating all the imports to use single quotes instead of double quotes, I put the LLM to work.

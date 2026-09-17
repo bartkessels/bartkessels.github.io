@@ -29,6 +29,7 @@ We have a top-level `/build.gradle.kts` files, this is useful when you have mult
 Let's start by enabling JetPack Compose under the `android` section in the `app/build.gradle.kts` file. Do this by adding the following contents in the `android` section and execute a `gradle sync` to implement the change to the project.
 
 <CodeBlock filename="app/build.gradle.kts">
+
 ```kotlin
 // ...
 android {
@@ -44,6 +45,7 @@ android {
 }
 // ...
 ```
+
 </CodeBlock>
 
 Inside the `android` block, all the Android specific properties are defined [(Google, 2024)](https://developer.android.com/build#sample_app-module_build_script). However, for Jetpack compose we only need to set the `buildFeatures` and the `composeOptions` properties to enable Jetpack compose for Android [(Google, 2024)](https://developer.android.com/jetpack/compose/setup).
@@ -60,6 +62,7 @@ Luckily, Jetpack Compose uses a BOM to store all the versions that its libraries
 Let's add the BOM dependencies inside the `dependencies` block of our `app` module `build.gradle.kts` [(Google, 2024)](https://developer.android.com/jetpack/compose/setup#kotlin_1).
 
 <CodeBlock filename="app/build.gradle.kts">
+
 ```kotlin
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
@@ -69,6 +72,7 @@ dependencies {
     // ...
 }
 ```
+
 </CodeBlock>
 
 Now we can import the dependencies from Jetpack Compose that we need to build UI elements. For this, we'll only be using the bare minimum libraries for the application to compile and display something on the screen. This way you have full control over the actual UI library you want to use eventually.
@@ -76,6 +80,7 @@ Now we can import the dependencies from Jetpack Compose that we need to build UI
 We'll be needing the `activity-compose` library so we can use a Composable view inside our Activity [(Google, 2023)](https://developer.android.com/reference/kotlin/androidx/activity/compose/package-summary). And the `compose.foundation` library for basic UI elements.
 
 <CodeBlock filename="app/build.gradle.kts">
+
 ```kotlin
 dependencies {
     // ...
@@ -85,6 +90,7 @@ dependencies {
     
     // ...
 ```
+
 </CodeBlock>
 
 Now execute a gradle sync and let's create a new activity.
@@ -98,6 +104,7 @@ Create a new Activity in the `src/main/kotlin/net.bartkessels.myapplication` pac
 Inside our empty `MainActivity.kt` we'll define a class that will inherit from the `ComponentActivity` base class and override the `onCreate` method since that is the entry point of an Android class [(Google, 2024)](https://developer.android.com/guide/components/activities/activity-lifecycle).
 
 <CodeBlock filename="src/main/kotlin/**/MainActivity.kt">
+
 ```kotlin
 // ...
 
@@ -112,6 +119,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 // ...
 
 ```
+
 </CodeBlock>
 
 Inside the `onCreate` method we call the `onCreate` method of the `ComponentActivity` and then run the `setContent` extension method to allow the rendering of a Composable component. In our case, that's the `BasicText` component.
@@ -123,6 +131,7 @@ We have our `MainActivity` set up, now we need to tell Android that this activit
 Inside the `application` tag we add a new `activity` tag with the name set to the location of our `MainActivity`. Because this activity lives in the root of our module, we can simply type `.MainActivity` where the `.` references the current root directory.
 
 <CodeBlock filename="app/AndroidManifest.xml">
+
 ```xml
 <activity
     android:name=".MainActivity"
@@ -133,6 +142,7 @@ Inside the `application` tag we add a new `activity` tag with the name set to th
     </intent-filter>
 </activity>
 ```
+
 </CodeBlock>
 
 ## Run the application

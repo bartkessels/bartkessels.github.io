@@ -23,7 +23,7 @@ But you might have a smart plug yourself, and you might have noticed some odd (a
 
 That evening when we went to bed the smart plug was already turned on, it lives behind a timer automation, so we were really excited (I was at least). But as we do every evening we ask Google to turn off all the lights, and we hear this clicking noise without thinking anything about it. Cue the next morning, we wake up with our phones not charged and no indication that the chargers were on. So we ask Google to turn on the smart plug and our phones began charging.
 
-That evening the same happened, we turn off all the lights and hear that clicking noise again. We knew that that noise was probably the smart plug so we also ask Google to turn on the smart plug and all was well. At least, for that evening.
+That evening the same happened, we turn off all the lights and hear that clicking noise again. We knew that the noise was probably the smart plug so we also ask Google to turn on the smart plug and all was well. At least, for that evening.
 
 ## Keep the smart plug on
 
@@ -34,7 +34,8 @@ At that point I had kind of lost the hope that it would work so I gave myself a 
 After testing that out for a couple of days, I am happy to share with you that it works! So here's my automation to keep the smart plug on when turning off all the lights.
 
 <CodeBlock>
-```yaml
+
+yaml
 metadata:
   name: Smart plug bedroom
   description: Turn on the smart plug in the bedroom when it's (almost) bedtime
@@ -66,6 +67,7 @@ automations:
       on: true
       device: Plug bedroom - Bedroom
 ```
+
 </CodeBlock>
 
 This automation turns the smart plug on when

@@ -57,6 +57,7 @@ In the following section, I only share the frontmatter of each agent markdown fi
 Let's create our first agent, the architect, `.github/agents/architect.agent.md`.
 
 <CodeBlock filename="/.github/agents/architect.agent.md">
+
 ```markdown
 ---
 name: Architect
@@ -66,6 +67,7 @@ tools: [read, todo, web]
 
 # Obsidian plugin architect
 ```
+
 </CodeBlock>
 
 In the frontmatter, we specify the name and description of our architect. In this case, I'm very explicit about the scope of the architect. For the tools, I only give it access to `read`, `todo`, and `web`, because the architect should only give guidance and feedback to the development team and should not update the code itself. In my setup, the `todo` tool allows the agent to keep a todo list of tasks while researching an answer to a specific question.
@@ -75,6 +77,7 @@ In the frontmatter, we specify the name and description of our architect. In thi
 Create our lead developer agent.
 
 <CodeBlock filename="/.github/agents/lead-developer.agent.md">
+
 ```markdown
 ---
 name: Lead developer
@@ -84,6 +87,7 @@ tools: [execute, read, agent, search, web, todo]
 
 # Lead developer
 ```
+
 </CodeBlock>
 
 Our lead developer gets access to the `agent` tool so it can call and instruct other agents as required. Because the lead developer is the agent that will orchestrate the other agents, it doesn't have access to the `edit` tool. That responsibility belongs to the developer agents.
@@ -93,6 +97,7 @@ Because the lead developer should also validate the results of the developer age
 ### Developer
 
 <CodeBlock filename="/.github/agents/developer.agent.md">
+
 ```markdown
 ---
 name: Developer
@@ -102,6 +107,7 @@ tools: [vscode, execute, read, agent, edit, search, web, todo]
 
 # Developer
 ```
+
 </CodeBlock>
 
 Because a developer is the agent that is responsible for creating and updating files, this agent has the `edit` tool. Using this tool, the agent can modify all files in the current workspace.
@@ -111,6 +117,7 @@ The developer agent also gets access to the `agent` tool, allowing it to communi
 ### UX designer
 
 <CodeBlock filename="ux-designer.agent.md">
+
 ```markdown
 ---
 name: UX designer
@@ -120,6 +127,7 @@ tools: [read, search, web, todo]
 
 # UX designer
 ```
+
 </CodeBlock>
 
 Just like the architect, the UX designer is only capable of reading files, doing research, and keeping a todo list for its internal tasks. All actual modifications in the project must be done by a developer agent.
@@ -127,6 +135,7 @@ Just like the architect, the UX designer is only capable of reading files, doing
 ### Tester
 
 <CodeBlock filename="tester.agent.md">
+
 ```markdown
 ---
 name: Tester
@@ -136,6 +145,7 @@ tools: [execute, read, todo]
 
 # Tester
 ```
+
 </CodeBlock>
 
 The tester is the agent with the fewest capabilities. It's only allowed to read all the files within the workspace, execute commands, for example the `npm run test` command, and keep an internal todo list. Again, this agent should communicate with the developer agent, and the developer should initiate the follow-up and fix any issues the tester finds.

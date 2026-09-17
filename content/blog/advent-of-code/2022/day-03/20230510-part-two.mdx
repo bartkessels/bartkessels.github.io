@@ -146,6 +146,7 @@ can be seen in _step 1_ in our PartTwo implementation. Wereas in _step 2_ we 'ch
 Which we finally sum up in _step 3_.
 
 <CodeBlock filename="aoc-2022/day3/src/main/kotlin/aoc/PartTwo.kt">
+
 ```kotlin
 class PartTwo(
     private val sanitizer: Sanitizer
@@ -201,6 +202,7 @@ class PartTwo(
     }
 }
 ```
+
 </CodeBlock>
 
 As you can see, our `getPriority` method is exactly the same as for Part One of todays advent of code. However, `findMatchingCharacter` has changed quite a bit. Instead of searching for the
@@ -210,6 +212,7 @@ by only iterating over the smallest string. Because all three strings are checke
 So with the optimization, our `findMatchingCharacter` now looks like this.
 
 <CodeBlock>
+
 ```kotlin
 /**
   * Find the first character in rucksack A that also
@@ -235,12 +238,14 @@ private fun findMatchingCharacter(rucksackA: String, rucksackB: String, rucksack
     return Char.MIN_VALUE
 }
 ```
+
 </CodeBlock>
 
 In the if-statement will check if rucksackA is bigger than the smallest rucksackB or rucksackC, if the statement is true it will call the `findMatchingCharacter` again but with the rucksacks in a different order.
 This will generate the following call-stack based on our test input.
 
 <CodeBlock>
+
 ```kotlin
 // First three items
 // ---
@@ -262,6 +267,7 @@ findMatchingCharacter(rucksack3, rucksack1, rucksack2) // if (18 > min(24, 32) =
 findMatchingCharacter(rucksack4, rucksack5, rucksack6) // if (30 > min(16, 24) = 16) -> true
 findMatchingCharacter(rucksack5, rucksack6, rucksack4) // if (16 > min(24, 30) = 24) -> false
 ```
+
 </CodeBlock>
 
 ### Test case
@@ -269,6 +275,7 @@ findMatchingCharacter(rucksack5, rucksack6, rucksack4) // if (16 > min(24, 30) =
 Now that we've established that the expected test output is __70__ we can start setting up our test case.
 
 <CodeBlock filename="aoc-2022/day3/src/test/kotlin/aoc/PartTwo.kt">
+
 ```kotlin
 class PartTwoTest {
     @Test
@@ -287,4 +294,5 @@ class PartTwoTest {
     }
 }
 ```
+
 </CodeBlock>

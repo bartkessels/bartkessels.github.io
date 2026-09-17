@@ -129,6 +129,7 @@ flowchart LR
 Now we have an idea of our design, let's start implementing it in our PartOne class.
 
 <CodeBlock filename="aoc-2022/day5/src/main/kotlin/aoc/PartOne.kt">
+
 ```kotlin
 class PartOne(
     val sanitizer: Sanitizer
@@ -167,6 +168,7 @@ class PartOne(
     }
 }
 ```
+
 </CodeBlock>
 
 Inside the `moveItem` method we have a for-loop, _Step 1_, which ranges from 1 to the `noItemsToMove`. This is done because this way our for-loop is exlusive. Which means that the loop is only executed once, if the `noItemsToMove` contains the value `1`. If it was inclusive it would be executed twice, once for the `0` and once for the `1` value in the loop.
@@ -180,6 +182,7 @@ And finally at _Step 3_ we concatenate all the first items from each stack toget
 We have written our business logic, and for our test input we now that the expected output for the test data is `CMZ`. So we can start to write our test case.
 
 <CodeBlock filename="aoc-2022/day5/src/test/kotlin/aoc/PartOne.kt">
+
 ```kotlin
 class PartOneTest {
     @Test
@@ -198,4 +201,5 @@ class PartOneTest {
     }
 }
 ```
+
 </CodeBlock>

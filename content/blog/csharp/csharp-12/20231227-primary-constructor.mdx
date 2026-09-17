@@ -38,6 +38,7 @@ So let's create a repository class which has a (fake) dependency on a DbContext 
 Our old C# 11 (and below) code would look like this
 
 <CodeBlock filename="PeopleRepository.cs">
+
 ```csharp
 class PeopleRepository
 {
@@ -47,22 +48,26 @@ class PeopleRepository
         _context = context;
 }
 ```
+
 </CodeBlock>
 
 As you can see, we have three lines of code just for declaring and initializing a single property. If we convert this to C# 12, this will look like a `record` constructor.
 
 <CodeBlock filename="PersonRepository.cs">
+
 ```csharp
 public class PersonRepository(DbContext context)
 { 
     // TODO: Implement some logic
 }
 ```
+
 </CodeBlock>
 
 Let's create our fake `DbContext` class and give it a method to read all names from the _'database'_.
 
 <CodeBlock filename="DbContext.cs">
+
 ```csharp
 namespace PrimaryConstructor;
 
@@ -76,11 +81,13 @@ public class DbContext
         };
 }
 ```
+
 </CodeBlock>
 
 Next we'll be implementing a method in our `PersonRepository` to get a persons name based on an index (yes, not a best practice but usable for our purpose).
 
 <CodeBlock filename="PersonRepository.cs">
+
 ```csharp
 namespace PrimaryConstructor;
 
@@ -90,6 +97,7 @@ public class PersonRepository(DbContext context)
         context.GetPeople().ElementAt(index);
 }
 ```
+
 </CodeBlock>
 
 As you can see we use the `context` from our primary constructor to call the `GetPeople` method from the `DbContext`.
@@ -106,6 +114,7 @@ primary constructor where the documentation says _t's important to view primary 
 If we take our example and put it inside a tool like [sharplab.io](https://sharplab.io) we can see the code that is being generated for the primary constructor.
 
 <CodeBlock>
+
 ```csharp
 [System.Runtime.CompilerServices.NullableContext(1)]
 [System.Runtime.CompilerServices.Nullable(0)]
@@ -127,11 +136,13 @@ public class PersonRepository
     }
 }
 ```
+
 </CodeBlock>
 
 We see that the primary constructor parameter is added as a member variable to our class, but it's accessed through the `P` variable based on a generic type of the name of our parameter. So what happens when we try to use the `P` member ourselves.
 
 <CodeBlock filename="PersonRepository.cs">
+
 ```csharp
 public class PersonRepository(DbContext context)
 {
@@ -139,6 +150,7 @@ public class PersonRepository(DbContext context)
         <context>P.GetPeople().ElementAt(index);
 }
 ```
+
 </CodeBlock>
 
 As I expected, we cannot access it directly because it gives our the error message that it cannot resolve the `context` symbol.

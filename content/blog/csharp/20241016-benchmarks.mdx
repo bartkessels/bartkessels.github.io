@@ -51,6 +51,7 @@ Yes, I hear you think how is this useful for two methods? Well, we'll make one m
 counter and another method that uses LINQ.
 
 <CodeBlock filename="Calculator.cs">
+
 ```csharp
 internal class Calculator
 {
@@ -72,6 +73,7 @@ internal class Calculator
     }
 }
 ```
+
 </CodeBlock>
 
 To be completely honest, I don't have any expectations on which method will be faster, or what the actual difference between the two will be.
@@ -82,6 +84,7 @@ Let's just try it out.
 Now that our methods have been written, we simply add the `[Benchmark]` attribute to the methods we want to benchmark.
 
 <CodeBlock filename="CalculatorBenchmark.cs">
+
 ```csharp
 internal class CalculatorBenchmark
 {
@@ -102,19 +105,22 @@ internal class CalculatorBenchmark
     }
 }
 ```
+
 </CodeBlock>
 
 Next we need to register our benchmark class to the benchmark runner in our `Program.cs` file.
 
 <CodeBlock filename="Program.cs">
+
 ```csharp
 BenchmarkRunner.Run<CalculatorBenchmark>();
 ```
+
 </CodeBlock>
 
 Now, let's dive into the code behind the `BenchmarkRunner.Run` method and see how it knows what methods we have declared as benchmarks.
 
-Let's start by opening the `BenchmarkRunner.Run` method in Github, after a little digging I found in the [BenchmarkRunnerDirty](https://github.com/dotnet/BenchmarkDotNet/blob/9040e40187f2bbecea4aec724f995fde378f608b/src/BenchmarkDotNet/Running/BenchmarkRunnerDirty.cs#L21) file.
+Let's start by opening the `BenchmarkRunner.Run` method in GitHub, after a little digging I found in the [BenchmarkRunnerDirty](https://github.com/dotnet/BenchmarkDotNet/blob/9040e40187f2bbecea4aec724f995fde378f608b/src/BenchmarkDotNet/Running/BenchmarkRunnerDirty.cs#L21) file.
 All this method does, is actually calling the `BenchmarkRunnerClean ` method, which in turn uses the `BenchMarkConverter` to retrieve all methods that have the `Benchmark` attribute, see [BenchmarkConverter.cs; line35](https://github.com/dotnet/BenchmarkDotNet/blob/9040e40187f2bbecea4aec724f995fde378f608b/src/BenchmarkDotNet/Running/BenchmarkConverter.cs#L35).
 
 Then for each method it finds, it will execute it and temporarily save the results, see [BenchmarkRunnerClean.cs; line 121](https://github.com/dotnet/BenchmarkDotNet/blob/9040e40187f2bbecea4aec724f995fde378f608b/src/BenchmarkDotNet/Running/BenchmarkRunnerClean.cs#L121)

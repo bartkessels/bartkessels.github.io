@@ -1,7 +1,7 @@
 ---
 slug: keep-your-automations-clean
 title: Keep your automations clean
-description: Keep your automations overview clean by adding multiple automations in the same yaml-file.
+description: Keep your automations overview clean by adding multiple automations in the same YAML-file.
 author: Bart Kessels
 date: 2023-10-18
 image: /images/blog/google-home/multiple-automations.png
@@ -22,7 +22,8 @@ import Char from '@/components/Char.astro';
 The first thing I wanted were the hallway lights to always turn on during the day, but at night only when either the living room lights are on or when the bedroom light is on. What I wanted was this (note, this does not work):
 
 <CodeBlock>
-```yaml
+
+yaml
 metadata:
   name: Motion in hallway
   description: Turn on the hallway lights when motion is detected while I'm home and it's dark outside
@@ -58,20 +59,22 @@ automations:
                 is: true
                 device: Living room Light - Living Room
 ```
+
 </CodeBlock>
 
 But that didn't pass the validation step in the editor, thus I got back to Googling another solution.
 
 ## Multiple starters
 
-When Googling I came across another example from Google where I saw something that was just what I wanted. There's an option to add multiple automations using the collection syntax from yaml [(YAML Language Development Team, 2021)](https://yaml.org/spec/1.2.2/#collections)!
+When Googling I came across another example from Google where I saw something that was just what I wanted. There's an option to add multiple automations using the collection syntax from YAML [(YAML Language Development Team, 2021)](https://YAML.org/spec/1.2.2/#collections)!
 
 This gives us the option to have multiple different starters with their own conditions to be placed in the same automation, thus keeping our overview clean and making it easy to group automations.
 
 Given our previous automation, we can turn that into a working automation by rewriting it.
 
 <CodeBlock>
-```yaml
+
+yaml
 metadata:
   name: Motion in hallway
   description: Turn on the hallway lights when motion is detected while I'm home and it's dark outside
@@ -127,4 +130,5 @@ automations:
         on: true
         devices: Hallway light - Hallway
 ```
+
 </CodeBlock>

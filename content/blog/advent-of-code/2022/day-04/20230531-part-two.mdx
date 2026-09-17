@@ -22,6 +22,7 @@ Because the assignment is almost the same but with the only exception that we ne
 Let's take a look at our design from the [previous post](./20230524-part-one.mdx).
 
 <CodeBlock>
+
 ```kotlin
 fun isRangeInsideAnother(rangeA: Pair<Int, Int>, rangeB: Pair<Int, Int>): Boolean {
   val isStartInsideRangeA = rangeB.first >= rangeA.first && rangeB.first <= rangeA.second
@@ -30,11 +31,13 @@ fun isRangeInsideAnother(rangeA: Pair<Int, Int>, rangeB: Pair<Int, Int>): Boolea
   return isStartInsideRangeA && isEndInsideRangeA
 }
 ```
+
 </CodeBlock>
 
 In this method we check if the start of rangeB and the end of rangeB is inside rangeA. The keyword here is _and_. If we change the operation by checking if the start of rangeB is inside rangeA _or_ if the end of rangeB is inside rangeA we get all the ranges that overlap at some point. So it'll look like this.
 
 <CodeBlock>
+
 ```kotlin
 fun doesRangeOverlap(rangeA: Pair<Int, Int>, rangeB: Pair<Int, Int>): Boolean {
   val isStartInsideRangeA = rangeB.first >= rangeA.first && rangeB.first <= rangeA.second
@@ -43,6 +46,7 @@ fun doesRangeOverlap(rangeA: Pair<Int, Int>, rangeB: Pair<Int, Int>): Boolean {
   return isStartInsideRangeA || isEndInsideRangeA
 }
 ```
+
 </CodeBlock>
 
 For this to work both ways, we need to call the above method twice in the order of `doesRangeOverlap(rangeA, rangeB)` and `doesRangeOverlap(rangeB, rangeA)`. And if we then `or` the result, we get the expected behaviour.
@@ -54,6 +58,7 @@ For this to work both ways, we need to call the above method twice in the order 
 Now we have an idea of our design, let's start implementing it in our PartTwo class.
 
 <CodeBlock filename="aoc-2022/day4/src/main/kotlin/aoc/PartTwo.kt">
+
 ```kotlin
 class PartTwo(
     private val sanitizer: Sanitizer
@@ -84,6 +89,7 @@ class PartTwo(
     }
 }
 ```
+
 </CodeBlock>
 
 At _Step 1_ we filter the input elements based on the overlapping ranges. We do this by validating that rangeB overlaps with rangeA or if rangeA overlaps with rangeB.
@@ -93,6 +99,7 @@ At _Step 1_ we filter the input elements based on the overlapping ranges. We do 
 We have written our business logic, and for our test input we now that the expected number of overlapping ranges is __4__. So we can start setting up our test case.
 
 <CodeBlock filename="aoc-2022/day4/src/test/kotlin/aoc/PartTwo.kt">
+
 ```kotlin
 class PartTwoTest {
     @Test
@@ -111,4 +118,5 @@ class PartTwoTest {
     }
 }
 ```
+
 </CodeBlock>

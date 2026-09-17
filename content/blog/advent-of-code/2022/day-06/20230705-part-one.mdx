@@ -68,6 +68,7 @@ This does look a lot cleaner, so let's start implementing it in actual Kotlin co
 Now we have an idea of our design, let's start implementing it in our PartOne class.
 
 <CodeBlock filename="aoc-2022/day6/src/main/kotlin/aoc/PartOne.kt">
+
 ```kotlin
 class PartOne(
     private val sanitizer: Sanitizer
@@ -89,6 +90,7 @@ class PartOne(
     }
 }
 ```
+
 </CodeBlock>
 
 At _Step 1_ we declare all variables which we need outside of our `windowed` method. The `chunkSize` is the size of the marker packet, which was `4` according to the assignment. To get the first marker position, we need to keep a count of the current index, which will start at `-1` because at the first iteration before any check, it's incremented at _Step 3_.
@@ -102,6 +104,7 @@ To check if our current window of chars are unique, we turn them into a set at _
 We have written our business logic, and for our test input we now that the expected output for the test data is `7`. So we can start to write our test case.
 
 <CodeBlock filename="aoc-2022/day6/src/test/kotlin/aoc/PartOne.kt">
+
 ```kotlin
 class PartOneTest {
     @Test
@@ -120,4 +123,5 @@ class PartOneTest {
     }
 }
 ```
+
 </CodeBlock>

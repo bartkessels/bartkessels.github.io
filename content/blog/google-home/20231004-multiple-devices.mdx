@@ -19,10 +19,11 @@ import Char from '@/components/Char.astro';
 
 ### The verbose method
 
-Now is this very easy using the yaml automations where you can just copy the action and change the name of the light, but to me this didn’t look very pleasing having more than five lights. Because it looked like this.
+Now is this very easy using the YAML automations where you can just copy the action and change the name of the light, but to me this didn't look very pleasing having more than five lights. Because it looked like this.
 
 <CodeBlock>
-```yaml
+
+yaml
 # ... redacted
 
 automations:  
@@ -39,17 +40,18 @@ automations:
       on: false
       devices: Back light - Living Room
 ```
+
 </CodeBlock>
 
 ### The cleaner method
 
-After some playing with the onOff action and trying to use the collection syntax of yaml [(YAML Language Development Team, 2021)](https://yaml.org/spec/1.2.2/#collections). And if we look at the documentation that Google provides, we see that the device actions support the use of multiple devices with the collection syntax [(Google, n.d.)](https://support.google.com/googlenest/answer/13460475?sjid=4162496325683235059-EU#actions&zippy=%2Cdevice-actions%2Cactions).
+After some playing with the `onOff` action and trying to use the collection syntax of YAML [(YAML Language Development Team, 2021)](https://YAML.org/spec/1.2.2/#collections). And if we look at the documentation that Google provides, we see that the device actions support the use of multiple devices with the collection syntax [(Google, n.d.)](https://support.google.com/googlenest/answer/13460475?sjid=4162496325683235059-EU#actions&zippy=%2Cdevice-actions%2Cactions).
 
-So if we use the collections instead of copying the action for each light our yaml file will look like this.
-
+So if we use the collections instead of copying the action for each light our YAML file will look like this.
 
 <CodeBlock>
-```yaml
+
+yaml
 # ... redacted
 
 automations:  
@@ -63,6 +65,7 @@ automations:
         - Front light - Living Room
         - Back light - Living Room
 ```
+
 </CodeBlock>
 
 As you see, this looks a lot cleaner than our previous verbose method of copying each action.

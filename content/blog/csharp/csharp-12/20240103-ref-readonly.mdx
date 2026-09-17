@@ -35,6 +35,7 @@ $ dotnet sln add RefReadonlyModifier
 Let's re-use our `PeopleRepository` and `DbContext` from our previous post about the [primary constructor](./20231227-primary-constructor.mdx).
 
 <CodeBlock filename="DbContext.cs">
+
 ```csharp
 namespace RefReadonlyModifier;
 
@@ -48,9 +49,11 @@ public class DbContext
         };
 }
 ```
+
 </CodeBlock>
 
 <CodeBlock filename="PersonRepository.cs">
+
 ```csharp
 namespace RefReadonlyModifier;
 
@@ -60,11 +63,13 @@ public class PersonRepository(DbContext context)
         context.GetPeople().ElementAt(index);
 }
 ```
+
 </CodeBlock>
 
 This is the exact same code as before, so let's add the `ref readonly` modifier to the `DbContext` datatype in our `PersonRepository` constructor.
 
 <CodeBlock filename="DbContext.cs">
+
 ```csharp
 public class PersonRepository(ref readonly DbContext context)
 {
@@ -72,6 +77,7 @@ public class PersonRepository(ref readonly DbContext context)
         context.GetPeople().ElementAt(index);
 }
 ```
+
 </CodeBlock>
 
 This gives us the following error-message when we try to access the `context` parameter from the `GetName` method.
@@ -83,6 +89,7 @@ cannot use 'ref readonly' primary constructor parameter 'context' inside an inst
 When looking back at the documentation it's pretty obvious because it clearly states _'...must be present in the method declaration. ...'_. So we can only use it for methods. Let's update our `PersonRepository` to pass the `DbContext` as a readonly reference to the `GetName` method.
 
 <CodeBlock filename="PersonRepository.cs">
+
 ```csharp
 public class PersonRepository()
 {
@@ -90,6 +97,7 @@ public class PersonRepository()
         context.GetPeople().ElementAt(index);
 }
 ```
+
 </CodeBlock>
 
 This will make the `context` variable read only as expected. If we take our `PersonRepository` and put it into a tool like [sharplab.io](https://sharplab.io) we get the generated C# code which will desugar the `ref readonly` modifier.

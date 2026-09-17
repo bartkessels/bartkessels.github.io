@@ -30,17 +30,21 @@ $ dotnet sln add CollectionExpressions
 If you remember the previous post about [default lambda parameters](./20240110-default-lambda-parameters.mdx), we created a list of names using the 'old' syntax like this.
 
 <CodeBlock filename="Main.cs">
+
 ```csharp
 var names = new List<String> { "John Doe", "Jane Doe" };
 ```
+
 </CodeBlock>
 
 But if we change this code to the new collection expressions, we get this much cleaner line of code.
 
 <CodeBlock filename="Main.cs">
+
 ```csharp
 List<string> names = ["Jane Doe", "John Doe"];
 ```
+
 </CodeBlock>
 
 The only downside for me is, that I can't use the `var` keyword. But that is not that weird because the compiler needs to know which type of list is being created. But, I would like to see the compiler getting a bit smarter and guess the type from the assigned value. In our example a list of `string`s.
@@ -58,4 +62,4 @@ List<string> list2 = list;
 
 ## Use case
 
-For me, I'll be using this syntax everytime I need to initialize a list with default values. For example in test projects when I need to test a method that needs a list as an input. For now, I don't have exact use cases for an actual production application which has a defined set of values, because the applications I work on mostly get their data from a database or another source.
+For me, I'll be using this syntax every time I need to initialize a list with default values. For example in test projects when I need to test a method that needs a list as an input. For now, I don't have exact use cases for an actual production application which has a defined set of values, because the applications I work on mostly get their data from a database or another source.
