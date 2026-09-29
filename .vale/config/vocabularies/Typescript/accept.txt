@@ -1,0 +1,4 @@
+ESLint
+Stryker
+Javascript
+Typescript

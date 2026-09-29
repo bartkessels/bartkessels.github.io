@@ -141,8 +141,8 @@ So this means our test data will get the following data structure.
 ]
 ```
 
-As you can see, we have added the two compartments togheter in our data structure, because there's no need for the two compartments to be different for each rucksack. This
-can be seen in _step 1_ in our PartTwo implementation. Wereas in _step 2_ we 'chunk' our list into sublists with three strings each and find the matching character between the three strings.
+As you can see, we have added the two compartments together in our data structure, because there's no need for the two compartments to be different for each rucksack. This
+can be seen in _step 1_ in our PartTwo implementation. Whereas in _step 2_ we 'chunk' our list into sub-lists with three strings each and find the matching character between the three strings.
 Which we finally sum up in _step 3_.
 
 <CodeBlock filename="aoc-2022/day3/src/main/kotlin/aoc/PartTwo.kt">
@@ -205,7 +205,7 @@ class PartTwo(
 
 </CodeBlock>
 
-As you can see, our `getPriority` method is exactly the same as for Part One of todays advent of code. However, `findMatchingCharacter` has changed quite a bit. Instead of searching for the
+As you can see, our `getPriority` method is exactly the same as for Part One of today's advent of code. However, `findMatchingCharacter` has changed quite a bit. Instead of searching for the
 same character in two lists, we search in three lists. We only iterate over the first item and validate if each character is present in the other two strings. We can even streamline this code a bit
 by only iterating over the smallest string. Because all three strings are checked for the matching character, we don't need to check characters that aren't available in one string.
 

@@ -63,7 +63,7 @@ class MainViewModel: ViewModel() {
 
 </CodeBlock>
 
-There are already a few things happening. First we inherit from the `ViewModel` class, this allows us to persis UI state and provide access to business logic [(Google, 2023)](https://developer.android.com/topic/libraries/architecture/viewmodel#jetpack-compose_1). We could also be using a regular class, but then we'd lose the aforementioned benefits.
+There are already a few things happening. First we inherit from the `ViewModel` class, this allows us to persist UI state and provide access to business logic [(Google, 2023)](https://developer.android.com/topic/libraries/architecture/viewmodel#jetpack-compose_1). We could also be using a regular class, but then we'd lose the aforementioned benefits.
 
 ### Update the state flow
 
@@ -118,7 +118,7 @@ fun Main(
 
 </CodeBlock>
 
-The first that you might notice is the capitalization used for the `Main` method. Usually a function in Kotlin would begin with a lowercase letter, but for `Composables` the naming-convention is to use camel-case as opposed to Pascal case [(JetPack Compose, 2021)](https://android.googlesource.com/platform/frameworks/support/+/androidx-main/compose/docs/compose-api-guidelines.md#naming-unit-composable-functions-as-entities). This might take some time before you are used to this, at least it was for me, luckily Android Studio will give you warnings in the IDE when you don't comply to the naming convention.
+The first that you might notice is the capitalization used for the `Main` method. Usually a function in Kotlin would begin with a lowercase letter, but for composables the naming-convention is to use camel-case as opposed to Pascal case [(JetPack Compose, 2021)](https://android.googlesource.com/platform/frameworks/support/+/androidx-main/compose/docs/compose-api-guidelines.md#naming-unit-composable-functions-as-entities). This might take some time before you are used to this, at least it was for me, luckily Android Studio will give you warnings in the IDE when you don't comply to the naming convention.
 
 As a parameter to our `Main` method, we pass a reference to the `MainViewModel` because we'll be needing two properties of that view model. Namely, the `displayText` member, and the `updateText` function because we need to display that information. Inside the `Main` function, we have the same `BasicText` element that we've had in our previous post. But now we set the `text` parameter to the `displayText` property of the view model. We call the `collectAsState` method on the `displayText` member. If we check out the documentation for `collectAsState`, we see that this method allows us to update the `displayText` member, and that the new value will automatically trigger a recomposition thus updating the UI to display the new value of the `displayText` member [(Google, 2023)](https://developer.android.com/reference/kotlin/androidx/compose/runtime/package-summary#(kotlinx.coroutines.flow.StateFlow).collectAsState(kotlin.coroutines.CoroutineContext)). Because the `collectAsState` returns a `StateFlow<string>` we call the `value` property to get the actual string value of the `displayText` member.
 
@@ -138,7 +138,7 @@ modifier = Modifier.clickable {
 
 ## Update the `MainActivity`
 
-Now that we have set up our view model, and properly decouple our UI from the logic, it's time to wire it all together. We'll be updating our original `MainActivity.kt` `onCreate` method by replacing the `BasicText` element inside the `setContent` lambda with a call to our own Composable `Main`.
+Now that we have set up our view model, and properly decouple our UI from the logic, it's time to wire it all together. We'll be updating our original `MainActivity.kt` `onCreate` method by replacing the `BasicText` element inside the `setContent` lambda with a call to our own composable `Main`.
 
 Update the `onCreate` method with the following contents.
 

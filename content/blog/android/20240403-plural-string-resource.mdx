@@ -193,4 +193,4 @@ Let's update the `shouldDisplayHelloAgainWhenTheMainStateIsUpdated` test case in
 // ... redacted
 ```
 
-You might notice that we moved from the `context.stringResource` to hardcoded strings for these test cases. This is something I did because it allows us to validate that our plural string resource is correct, and that the correct plural is used for the amount we test. If for example, we've swapped the text for the `one` and `other` quantity our test would fail in this case. If we use the `context.pluralStringResource`, we wouldn't detect that issue.
+You might notice that we moved from the `context.stringResource` to hard coded strings for these test cases. This is something I did because it allows us to validate that our plural string resource is correct, and that the correct plural is used for the amount we test. If for example, we've swapped the text for the `one` and `other` quantity our test would fail in this case. If we use the `context.pluralStringResource`, we wouldn't detect that issue.

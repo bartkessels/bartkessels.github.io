@@ -171,7 +171,7 @@ class PartOne(
 
 </CodeBlock>
 
-Inside the `moveItem` method we have a for-loop, _Step 1_, which ranges from 1 to the `noItemsToMove`. This is done because this way our for-loop is exlusive. Which means that the loop is only executed once, if the `noItemsToMove` contains the value `1`. If it was inclusive it would be executed twice, once for the `0` and once for the `1` value in the loop.
+Inside the `moveItem` method we have a for-loop, _Step 1_, which ranges from 1 to the `noItemsToMove`. This is done because this way our for-loop is exclusive. Which means that the loop is only executed once, if the `noItemsToMove` contains the value `1`. If it was inclusive it would be executed twice, once for the `0` and once for the `1` value in the loop.
 
 At _Step 2_ we use the `pop` function on the `stackToRetrieve` variable because that gives us the first item in the stack and removes it from that stack [(Oracle, 2023)](https://docs.oracle.com/javase/8/docs/api/java/util/Stack.html#pop--) whereas the `peek()` method returns the first item on the stack without removing that item [(Oracle, 2023)](https://docs.oracle.com/javase/8/docs/api/java/util/Stack.html#peek--).
 

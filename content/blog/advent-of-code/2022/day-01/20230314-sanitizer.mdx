@@ -45,7 +45,7 @@ So we've got the following raw input.
 
 </CodeBlock>
 
-If we look at it, we can see that each 'elve' is divided by an empy line. And each number is the calories of one snack they're carrying. So in total we've got five elves,
+If we look at it, we can see that each 'elve' is divided by an empty line. And each number is the calories of one snack they're carrying. So in total we've got five elves,
 each carrying one or more snack(s).
 
 If we split up the raw data into specific elves, we want to get the following data structure.
@@ -56,7 +56,7 @@ If we split up the raw data into specific elves, we want to get the following da
 | 2000   |        | 6000     | 8000    |         |
 | 3000   |        |          | 9000    |         |
 
-So we can see that we first need to split the raw input on an empy line, which will give us five strings with the calories for each elve. So if we split those strings on a newline character (`\n`)
+So we can see that we first need to split the raw input on an empty line, which will give us five strings with the calories for each elve. So if we split those strings on a newline character (`\n`)
 we get a list of calories inside our list of elves. Which means, we'll get something like this:
 
 ```kotlin
@@ -69,7 +69,7 @@ we get a list of calories inside our list of elves. Which means, we'll get somet
 ]
 ```
 
-So the only thing we need to do, is map each calory inside our 'inner-list' to an integer.
+So the only thing we need to do, is map each calorie inside our 'inner-list' to an integer.
 
 ## Implementation
 

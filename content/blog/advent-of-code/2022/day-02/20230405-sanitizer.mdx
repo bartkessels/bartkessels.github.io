@@ -42,7 +42,7 @@ some kind of a match model like this.
 | Match 2 | B                | X            |
 | Match 3 | C                | Z            |
 
-We can do this by spliting the data into matches by splitting on the newline character. After that, we can split on the space character to get a pair of strategies.
+We can do this by splitting the data into matches by splitting on the newline character. After that, we can split on the space character to get a pair of strategies.
 Which means that we'll get something like this:
 
 ```kotlin
@@ -60,7 +60,7 @@ Which means that we'll get something like this:
 Now we now how we want our data structure to look like, we can start creating the `getItems(): List<Pair<Char, Char>>` method inside our `Sanitizer` class.
 Because we've laid out the way we want to functionally setup our code. We can just implement it in Kotlin using the `split` and `zipWithNext` methods on our input file.
 
-> The `zipWithNext` method is used to take an item from a list and concat it with the following item in a pair.
+> The `zipWithNext` method is used to take an item from a list and concatenate it with the following item in a pair.
 - [(Jetbrains, n.d.)](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/zip-with-next.html)
 
 <CodeBlock filename="aoc-2022/day2/src/main/kotlin/aoc/Sanitizer.kt">

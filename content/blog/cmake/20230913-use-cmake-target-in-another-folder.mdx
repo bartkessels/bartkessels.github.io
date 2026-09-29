@@ -30,7 +30,7 @@ However, to make things more complicated, I want to do this in CMake on the defa
 
 Why is this complicated you might ask. Well, you can't access a target that's created in another `CMakeLists.txt` in a different folder.
 
-Logically thinking you'd add both directories in the root `CMakeLists.txt` and that's all there is to it. Unfortunatly it's not that easy (well almost, I'll explain later).
+Logically thinking you'd add both directories in the root `CMakeLists.txt` and that's all there is to it. Unfortunately it's not that easy (well almost, I'll explain later).
 
 ### Test setup
 
@@ -95,7 +95,7 @@ add_custom_command(TARGET test_target POST_BUILD
 
 </CodeBlock>
 
-### add_subdirectory
+### Add subdirectory
 
 The first thought is to add `add_subdirectory(./packaging)` in the root `CMakeLists.txt` and add a reference to the `test_target` target in the `src/CMakeLists.txt` to execute a command after the build has finished. So this look exactly like our test setup above.
 

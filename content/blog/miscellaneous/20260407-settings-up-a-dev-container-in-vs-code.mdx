@@ -15,7 +15,7 @@ import Intro from '@/components/Intro.astro';
 import Char from '@/components/Char.astro';
 
 <Intro>
-    <Char>I</Char>n this post, I'll show how to use Visual Studio Code Dev Containers to isolate an agentic team inside a controlled development environment. Because the container only has access to the files and tooling you expose to it, it reduces the risk of an agent reading sensitive data or modifying unrelated files on your machine.
+    <Char>I</Char>n this post, I'll show how to use dev containers in Visual Studio Code to isolate an agentic team inside a controlled development environment. Because the container only has access to the files and tooling you expose to it, it reduces the risk of an agent reading sensitive data or modifying unrelated files on your machine.
 </Intro>
 
 ## What are dev containers
@@ -30,7 +30,7 @@ When you open a local project in a dev container, Visual Studio Code typically e
 
 To make this concrete, I'll use [Daily note calendar](../../../software/daily-note-calendar.mdx) as the example project. Open it in Visual Studio Code and install the [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension.
 
-Create a new file called `devcontainer.json` inside the `.devcontainer` folder at the root of your project. In the case of Daily note calendar, I based the configuration on a Node.js image because the plugin is written in TypeScript and requires Node.js.
+Create a new file called `devcontainer.json` inside the `.devcontainer` folder at the root of your project. In the case of Daily note calendar, I based the configuration on a Node.js image because the plugin is written in Typescript and requires Node.js.
 
 <CodeBlock filename="/.devcontainer/devcontainer.json">
 

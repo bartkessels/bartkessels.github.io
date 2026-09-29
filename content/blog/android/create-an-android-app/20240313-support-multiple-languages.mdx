@@ -70,7 +70,7 @@ Because we want to use the text that we've defined in the `string.xml`, we need 
 
 What we can do, however, is use states. Our application has two states an `Uninitialized` state and a `Updated` state. Where the `Uninitialized` state corresponds to the _Hello world!_ text, and the `Updated` state to the _Hello again!_ text.
 
-Let's create a sealed interface called `MainState` and add the two `Uninitialized` and `Updated` states as implementations. The reason we use a sealed interface as a base for both is that when the implementations of a sealed class are known at compile-time. This allows us to use these states as if they were enum values [(Kotlin Foundation, 2023)](https://kotlinlang.org/docs/sealed-classes.html).
+Let's create a sealed interface called `MainState` and add the two `Uninitialized` and `Updated` states as implementations. The reason we use a sealed interface as a base for both is that when the implementations of a sealed class are known at compile-time. This allows us to use these states as if they were `enum` values [(Kotlin Foundation, 2023)](https://kotlinlang.org/docs/sealed-classes.html).
 
 <CodeBlock filename="app/src/main/**/MainState.kt">
 

@@ -26,7 +26,7 @@ We have a top-level `/build.gradle.kts` files, this is useful when you have mult
 
 ### Enable Jetpack compose
 
-Let's start by enabling JetPack Compose under the `android` section in the `app/build.gradle.kts` file. Do this by adding the following contents in the `android` section and execute a `gradle sync` to implement the change to the project.
+Let's start by enabling Jetpack Compose under the `android` section in the `app/build.gradle.kts` file. Do this by adding the following contents in the `android` section and execute a `gradle sync` to implement the change to the project.
 
 <CodeBlock filename="app/build.gradle.kts">
 
@@ -77,7 +77,7 @@ dependencies {
 
 Now we can import the dependencies from Jetpack Compose that we need to build UI elements. For this, we'll only be using the bare minimum libraries for the application to compile and display something on the screen. This way you have full control over the actual UI library you want to use eventually.
 
-We'll be needing the `activity-compose` library so we can use a Composable view inside our Activity [(Google, 2023)](https://developer.android.com/reference/kotlin/androidx/activity/compose/package-summary). And the `compose.foundation` library for basic UI elements.
+We'll be needing the `activity-compose` library so we can use a composable view inside our Activity [(Google, 2023)](https://developer.android.com/reference/kotlin/androidx/activity/compose/package-summary). And the `compose.foundation` library for basic UI elements.
 
 <CodeBlock filename="app/build.gradle.kts">
 
@@ -93,7 +93,7 @@ dependencies {
 
 </CodeBlock>
 
-Now execute a gradle sync and let's create a new activity.
+Now execute a `gradle sync` and let's create a new activity.
 
 ## Create a new Activity
 
@@ -122,7 +122,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 </CodeBlock>
 
-Inside the `onCreate` method we call the `onCreate` method of the `ComponentActivity` and then run the `setContent` extension method to allow the rendering of a Composable component. In our case, that's the `BasicText` component.
+Inside the `onCreate` method we call the `onCreate` method of the `ComponentActivity` and then run the `setContent` extension method to allow the rendering of a composable component. In our case, that's the `BasicText` component.
 
 ### Register the `MainActivity` as the entry point
 

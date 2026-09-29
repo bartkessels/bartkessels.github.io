@@ -20,7 +20,7 @@ import Char from '@/components/Char.astro';
 
 This workflow isn't that bad for just two iterations and our small UI, but let's say your working on a big project which consists of multiple components where you'd like to see each component separate from the entire app. This might become pretty tedious when you have to build your entire app just to see how a little component looks.
 
-Luckily, for this we can use previews in Android Studio. This is different from the old XML-views we knew before, because the main difference between the View-based UI and Jetpack Compose is the fact that Compose doesn't need a View to render it's composables. Because of this, we can view the UI in Android Studio without having to run the app on an emulator or Android device [(Google, 2024)](https://developer.android.com/jetpack/compose/tooling).
+Luckily, for this we can use previews in Android Studio. This is different from the old XML-views we knew before, because the main difference between the View-based UI and Jetpack Compose is the fact that compose doesn't need a View to render it's composables. Because of this, we can view the UI in Android Studio without having to run the app on an emulator or Android device [(Google, 2024)](https://developer.android.com/jetpack/compose/tooling).
 
 ## Add the dependency
 
@@ -43,13 +43,13 @@ dependencies {
 
 This gives us the `Preview` annotation, which in turn will enable us to preview our UI without having to connect to an emulator in Android Studio [(Google, 2024)](https://developer.android.com/jetpack/compose/tooling/previews). The `debugImplementation` will add the extra `ui-tooling` dependency only when your app is running in debug-mode, in other words, when the preview is being rendered.
 
-Execute a gradle sync and we're ready to preview our UI.
+Execute a `gradle sync` and we're ready to preview our UI.
 
 ## Create a preview
 
 Our `Main` composable lives inside the `main.kt` file, let's open this file and refactor the `Main` composable so it isn't as dependent on the view model as it is now. The reason that this is a problem is that we don't want to mock or stub our view model in the preview. We only want to display the preview as is, without it doing weird things because of the view model.
 
-We'll create a new private composable called `MainInternal` which will have two parameters, on for the onClick handler of the button and one for the `MainState`.
+We'll create a new private composable called `MainInternal` which will have two parameters, on for the `onClick` handler of the button and one for the `MainState`.
 
 <CodeBlock filename="src/main/kotlin/**/main.kt">
 
@@ -162,4 +162,4 @@ If we build the application, Android Studio should display the preview window by
 ![Android Studio with code and the preview](/images/blog/android/create-an-application/android-studio-code-with-preview.png)
 
 * The entire application can be found on [github.com/bartkessels/basic-android-app](https://github.com/bartkessels/basic-android-app)
-* Just the code that's been created in this post can be found in the [tutorial/android-studio-preview branch](https://github.com/bartkessels/basic-android-app/tree/tutorial/android-studio-preview)
+* Just the code that's been created in this post can be found in the [tutorial/android-studio-preview branch](github.com/bartkessels/basic-android-app/tree/tutorial/android-studio-preview)

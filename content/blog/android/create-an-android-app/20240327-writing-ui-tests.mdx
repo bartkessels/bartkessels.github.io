@@ -41,7 +41,7 @@ These dependencies allow us to use the `ComposeTestRule` and `AndroidComposeTest
 
 You can even remove the `androidx.test.espresso:espresso-core` dependency if you want. This is a library that allows you to write UI-tests for the old XML-view UI [(Google, 2024)](https://developer.android.com/training/testing/espresso). Because we're using the `androidx.compose.ui:ui-test-junit4` library, we don't need another UI testing library.
 
-Let's execute a gradle sync, and let's get started by writing our first UI test.
+Let's execute a `gradle sync`, and let's get started by writing our first UI test.
 
 ## Create a UI test
 
@@ -61,7 +61,7 @@ internal class MainTest {
 
 ### Set up the basics
 
-The first thing we'll need to add is a property which allows us to access the contents of our semantics tree. The compose layout we've set up in tne `Main` composable is transformed into a semantics tree for our UI tests. We can access this tree by referencing an instance of a `ComposeRule` [(Google, 2024)](https://developer.android.com/jetpack/compose/testing#setup).
+The first thing we'll need to add is a property which allows us to access the contents of our semantics tree. The compose layout we've set up in the `Main` composable is transformed into a semantics tree for our UI tests. We can access this tree by referencing an instance of a `ComposeRule` [(Google, 2024)](https://developer.android.com/jetpack/compose/testing#setup).
 
 <CodeBlock filename="src/main/**/androidTest/MainTests.kt">
 
@@ -80,7 +80,7 @@ The `@get:Rule` allows the `createComposeTestRule` function to run before each t
 
 Now that we've set up the basics, we can start by adding a new test which will test if the text for the `MainState.Uninitialized` equals the expected text of `Hello world!`.
 
-Create a new method called `shouldDisplayHelloWorldWhenTheMainStateIsUninitialized` and annotate it with the `Test` annotation. The `Test` annotation tells the JUnit test runner that the method on which the annotation is declared, should be run as a test case. To run the test case, JUnit creates a new instance of the class and then calls the annotated method [(Junit, 2016)](https://junit.org/junit4/javadoc/4.12/org/junit/Test.html).
+Create a new method called `shouldDisplayHelloWorldWhenTheMainStateIsUninitialized` and annotate it with the `Test` annotation. The `Test` annotation tells the JUnit test runner that the method on which the annotation is declared, should be run as a test case. To run the test case, JUnit creates a new instance of the class and then calls the annotated method [(JUnit, 2016)](https://junit.org/junit4/javadoc/4.12/org/junit/Test.html).
 
 <CodeBlock filename="src/main/**/androidTest/MainTests.kt">
 

@@ -14,13 +14,13 @@ Stackoverflow
 API
 API's
 UI's
-Javascript
 Zsh
 nd
 Macbook
 Wordpress
-LLM's
 nullable
 readonly
 desugar
 desugared
+accountabilities
+todo
