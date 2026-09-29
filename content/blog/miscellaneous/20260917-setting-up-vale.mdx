@@ -20,11 +20,11 @@ import CodeBlock from '@/components/CodeBlock.astro';
     <Char>S</Char>ince the prices of all AI models are increasing, I'm currently looking for alternatives to my use of AI. One of those use-cases is checking my content for spelling and grammar errors, let's dive into Vale and see if it can properly validate my content.
 </Intro>
 
-I've been looking at Vale for some time now, initially I was using it directly on my machine using the available Docker image, which allowed me to run Vale without installing anything. But since my move to the [using Dev Containers](./20260407-settings-up-a-dev-container-in-vs-code.mdx) the Docker-in-Docker approach wasn't working correctly for me.
+I've been looking at Vale for some time now, initially I was using it directly on my machine using the available Docker image, which allowed me to run Vale without installing anything. But since my move to the [using dev containers](./20260407-settings-up-a-dev-container-in-vs-code.mdx) the Docker-in-Docker approach wasn't working correctly for me.
 
 Luckily, Vale also offers a npm-package you can use [(Vale, sept. 26 2026)](https://docs.vale.sh/topics/installation#installing-vale-with-a-project) in your Javascript or Typescript project. Since this website runs on [Astro](https://astro.build) I can use the npm-package to use Vale.
 
-Before writing this post I executed Vale and came accross a lot of issues within my content, both correct and incorrectly flagged issues arised, for example all my code examples where flagged since `DbContext` isn't a valid word. For this Vale offers various _scopes_ which allow you to ignore pre-defined types of content, to ignore all content within a code fence you'd add this to your `vale.ini` file.
+Before writing this post I executed Vale and came across a lot of issues within my content, both correct and incorrectly flagged issues came up, for example all my code examples where flagged since `DbContext` isn't a valid word. For this Vale offers various _scopes_ which allow you to ignore pre-defined types of content, to ignore all content within a code fence you'd add this to your `vale.ini` file.
 
 <CodeBlock filename=".vale.ini">
 
