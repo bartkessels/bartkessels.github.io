@@ -19,20 +19,20 @@ concurrency:
 
 jobs:
   lint:
-    uses: ./.github/workflows/steps/lint.yml
+    uses: ./.github/workflows/lint.yml
 
   check-content:
-    uses: ./.github/workflows/steps/check-content.yml
+    uses: ./.github/workflows/check-content.yml
 
   test:
-    uses: ./.github/workflows/steps/test.yml
+    uses: ./.github/workflows/test.yml
 
   test-e2e:
-    uses: ./.github/workflows/steps/test-e2e.yml
+    uses: ./.github/workflows/test-e2e.yml
 
   build:
-    uses: ./.github/workflows/steps/build.yml
+    uses: ./.github/workflows/build.yml
 
   deploy:
     needs: [lint, check-content, test, test-e2e, build]
-    uses: ./.github/workflows/steps/deploy.yml
+    uses: ./.github/workflows/deploy-pages.yml
