@@ -17,6 +17,7 @@ Now that we have the following data structure from our [previous post](./2023031
 number of calories and add them together.
 
 <CodeBlock filename="Elve structure">
+
 ```kotlin
 [
   [ 1000, 2000, 3000 ], // Elve one
@@ -26,6 +27,7 @@ number of calories and add them together.
   [ 10000 ]             // Elve five
 ]
 ```
+
 </CodeBlock>
 
 ## Design
@@ -135,6 +137,7 @@ flowchart LR
 Now we know what we want our code to do, let's start implementing it in our `PartOne` class.
 
 <CodeBlock filename="aoc-2022/day1/src/main/kotlin/aoc/PartTwo.kt">
+
 ```kotlin
 class PartTwo(
     private val sanitizer: Sanitizer
@@ -153,6 +156,7 @@ class PartTwo(
     }
 }
 ```
+
 </CodeBlock>
 
 What our code does is, it creates a new list based on the input in _step 1_. This new list will contain the summed up values of the calories for each elve. This data structure
@@ -181,6 +185,7 @@ expected outcome in the test case.
 So we can write a test case that validates our test input to the outcome of __45000__. Right now we can update the `PartTwoTest` class with the following contents.
 
 <CodeBlock filename="aoc-2022/day1/src/test/kotlin/aoc/PartTwoTest.kt">
+
 ```kotlin
 class PartTwoTest {
     @Test
@@ -199,4 +204,5 @@ class PartTwoTest {
     }
 }
 ```
+
 </CodeBlock>

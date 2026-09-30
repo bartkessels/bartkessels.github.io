@@ -17,6 +17,7 @@ import CodeBlock from '@/components/CodeBlock.astro';
 Now that we have the following data structure from our [previous post](./20230314-sanitizer.mdx), we start implementing the business logic to retrieve the highest combined number of calories.
 
 <CodeBlock filename="Elve structure">
+
 ```kotlin
 [
   [ 1000, 2000, 3000 ], // Elve one
@@ -26,6 +27,7 @@ Now that we have the following data structure from our [previous post](./2023031
   [ 10000 ]             // Elve five
 ]
 ```
+
 </CodeBlock>
 
 ## Design
@@ -120,6 +122,7 @@ flowchart LR
 Now we know what we want our code to do, let's start implementing it in our `PartOne` class.
 
 <CodeBlock filename="aoc-2022/day1/src/main/kotlin/aoc/PartOne.kt">
+
 ```kotlin
 class PartOne(
     private val sanitizer: Sanitizer
@@ -133,12 +136,14 @@ class PartOne(
     }
 }
 ```
+
 </CodeBlock>
 
 What our code does is, it creates a new list based on the input in _step 1_. This new list will contain the summed up values of the calories for each elve. This data structure
 looks like this
 
 <CodeBlock>
+
 ```kotlin
 [
   5000,
@@ -148,6 +153,7 @@ looks like this
   10000
 ]
 ```
+
 </CodeBlock>
 
 Next, in _step 2_ we get the biggest number from the list, which will be `24000`. And in _step 3_ we return that value, or `-1` if the input data was null.
@@ -161,6 +167,7 @@ total of __24000__.
 So we can write a test case that validates our test input to the outcome of __24000__. Right now we can update the `PartOneTest` class with the following contents.
 
 <CodeBlock filename="aoc-2022/day1/src/test/kotlin/aoc/PartOneTest.kt">
+
 ```kotlin
 class PartOneTest {
     @Test
@@ -179,4 +186,5 @@ class PartOneTest {
     }
 }
 ```
+
 </CodeBlock>

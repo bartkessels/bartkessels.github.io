@@ -11,22 +11,26 @@ tags: [CMake, include, add_subdirectory, target, different folder, scope]
 ---
 
 import CodeBlock from '@/components/CodeBlock.astro';
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
 
-## Introduction
-
-With the release of [_It Depends_](../../software/it-depends.mdx), I've been searching for a way to execute a command after a target has been built. The reason for this is that I'd like to have a flag which will trigger the `macdeployqt` application on the generated app bundle.
+<Intro>
+    <Char>W</Char>ith the release of [_It Depends_](../../software/it-depends.mdx), I've been searching for a way to execute a command after a target has been built. The reason for this is that I'd like to have a flag which will trigger the `macdeployqt` application on the generated app bundle.
+</Intro>
 
 However, to make things more complicated, I want to do this in CMake on the default _It Depends_  target but I'd like to do this in a different `CMakeFile.txt` in a different folder from where the _It Depends_ target is created. So roughly the structure looks like this
 
-* src/
-    * CMakeLists.txt (`<- It Depends target is created here`)
-* packaging/
-    * CmakeLists.txt(`<- macdeployqt should be triggered here after the build of It Depends`)
-* CmakeLists.txt (`<- include both folders here`)
+```
+- src/
+  | - CMakeLists.txt (<- It Depends target is created here)
+- packaging/
+  | - CmakeLists.txt(<- macdeployqt should be triggered here after the build of It Depends)
+- CmakeLists.txt (<- include both folders here)
+```
 
-Why is this complicated you might ask. Well, you can't access a target that's created in another CMakeLists.txt in a different folder.
+Why is this complicated you might ask. Well, you can't access a target that's created in another `CMakeLists.txt` in a different folder.
 
-Logically thinking you'd add both directories in the root `CMakeLists.txt` and that's all there is to it. Unfortunatly it's not that easy (well almost, I'll explain later).
+Logically thinking you'd add both directories in the root `CMakeLists.txt` and that's all there is to it. Unfortunately it's not that easy (well almost, I'll explain later).
 
 ### Test setup
 
@@ -34,34 +38,41 @@ So to test whether it's possible to add a `POST_BUILD` command to a target that'
 
 Create the following file structure
 
-* src/
-    * main.cpp
-    * CMakeLists.txt
-* packaging/
-    * CMakeLists.txt
-* CMakeLists.txt
+```
+- src/
+  | - main.cpp
+  | - CMakeLists.txt
+- packaging/
+  | - CMakeLists.txt
+- CMakeLists.txt
+```
 
 And give them the following contents
 
 <CodeBlock filename="CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 add_subdirectory(./src)
 add_subdirectory(./packaging)
 ```
+
 </CodeBlock>
 
 <CodeBlock filename="src/main.cpp">
+
 ```cpp
 int main(int argc, char** args)
 {
   return 0;
 }
 ```
+
 </CodeBlock>
 
 <CodeBlock filename="src/CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
@@ -73,6 +84,7 @@ add_executable(
 </CodeBlock >
 
 <CodeBlock filename="packaging/CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
@@ -80,9 +92,10 @@ add_custom_command(TARGET test_target POST_BUILD
   COMMAND echo "The project has been built!"
 )
 ```
+
 </CodeBlock>
 
-### add_subdirectory
+### Add subdirectory
 
 The first thought is to add `add_subdirectory(./packaging)` in the root `CMakeLists.txt` and add a reference to the `test_target` target in the `src/CMakeLists.txt` to execute a command after the build has finished. So this look exactly like our test setup above.
 
@@ -108,6 +121,7 @@ If we then run `cmake .` and build our target, we should be able to execute our 
 So modify the `CMakeLists.txt` in the root and the `src/CMakeLists.txt` to look like this.
 
 <CodeBlock filename="src/CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
@@ -118,15 +132,18 @@ add_executable(
 
 include(../packaging) # <- Add this line
 ```
+
 </CodeBlock>
 
 <CodeBlock filename="CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 add_subdirectory(./src)
 # add_subdirectory(./packaging) # <- Remove this line
 ```
+
 </CodeBlock>
 
 Well, this gives us the following error message.
@@ -165,23 +182,28 @@ To recap and use the example structure again, we have the following folder struc
 Where the files have the following contents.
 
 <CodeBlock filename="CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 add_subdirectory(./src)
 ```
+
 </CodeBlock>
 
 <CodeBlock filename="src/main.cpp">
+
 ```cpp
 int main(int argc, char** args)
 {
   return 0;
 }
 ```
+
 </CodeBlock>
 
 <CodeBlock filename="src/CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
@@ -192,9 +214,11 @@ add_executable(
 
 include(../packaging/CMakeLists.txt)
 ```
+
 </CodeBlock>
 
 <CodeBlock filename="packaging/CMakeLists.txt">
+
 ```cmake
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
@@ -202,6 +226,7 @@ add_custom_command(TARGET test_target POST_BUILD
   COMMAND echo "The project has been built!"
 )
 ```
+
 </CodeBlock>
 
 When we build the project, using Ninja in this example, we get the following output.

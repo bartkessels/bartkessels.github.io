@@ -1,0 +1,4 @@
+Powershell
+winget
+msstore
+CMDLet

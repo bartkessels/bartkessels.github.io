@@ -10,10 +10,14 @@ caption: This image is generated using Dall-E
 ---
 
 import CodeBlock from '@/components/CodeBlock.astro';
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
+
+<Intro>
+    <Char>S</Char>tring resources are a great way to support multiple languages, but what if you want to display a string to the user that is different for multiple amounts? For example, you want to display the string _You have clicked 1 time_ or _You have clicked 2 times_.
+</Intro>
 
 In a [previous post](./create-an-android-app/20240313-support-multiple-languages.mdx) about supporting multiple languages, we've discussed the use of string resources. Which are XML-files where you store the strings that are used in your app. 
-
-This is a great way to support multiple languages, but what if you want to display a string to the user that is different for multiple amounts? For example, you want to display the string _You have clicked 1 time_ or _You have clicked 2 times_.
 
 For this blogpost we'll be continuing with the app we've created in the [Create an Android app story](../../stories/20240214-create-an-android-app.mdx), only on a different branch. We'll be using the [feature/plural-string-resource](https://github.com/bartkessels/basic-android-app/tree/feature/plural-string-resource) branch.
 
@@ -22,6 +26,7 @@ For this blogpost we'll be continuing with the app we've created in the [Create 
 Before we'll add the string resource, we need to update our view model to keep track of the number of times we've clicked the button. We'll be adding a new property to our view model called `clickCount`.
 
 <CodeBlock filename="MainViewModel.kt">
+
 ```kotlin
 // ... redacted
 
@@ -38,11 +43,13 @@ class MainViewModel: ViewModel() {
 
 // ... redacted
 ```
+
 </CodeBlock>
 
 Now, if we run our application we don't see any change. This is because we need to update our view state to include the `clickCount` property. We'll be updating our `Updated` implementation of `MainState` sealed class to include a new state called `UpdatedWithCount`. We only need this property on the `Updated` state because when the user hasn't pressed the button we don't want to change the current state of the app.
 
 <CodeBlock filename="app/src/main/**/MainState.kt">
+
 ```kotlin
 // ... redacted
 
@@ -51,11 +58,13 @@ sealed interface MainState {
     data class Updated(val clickCount: Int): MainState
 }
 ```
+
 </CodeBlock>
 
 This will also lead to another update to our `updateText` method in the view model, because we need to give the `clickCount` property as a constructor parameter to the `MainState.Updated` class we've just updated.
 
 <CodeBlock filename="app/src/main/**/MainViewModel.kt">
+
 ```kotlin
 // ... redacted 
 
@@ -66,6 +75,7 @@ This will also lead to another update to our `updateText` method in the view mod
     
 // ... redacted
 ```
+
 </CodeBlock>
 
 If we try to compile our app, we see that the `MainInternal` composable function fails to compile. This is because of the `when` statement.
@@ -75,6 +85,7 @@ If we try to compile our app, we see that the `MainInternal` composable function
 To make our `when` statement compile again, we need to tell the compiler that the `ViewState.Updated` is a type instead of a singleton object. We can do this by adding a `is` statement to the `when` statement.
 
 <CodeBlock filename="app/src/main/**/Thing.kt">
+
 ```kotlin
 // ... redacted
 
@@ -85,6 +96,7 @@ To make our `when` statement compile again, we need to tell the compiler that th
     
 // ... redacted
 ```
+
 </CodeBlock>
 
 ## Update the strings resource
@@ -181,4 +193,4 @@ Let's update the `shouldDisplayHelloAgainWhenTheMainStateIsUpdated` test case in
 // ... redacted
 ```
 
-You might notice that we moved from the `context.stringResource` to hardcoded strings for these test cases. This is something I did because it allows us to validate that our plural string resource is correct, and that the correct plural is used for the amount we test. If for example, we've swapped the text for the `one` and `other` quantity our test would fail in this case. If we use the `context.pluralStringResource`, we wouldn't detect that issue.
+You might notice that we moved from the `context.stringResource` to hard coded strings for these test cases. This is something I did because it allows us to validate that our plural string resource is correct, and that the correct plural is used for the amount we test. If for example, we've swapped the text for the `one` and `other` quantity our test would fail in this case. If we use the `context.pluralStringResource`, we wouldn't detect that issue.

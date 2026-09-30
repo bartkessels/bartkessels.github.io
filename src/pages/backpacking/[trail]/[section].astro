@@ -1,13 +1,14 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { render } from 'astro:content';
-import { Calendar, ChevronLeft, ChevronRight, MapPin } from '@lucide/astro';
+import { ChevronLeft, ChevronRight, MapPin } from '@lucide/astro';
 import { getSectionOrderLabel } from '@/utils/content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TrailMap from '@/components/TrailMap.astro';
 import TagsList from '@/components/TagsList.astro';
 import TripConditions from '@/components/TripConditions.astro';
 import ElevationProfile from '@/components/ElevationProfile.astro';
+import ContentMeta from '@/components/ContentMeta.astro';
 import { getBackpackingViewModel } from '@/factories/view-model.factory';
 
 export const getStaticPaths = (async () => {
@@ -72,17 +73,8 @@ const totalLabel = getSectionOrderLabel(sectionNumber, trail.data.totalSections)
         <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 leading-tight">
           {section.data.title}
         </h1>
-
-        <p class="text-lg text-muted mb-6">
-          {section.data.description}
-        </p>
-
-        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted border-b border-border pb-6">
-          <time datetime={section.data.date.toISOString()} class="flex items-center gap-2">
-            <Calendar class="h-4 w-4" aria-hidden="true" />
-            {formattedDate}
-          </time>
-        </div>
+        
+        <ContentMeta date={section.data.date} formattedDate={formattedDate} />
       </header>
     </div>
 

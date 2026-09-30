@@ -11,8 +11,12 @@ tags: [Android, Jetpack Compose, UI, App Development]
 ---
 
 import CodeBlock from '@/components/CodeBlock.astro';
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
 
-Now that we have our [base project set up](../../../stories/20240214-create-an-android-app.mdx), let's add an activity with a view, so we can see our own application. When building Android application in this time and age, it's pretty assumable that you're going to use Jetpack Compose for your UI, since it's also the recommended toolkit by Google [(Google, n.d.)](https://developer.android.com/jetpack/compose).
+<Intro>
+    <Char>N</Char>ow that we have our [base project set up](../../../stories/20240214-create-an-android-app.mdx), let's add an activity with a view, so we can see our own application. When building Android application in this time and age, it's pretty assumable that you're going to use Jetpack Compose for your UI, since it's also the recommended toolkit by Google [(Google, n.d.)](https://developer.android.com/jetpack/compose).
+</Intro>
 
 ## Add Jetpack Compose
 
@@ -22,9 +26,10 @@ We have a top-level `/build.gradle.kts` files, this is useful when you have mult
 
 ### Enable Jetpack compose
 
-Let's start by enabling JetPack Compose under the `android` section in the `app/build.gradle.kts` file. Do this by adding the following contents in the `android` section and execute a `gradle sync` to implement the change to the project.
+Let's start by enabling Jetpack Compose under the `android` section in the `app/build.gradle.kts` file. Do this by adding the following contents in the `android` section and execute a `gradle sync` to implement the change to the project.
 
 <CodeBlock filename="app/build.gradle.kts">
+
 ```kotlin
 // ...
 android {
@@ -40,6 +45,7 @@ android {
 }
 // ...
 ```
+
 </CodeBlock>
 
 Inside the `android` block, all the Android specific properties are defined [(Google, 2024)](https://developer.android.com/build#sample_app-module_build_script). However, for Jetpack compose we only need to set the `buildFeatures` and the `composeOptions` properties to enable Jetpack compose for Android [(Google, 2024)](https://developer.android.com/jetpack/compose/setup).
@@ -56,6 +62,7 @@ Luckily, Jetpack Compose uses a BOM to store all the versions that its libraries
 Let's add the BOM dependencies inside the `dependencies` block of our `app` module `build.gradle.kts` [(Google, 2024)](https://developer.android.com/jetpack/compose/setup#kotlin_1).
 
 <CodeBlock filename="app/build.gradle.kts">
+
 ```kotlin
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
@@ -65,13 +72,15 @@ dependencies {
     // ...
 }
 ```
+
 </CodeBlock>
 
 Now we can import the dependencies from Jetpack Compose that we need to build UI elements. For this, we'll only be using the bare minimum libraries for the application to compile and display something on the screen. This way you have full control over the actual UI library you want to use eventually.
 
-We'll be needing the `activity-compose` library so we can use a Composable view inside our Activity [(Google, 2023)](https://developer.android.com/reference/kotlin/androidx/activity/compose/package-summary). And the `compose.foundation` library for basic UI elements.
+We'll be needing the `activity-compose` library so we can use a composable view inside our Activity [(Google, 2023)](https://developer.android.com/reference/kotlin/androidx/activity/compose/package-summary). And the `compose.foundation` library for basic UI elements.
 
 <CodeBlock filename="app/build.gradle.kts">
+
 ```kotlin
 dependencies {
     // ...
@@ -81,9 +90,10 @@ dependencies {
     
     // ...
 ```
+
 </CodeBlock>
 
-Now execute a gradle sync and let's create a new activity.
+Now execute a `gradle sync` and let's create a new activity.
 
 ## Create a new Activity
 
@@ -94,6 +104,7 @@ Create a new Activity in the `src/main/kotlin/net.bartkessels.myapplication` pac
 Inside our empty `MainActivity.kt` we'll define a class that will inherit from the `ComponentActivity` base class and override the `onCreate` method since that is the entry point of an Android class [(Google, 2024)](https://developer.android.com/guide/components/activities/activity-lifecycle).
 
 <CodeBlock filename="src/main/kotlin/**/MainActivity.kt">
+
 ```kotlin
 // ...
 
@@ -108,9 +119,10 @@ override fun onCreate(savedInstanceState: Bundle?) {
 // ...
 
 ```
+
 </CodeBlock>
 
-Inside the `onCreate` method we call the `onCreate` method of the `ComponentActivity` and then run the `setContent` extension method to allow the rendering of a Composable component. In our case, that's the `BasicText` component.
+Inside the `onCreate` method we call the `onCreate` method of the `ComponentActivity` and then run the `setContent` extension method to allow the rendering of a composable component. In our case, that's the `BasicText` component.
 
 ### Register the `MainActivity` as the entry point
 
@@ -119,6 +131,7 @@ We have our `MainActivity` set up, now we need to tell Android that this activit
 Inside the `application` tag we add a new `activity` tag with the name set to the location of our `MainActivity`. Because this activity lives in the root of our module, we can simply type `.MainActivity` where the `.` references the current root directory.
 
 <CodeBlock filename="app/AndroidManifest.xml">
+
 ```xml
 <activity
     android:name=".MainActivity"
@@ -129,6 +142,7 @@ Inside the `application` tag we add a new `activity` tag with the name set to th
     </intent-filter>
 </activity>
 ```
+
 </CodeBlock>
 
 ## Run the application
@@ -138,4 +152,6 @@ Now that everything is configured, we can run our own application. The only thin
 ![Our basic Android app](/images/blog/android/create-an-application/basic-android-application.png)
 
 * The entire application can be found on [github.com/bartkessels/basic-android-app](https://github.com/bartkessels/basic-android-app)
+  {/* <!-- vale off --> */}
 * Just the code that's been created in this post can be found in the [tutorial/setup-jetpack-compose branch](https://github.com/bartkessels/basic-android-app/tree/tutorial/setup-jetpack-compose)
+  {/* <!-- vale on --> */}

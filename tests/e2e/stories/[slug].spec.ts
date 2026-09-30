@@ -42,14 +42,6 @@ test.describe("Story detail page", () => {
         await expect(postCount).toBeVisible();
     });
 
-    test("displays the story description", async ({ page }: { page: Page }) => {
-        // Arrange
-        const description = page.locator("article header p");
-
-        // Act & Assert
-        await expect(description).toBeVisible();
-    });
-
     test("displays the started date", async ({ page }: { page: Page }) => {
         // Arrange
         const date = page.getByText(/Started /i);

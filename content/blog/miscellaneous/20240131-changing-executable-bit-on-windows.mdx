@@ -9,7 +9,12 @@ date: 2024-01-31
 subject: miscellaneous
 ---
 
-When using a Linux pipeline in your development process when you develop on a Windows system might give you error messages from time to time. Usually, at least in my experience, these are time-related issues because Windows has different naming conventions for timezone id's than Linux, for example `W. Europe Standard Time` on Windows versus `Europe/Amsterdam` on Linux.
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
+
+<Intro>
+    <Char>W</Char>hen using a Linux pipeline in your development process when you develop on a Windows system might give you error messages from time to time. Usually, at least in my experience, these are time-related issues because Windows has different naming conventions for timezone id's than Linux, for example `W. Europe Standard Time` on Windows versus `Europe/Amsterdam` on Linux.
+</Intro>
 
 But when you need to execute a script in your pipeline, the chances are high that you run into a `Permission denied` failure.
 

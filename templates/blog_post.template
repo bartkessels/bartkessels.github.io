@@ -12,3 +12,9 @@ tags: [A, B, C]
 
 import Callout from '@/components/Callout.astro';
 import CodeBlock from '@/components/CodeBlock.astro';
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
+
+<Intro>
+    <Char>T</Char>his post is about something else.
+</Intro>

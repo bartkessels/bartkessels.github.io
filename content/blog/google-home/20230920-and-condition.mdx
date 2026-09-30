@@ -10,10 +10,12 @@ subject: google-home
 ---
 
 import CodeBlock from '@/components/CodeBlock.astro';
+import Intro from '@/components/Intro.astro';
+import Char from '@/components/Char.astro';
 
-## Introduction
-
-Since a couple of weeks Google has (finally!) added support for more advanced automations using YAML. Even though as of right now it's still in public preview, I've migrated all my automations to this new style.
+<Intro>
+    <Char>S</Char>ince a couple of weeks Google has (finally!) added support for more advanced automations using YAML. Even though as of right now it's still in public preview, I've migrated all my automations to this new style.
+</Intro>
 
 ## Case
 
@@ -61,6 +63,7 @@ This means for our case to be executed properly we want the `and` operator. This
 Now we know how we can achieve our goal, let's create the actual automation.
 
 <CodeBlock>
+
 ```yaml
 metadata:
   name: Motion in hallway
@@ -93,4 +96,5 @@ automations:
       on: true
       devices: Hallway light - Hallway
 ```
+
 </CodeBlock>

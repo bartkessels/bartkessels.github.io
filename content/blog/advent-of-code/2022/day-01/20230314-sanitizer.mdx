@@ -25,6 +25,7 @@ our data structure.
 So we've got the following raw input.
 
 <CodeBlock filename="Raw input">
+
 ```
 1000
 2000
@@ -41,9 +42,10 @@ So we've got the following raw input.
 
 10000
 ```
+
 </CodeBlock>
 
-If we look at it, we can see that each 'elve' is divided by an empy line. And each number is the calories of one snack they're carrying. So in total we've got five elves,
+If we look at it, we can see that each 'elve' is divided by an empty line. And each number is the calories of one snack they're carrying. So in total we've got five elves,
 each carrying one or more snack(s).
 
 If we split up the raw data into specific elves, we want to get the following data structure.
@@ -54,7 +56,7 @@ If we split up the raw data into specific elves, we want to get the following da
 | 2000   |        | 6000     | 8000    |         |
 | 3000   |        |          | 9000    |         |
 
-So we can see that we first need to split the raw input on an empy line, which will give us five strings with the calories for each elve. So if we split those strings on a newline character (`\n`)
+So we can see that we first need to split the raw input on an empty line, which will give us five strings with the calories for each elve. So if we split those strings on a newline character (`\n`)
 we get a list of calories inside our list of elves. Which means, we'll get something like this:
 
 ```kotlin
@@ -67,7 +69,7 @@ we get a list of calories inside our list of elves. Which means, we'll get somet
 ]
 ```
 
-So the only thing we need to do, is map each calory inside our 'inner-list' to an integer.
+So the only thing we need to do, is map each calorie inside our 'inner-list' to an integer.
 
 ## Implementation
 
@@ -77,6 +79,7 @@ Now we now how we want our data structure to look like, we can start creating th
 Because we've laid out the way we want to functionally setup our code. We can just implement it in Kotlin using the `split` and `map` methods on our input file.
 
 <CodeBlock filename="aoc-2022/day1/src/main/kotlin/aoc/Sanitizer.kt">
+
 ```kotlin
 class Sanitizer(
     private val resource: URL?
@@ -93,6 +96,7 @@ class Sanitizer(
     }
 }
 ```
+
 </CodeBlock>
 
 All our sanitizer does right now, is just retrieving each group of calories by splitting the entire file on `\n\n`. This will create the following output at step _1a_ and _1b_.
@@ -108,7 +112,7 @@ All our sanitizer does right now, is just retrieving each group of calories by s
 ]
 ```
 
-So, if we iterate over each item in the list and seperate each string on `\n` we have the calories as a string so we need to convert that as well. The splitting is
+So, if we iterate over each item in the list and separate each string on `\n` we have the calories as a string so we need to convert that as well. The splitting is
 done in step _2a_ and the conversion to an integer is done in step _2b_. Which gives us the following data structure.
 
 ```kotlin
@@ -127,6 +131,7 @@ To validate that our logic works as expected, we create a test case based on the
 correct data structure which we can use in the assignments.
 
 <CodeBlock filename="aoc-2022/day1/src/test/kotlin/aoc/SanitizerTest.kt">
+
 ```kotlin
 class SanitizerTest {
     @Test
@@ -150,4 +155,5 @@ class SanitizerTest {
     }
 }
 ```
+
 </CodeBlock>

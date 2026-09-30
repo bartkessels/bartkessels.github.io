@@ -27,9 +27,22 @@ export function formatShortDate(date: Date): string {
  * Returns null when there are no published sections and no total is known.
  */
 export function getSectionLabel(publishedCount: number, totalSections?: number): string | null {
-    if (totalSections) return `${publishedCount} of ${totalSections} sections`;
+    const sectionLabel = getPluralString(publishedCount, 'section', 'sections');
+
+    if (totalSections) return `${publishedCount} of ${totalSections} ${sectionLabel}`;
     if (publishedCount === 0) return null;
-    return `${publishedCount} ${publishedCount === 1 ? 'section' : 'sections'}`;
+    return `${publishedCount} ${sectionLabel}`;
+}
+
+/**
+ * Returns a singular or plurar string based on the number input.
+ */
+export function getPluralString(total: number, singular: string, plural: string): string {
+    if (total === 1) {
+        return singular;
+    }
+    
+    return plural;
 }
 
 /** Returns a human-readable "Section X (of Y)" label for a section detail page. */
