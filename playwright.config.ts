@@ -26,8 +26,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm dev',
+    command: 'pnpm exec astro build && pnpm exec astro preview --host',
     url: 'http://localhost:4321',
     reuseExistingServer: !process.env.CI,
+    timeout: 120_000,
   },
 });
